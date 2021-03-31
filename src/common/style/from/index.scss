@@ -1,0 +1,114 @@
+@charset "utf-8";
+
+:-moz-placeholder {
+  color: rgb(185,190,199) !important; opacity:1 !important;
+}
+
+::-moz-placeholder {
+  color: rgb(185,190,199) !important; opacity:1 !important;
+}
+
+input:-ms-input-placeholder{
+  color: rgb(185,190,199) !important; opacity:1 !important;
+}
+
+input::-webkit-input-placeholder{
+  color: rgb(185,190,199) !important; opacity:1 !important;
+}
+
+
+input:focus{
+  outline-color: #40a9ff;
+  border-radius: 4px;
+}
+textarea:focus{
+  outline-color: #40a9ff;
+  border-radius: 4px;
+}
+input[type='checkbox']:checked, input[type='radio']:checked {
+   background : url('~@/assets/images/checked.png') no-repeat center; background-size: 100% auto;
+   border: 1px solid #00CEFF;
+}
+
+// input[type='checkbox']:checked, input[type='radio']:checked {
+//   background : url('../../../assets/checked-light.png') no-repeat center; background-size: 100% auto;
+//   border: 1px solid #00CEFF;
+// }
+
+
+.f-form-notfocus:focus{
+  outline: none;
+  border-radius: 4px;
+}
+
+button{
+  outline-style: none;
+  border:0px;
+  background-color:transparent;
+  cursor: pointer;
+}
+
+.f-btn{
+  cursor: pointer;
+  line-height: 1.499;
+  height: 32px;
+  padding: 0 24px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #333;
+  background-color: #d8d8d8;
+  border-color: #d8d8d8;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  &:hover{
+    color: #fff;
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+}
+
+
+.f-btn-primary{
+  cursor: pointer;
+  line-height: 1.499;
+  height: 32px;
+  padding: 0 24px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  &:hover{
+    color: #fff;
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+}
+
+.f-btn-disable{
+  line-height: 1.499;
+  height: 32px;
+  padding: 0 24px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  text-shadow: none;
+  box-shadow: none;
+  color: rgba(0,0,0,.25);
+  background-color: #f5f5f5;
+
+  border: 1px solid;
+  border-color: #d9d9d9;
+  &:hover{
+    cursor: not-allowed;
+  }
+}
+
+
+
+.f-form-label-color{
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.85) !important;
+}

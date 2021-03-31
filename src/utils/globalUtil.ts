@@ -1,0 +1,110 @@
+import { Loadings } from 'utils/loadings/loadings'
+const load = new Loadings;
+(Date as any).prototype.format = function(fmt:any) {
+    let o:any = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
+    };
+    if(/(y+)/.test(fmt)) {
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    }
+    for(let k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        }
+    }
+    return fmt;
+};
+
+
+(Array as any).prototype.insert = function(index:number, data:any) {
+    this.splice(index, 0, data);
+};
+
+// (Array as any).prototype.splice = function(start:number, lang:number, data:any) {
+//     this.splice(start, lang, data);
+// };
+
+(Array as any).prototype.delete = function(index:number, data:any) {
+    this.splice(index, 1);
+};
+
+/**
+ * formatMoney
+ * @param number 传入的数字。必选
+ * @param places  小数点的位数。可选，默认为两位小数
+ * @param symbol  数字最后的符号 。可选，默认为美元字符“￥”
+ * @param thousand  千分位分隔符。可选，默认为“，”
+ * @param decimal  小数位分隔符。可选，默认为“.”
+ */
+(Number as any).prototype.formatMoney = function(places:number = 2, symbol:string = '', thousand:string=',', decimal:string='.') {
+    let number:any = this || 0;
+    places = !isNaN(places = Math.abs(places)) ? places : 2;
+    symbol = symbol !== undefined ? symbol : "$";
+    thousand = thousand || ",";
+    decimal = decimal || ".";
+    var negative = number < 0 ? "-" : "",
+        i:any = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+        j:any = (j = i.length) > 3 ? j % 3 : 0;
+    return   negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "")+symbol;
+};
+
+
+/**
+ * 下载文件
+ * @param data 二进制文本流
+ * @param filesName  下载文件的名字
+ */
+(Window as any).prototype.downFlies = function(data:any, filesName:string){
+    if (typeof window.navigator.msSaveBlob !== 'undefined') {
+        window.navigator.msSaveBlob(new Blob([data]), filesName)
+    }else{
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.setAttribute('download', filesName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); //下载完成移除元素
+        window.URL.revokeObjectURL(url); //释放掉blob对象
+    }
+};
+
+//复制
+(Window as any).prototype.copy = (text:any) => {
+    var textArea:any = document.createElement('textarea')
+    textArea.style.position = 'fixed'
+    textArea.style.top = 0
+    textArea.style.left = 0
+    textArea.style.width = '2em'
+    textArea.style.height = '2em'
+    textArea.style.padding = 0
+    textArea.style.border = 'none'
+    textArea.style.outline = 'none'
+    textArea.style.boxShadow = 'none'
+    textArea.style.background = 'transparent'
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    try {
+        var successful = document.execCommand('copy')
+        var msg = successful ? 'successful' : 'unsuccessful'
+    } catch (err) {
+        console.log('Oops, unable to copy')
+    }
+    document.body.removeChild(textArea);
+    // load.tipSuccessShow('复制成功');
+    load.tipSuccessShow('复制成功');
+}
+
+
+
+
+
+

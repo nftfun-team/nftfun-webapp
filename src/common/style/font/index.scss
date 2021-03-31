@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+
+/*  font type color */
+.f-common-color{
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+.f-operating-color{
+  color: #1890ff !important;
+}
+.f-active-color{
+  color: #1890ff !important;
+}
+.f-error-color{
+  color: #f5222d !important;
+}
+
+
+/*  border type color */
+.f-act-border{
+  border-color: #1890ff !important;
+}
+.f-common-border{
+  border-color: #e8e8e8 !important;
+}
+
+
+/*  background type color */
+.f-head-background{
+  background: #1890ff;
+}
+.f-origin-background{
+  background: #f59a23;
+}
+
+
+/*  定义字体权重 */
+.f-fw1 {
+  font-weight: 100 !important;
+}
+.f-fw2 {
+  font-weight: 200 !important;
+}
+.f-fw3 {
+  font-weight: 300 !important;
+}
+.f-fw4 {
+  font-weight: 400 !important;
+}
+.f-fw5 {
+  font-weight: 600 !important;
+}
+.f-fw6 {
+  font-weight: 600 !important;
+}
+.f-fw7 {
+  font-weight: 700 !important;
+}
+.f-fw8 {
+  font-weight: 800 !important;
+}
+
+
+/*  定义字体相关样式 */
+.f-tal {
+  text-align: left;
+}
+
+.f-tac {
+  text-align: center;
+}
+
+.f-tar {
+  text-align: right;
+}

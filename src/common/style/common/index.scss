@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.april-f-btn{
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  background: linear-gradient(180deg, #409eff 0%, #409eff 100%);
+  &:hover{
+    background: linear-gradient(180deg, #66b1ff 0%, #66b1ff 100%);
+  }
+}
+.april-f-btn-disabled{
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  background: linear-gradient(180deg, #909399 0%, #909399 100%);
+  &:hover{
+    background:rgba($color: #a6a9ad, $alpha: 0.9)
+  }
+}

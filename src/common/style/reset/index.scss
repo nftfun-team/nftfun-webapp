@@ -1,0 +1,238 @@
+
+@charset "utf-8";
+/*=========================Reset_start==========================*/
+body,h1,h2,h3,h4,h5,h6,div,p,dl,dt,dd,ol,ul,li,form,table,th,td,a,img,span,strong,var,em,input,textarea,select,option,section{margin: 0; padding: 0;}
+/*html,body{font-family:"微软雅黑"; font-size: 12px; text-align: left;}*/
+html,body{
+    font-family: DINPro, "Microsoft YaHei","weiruanyahei",Tahoma,SimSun;
+    font-size: 14px;color: #333;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-width: 1200px;
+    //min-width: 1405px;
+    background: #fff
+}
+ul,ol{list-style: none;}
+img{border: 0;}
+/*input,select,textarea{outline:0;}*/
+textarea{resize:none;}
+table{border-collapse: collapse; border-spacing: 0;}
+th,strong,var,em{font-weight: normal; font-style: normal;}
+a{text-decoration: none;}
+/*a:link,a:visited,a:hover,a:active{text-decoration:none;} */
+/*==========================Reset_End===========================*/
+a{
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: 'DINPro';
+    src: url('~@/assets/DINPro-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+//html {
+//    filter: grayscale(100%);
+//    -webkit-filter: grayscale(100%);
+//    -moz-filter: grayscale(100%);
+//    -ms-filter: grayscale(100%);
+//    -o-filter: grayscale(100%);
+//    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+//    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+//    -webkit-filter: grayscale(1);
+//}
+
+.max-content{
+    width: 100%;
+    height: 100%;
+}
+.min-width {
+    width: 1366px;
+    margin: 0 auto;
+}
+
+/***********按钮点击清除样式**************/
+button{
+    outline-style: none;
+}
+
+/*  清除浮动 */
+.qcfd:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0
+}
+
+/*  居中  */
+.f-center {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*  水平居中 */
+.f-center-x {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+/*  垂直居中  */
+.f-center-y {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+/* // 水平居中  */
+.f-flex-x{
+    display: flex;
+    justify-content: center;
+}
+
+/* // 垂直居中 */
+.f-flex-y{
+    display: flex;
+    align-items: center
+}
+
+/* // 居中  */
+.f-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+/*  定义元素如何显示 */
+.f-di {
+    display: inline;
+}
+
+.f-dn {
+    display: none !important;
+}
+
+.f-db {
+    display: block;
+}
+
+/*  定义浮动 */
+.f-fl {
+    float: left;
+}
+
+.f-fr {
+    float: right;
+}
+
+.f-fn {
+    float: none;
+}
+
+/********鼠标**********/
+
+.f-cursor-not {
+    cursor: not-allowed;
+}
+
+.f-cursor {
+    cursor: pointer;
+}
+
+
+
+/*  定义元素定位类型 */
+.f-pr {
+    position: relative;
+}
+
+.f-pa {
+    position: absolute;
+}
+
+.f-pf {
+    position: fixed;
+}
+
+/*  定义元素超出隐藏 */
+.f-oh {
+    overflow: hidden;
+}
+
+
+
+.f-tdu,
+.f-tdu:hover {
+    text-decoration: underline;
+}
+
+/*  溢出单行文本显示省略号 */
+.f-toe {
+    width: 90%;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+/*  溢出文本强制换行 */
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* //*******************盒模型*************** */
+.border-box {
+    box-sizing: border-box;
+}
+
+.content-box {
+    box-sizing: content-box;
+}
+
+
+
+/** block flex */
+.f-df{
+    display: flex;
+}
+
+.href-link{
+    cursor: pointer;
+    color: #1890ff;
+}
+
+/************ style reset end *******************/
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: rgba(127, 143, 164, .4);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+    opacity: 0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+/************ style reset end *******************/
+
