@@ -8,18 +8,21 @@
         </div>
     </header>
 
-    main
+    <div class="_container">
+        <MainSlogan/>
+    </div>
 </div>
 </template>
 
 <script>
 import NavLink from '@/components/nav/index.vue';
-import Logo from '@/components/logo/index.vue'
-import Button from '@/components/button/index.vue'
+import Logo from '@/components/logo/index.vue';
+import Button from '@/components/button/index.vue';
+import MainSlogan from './components/main-slogan.vue';
 
 export default {
     name: 'index',
-    components: {NavLink, Logo, Button}
+    components: {NavLink, Logo, Button, MainSlogan}
 }
 </script>
 
