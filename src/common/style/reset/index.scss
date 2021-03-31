@@ -1,11 +1,15 @@
-
 @charset "utf-8";
 /*=========================Reset_start==========================*/
-body,h1,h2,h3,h4,h5,h6,div,p,dl,dt,dd,ol,ul,li,form,table,th,td,a,img,span,strong,var,em,input,textarea,select,option,section{margin: 0; padding: 0;}
+body, h1, h2, h3, h4, h5, h6, div, p, dl, dt, dd, ol, ul, li, form, table, th, td, a, img, span, strong, var, em, input, textarea, select, option, section {
+    margin: 0;
+    padding: 0;
+}
+
 /*html,body{font-family:"微软雅黑"; font-size: 12px; text-align: left;}*/
-html,body{
-    font-family: DINPro, "Microsoft YaHei","weiruanyahei",Tahoma,SimSun;
-    font-size: 14px;color: #333;
+html, body {
+    font-family: BrandonGrotesqueWebRegular;
+    font-size: 14px;
+    color: #333;
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -13,16 +17,37 @@ html,body{
     //min-width: 1405px;
     background: #fff
 }
-ul,ol{list-style: none;}
-img{border: 0;}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    border: 0;
+}
+
 /*input,select,textarea{outline:0;}*/
-textarea{resize:none;}
-table{border-collapse: collapse; border-spacing: 0;}
-th,strong,var,em{font-weight: normal; font-style: normal;}
-a{text-decoration: none;}
+textarea {
+    resize: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th, strong, var, em {
+    font-weight: normal;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
 /*a:link,a:visited,a:hover,a:active{text-decoration:none;} */
 /*==========================Reset_End===========================*/
-a{
+a {
     text-decoration: none;
 }
 
@@ -33,34 +58,47 @@ a{
     font-style: normal;
 }
 
-//html {
-//    filter: grayscale(100%);
-//    -webkit-filter: grayscale(100%);
-//    -moz-filter: grayscale(100%);
-//    -ms-filter: grayscale(100%);
-//    -o-filter: grayscale(100%);
-//    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-//    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
-//    -webkit-filter: grayscale(1);
+/* font family */
+@font-face {
+    font-family: 'BrandonGrotesqueWebRegular';
+    src: url("/src/assets/BrandonGrotesqueWebRegular.woff2.ttf");
+}
+//
+//@font-face {
+//    font-family: 'PitchMedium';
+//    src: url("src/assets/pitch-medium.woff.ttf");
 //}
 
-.max-content{
+.f-bgwr-family {
+    font-family: 'BrandonGrotesqueWebRegular';
+}
+
+.f-pm-family {
+    font-family: 'PitchMedium';
+}
+
+.max-content {
     width: 100%;
     height: 100%;
 }
+
 .min-width {
     width: 1366px;
     margin: 0 auto;
 }
 
 /***********按钮点击清除样式**************/
-button{
+button {
     outline-style: none;
 }
 
 /*  清除浮动 */
-.qcfd:after{
-    display:block;clear:both;content:"";visibility:hidden;height:0
+.qcfd:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0
 }
 
 /*  居中  */
@@ -86,19 +124,19 @@ button{
 }
 
 /* // 水平居中  */
-.f-flex-x{
+.f-flex-x {
     display: flex;
     justify-content: center;
 }
 
 /* // 垂直居中 */
-.f-flex-y{
+.f-flex-y {
     display: flex;
     align-items: center
 }
 
 /* // 居中  */
-.f-flex{
+.f-flex {
     display: flex;
     justify-content: center;
     align-items: center
@@ -141,7 +179,6 @@ button{
 }
 
 
-
 /*  定义元素定位类型 */
 .f-pr {
     position: relative;
@@ -159,7 +196,6 @@ button{
 .f-oh {
     overflow: hidden;
 }
-
 
 
 .f-tdu,
@@ -194,13 +230,12 @@ button{
 }
 
 
-
 /** block flex */
-.f-df{
+.f-df {
     display: flex;
 }
 
-.href-link{
+.href-link {
     cursor: pointer;
     color: #1890ff;
 }
