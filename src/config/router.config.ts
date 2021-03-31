@@ -1,7 +1,7 @@
 export const BaseRouter = [
     {
         path: '/',
-        component: () => import( "components/menu/index.vue"),
+        component: () => import( 'components/menu/index.vue'),
         children: [
             // {
             //     path: 'pair-weight',
@@ -9,15 +9,19 @@ export const BaseRouter = [
             //     component: () => import( "pages/pair-weight/index.vue")
             // },
         ],
-        redirect: '/login',
+        redirect: '/main',
+    },
+    {
+        path: '/main',
+        component: () => import('../pages/main/index.vue')
     },
     {
         path: '/login',
-        component: () => import( "pages/login/index.vue"),
+        component: () => import( 'pages/login/index.vue'),
     },
     {
         path: '*',
         redirect: '/login'
     },
-]
+];
 
