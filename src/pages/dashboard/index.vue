@@ -1,13 +1,33 @@
 <template>
-<div></div>
+<div>
+    <Tabs :tabsList="tabsList" :active="activeIndex"/>
+</div>
 </template>
 
 <script>
 import Button from '@/components/button/index.vue';
+import Tabs from '@/components/tabs/index.vue';
 
 export default {
     name: 'index',
-    components: {Button}
+    components: {Button, Tabs},
+    data() {
+        return {
+            tabsList: [
+                {
+                    name: '1',
+                    label: 'PRICE AND SUPPLY',
+                    active: 1
+                },
+                {
+                    name: '2',
+                    label: 'REBASE HISTORY',
+                    active: 2
+                }
+            ],
+
+        }
+    }
 }
 </script>
 
