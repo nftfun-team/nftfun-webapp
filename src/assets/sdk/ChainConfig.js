@@ -40,6 +40,23 @@ const Tokens = {
     },
 }
 
+const Pools = {
+    56: [
+    ],
+    97: [
+        {
+            "name": "FUN-USDT",
+            "address": "0x455985da88818f422ef3bf9d379427f7be34c81b",
+            "weigth": 100,
+        },
+        {
+            "name": "FUN-BNB",
+            "address": "0x4195f83e2d2450d7083423c61c56631611527075",
+            "weigth": 100,
+        }
+    ],
+}
+
 const ChainSymbol = {
     WToken: {
         1: "WETH",
@@ -59,4 +76,4 @@ const ChainSymbol = {
     }
 }
 
-export {CHAIN_RPC, CHAIN_BROWSER, Tokens, ContractsAddr, ChainSymbol, IPFS_URL};
+export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL};

@@ -9,7 +9,7 @@ import ERC20TokenABI from './abi/ERC20Token.json'
 import MasterABI from './abi/Master.json'
 import MasterChefABI from './abi/MasterChef.json'
 import SimpleOracleABI from './abi/SimpleOracle.json'
-import {CHAIN_RPC, CHAIN_BROWSER, Tokens, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
+import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
 
 var InpageProvider = {}
 let $ = InpageProvider;
@@ -673,6 +673,11 @@ $.tokenBalanceOf = async (token, address) => {
   let decimals = await methods.decimals().call()
   let balance = await methods.balanceOf(address).call()
   return new BigNumber(balance).shiftedBy(-1*decimals).toFixed()
+}
+
+$.getPoolList = async() => {
+  let pools = Pools[getNetworkVersion()]
+  return pools
 }
 
 $.rebase = async() => {
