@@ -1,15 +1,15 @@
 export const BaseRouter = [
     {
         path: '/',
-        component: () => import( 'components/menu/index.vue'),
+        component: () => import( 'components/header/index.vue'),
         children: [
-            // {
-            //     path: 'pair-weight',
-            //     name: "pairWeight",
-            //     component: () => import( "pages/pair-weight/index.vue")
-            // },
+            {
+                path: 'staking',
+                name: "staking",
+                component: () => import( "pages/staking/index.vue")
+            },
         ],
-        redirect: '/main',
+        redirect: '/staking',
     },
     {
         path: '/main',

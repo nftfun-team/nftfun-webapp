@@ -44,7 +44,7 @@
 <style lang="scss">
 #app {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0);
   width: 100%;
   height: 100%;
   /*justify-items: center;*/
