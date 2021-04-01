@@ -27,9 +27,7 @@ $.tokens = {}
 $.poolsMapWithIndex = {}
 $.poolInfoMapWithPair = {}
 $.pairsToken = {}
-$.ifoPools = {}
-$.projectFactories = {}
-$.projectPools = {}
+$.pools = {}
 let web3Util = new Web3Util()
 
 let chainStatusHandles = []
@@ -677,6 +675,7 @@ $.tokenBalanceOf = async (token, address) => {
 
 $.getPoolList = async() => {
   let pools = Pools[getNetworkVersion()]
+  $.pools = pools
   return pools
 }
 
