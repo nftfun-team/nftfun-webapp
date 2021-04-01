@@ -3,6 +3,7 @@
 body, h1, h2, h3, h4, h5, h6, div, p, dl, dt, dd, ol, ul, li, form, table, th, td, a, img, span, strong, var, em, input, textarea, select, option, section {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 /*html,body{font-family:"微软雅黑"; font-size: 12px; text-align: left;}*/

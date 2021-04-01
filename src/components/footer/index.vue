@@ -1,5 +1,5 @@
 <template>
-<footer>
+<div class="_footer">
     <a href="">
         <img src="~img/twitter.svg" alt="">
     </a>
@@ -12,7 +12,7 @@
     <a href="">
         <img src="~img/github.svg" alt="">
     </a>
-</footer>
+</div>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    footer {
+    ._footer {
         height: 115px;
         width: 100%;
         display: flex;

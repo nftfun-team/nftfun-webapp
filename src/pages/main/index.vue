@@ -1,12 +1,12 @@
 <template>
 <div class="_main">
-    <header>
+    <div class="_main-header">
         <div class="_container">
             <Logo/>
             <NavLink/>
             <Button :name="'BUY NFTFUN'"/>
         </div>
-    </header>
+    </div>
     <div class="_container">
         <MainSlogan/>
         <MainDescribe :title="title1" :subTitle="subTitle1"/>
@@ -41,7 +41,7 @@ export default {
         margin: 0 auto;
     }
 
-    header {
+    ._main-header {
         width: 100%;
         height: 160px;
         background-color: #F3CDC7;
@@ -66,7 +66,7 @@ export default {
         }
     }
 
-    footer {
+    ._footer {
         margin-top: -115px;
     }
 </style>
