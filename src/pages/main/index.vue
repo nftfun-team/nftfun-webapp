@@ -37,11 +37,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    ._container {
-        width: 1133px;
-        margin: 0 auto;
-    }
-
     ._main-header {
         width: 100%;
         height: 160px;
@@ -59,6 +54,7 @@ export default {
     ._main {
         width: 100%;
         height: 100%;
+        background: #ffffff;
 
         & > ._container {
             min-height: 100%;
