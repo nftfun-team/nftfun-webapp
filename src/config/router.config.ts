@@ -1,7 +1,7 @@
 export const BaseRouter = [
     {
         path: '/',
-        component: () => import( 'components/header/index.vue'),
+        component: () => import( 'components/layout/index.vue'),
         children: [
             {
                 path: 'staking',

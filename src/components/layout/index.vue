@@ -12,7 +12,7 @@
     import { Component, Vue, Watch } from "vue-property-decorator";
 
     @Component
-    export default class AppHead extends Vue{
+    export default class AppLayout extends Vue{
         private title: string | undefined = 'Staking'
     }
 </script>
