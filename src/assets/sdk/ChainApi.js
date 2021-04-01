@@ -6,19 +6,10 @@ import BigNumber from "bignumber.js"
 import Web3Util from './Web3Util.js'
 
 import ERC20TokenABI from './abi/ERC20Token.json'
-import IFOABI from './abi/IFO.json'
-import IFOFactoryABI from './abi/IFOFactory.json'
-import IFOQueryABI from './abi/IFOQuery.json'
-import DemaxLPABI from './abi/DemaxLP.json'
-import DemaxProjectDeployABI from './abi/DemaxProjectDeploy.json'
-import DemaxProjectQueryABI from './abi/DemaxProjectQuery.json'
-import DemaxProjectFactory from './abi/DemaxProjectFactory.json'
-import DemaxProjectPool from './abi/DemaxProjectPool.json'
-import DemaxQueryPairWeigthABI from './abi/DemaxQueryPairWeigth.json'
-import DemaxTransferListenerABI from './abi/DemaxTransferListener.json'
-import {CHAIN_RPC, CHAIN_BROWSER, Tokens, ContractsAddr, ChainSymbol, BALLOT_BYTECODE, IPFS_URL, AdminUsers} from './ChainConfig.js'
-import { data } from "autoprefixer";
-// import {ProjectCoin} from '@/assets/js/coin';
+import MasterABI from './abi/Master.json'
+import MasterChefABI from './abi/MasterChef.json'
+import SimpleOracleABI from './abi/SimpleOracle.json'
+import {CHAIN_RPC, CHAIN_BROWSER, Tokens, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
 
 var InpageProvider = {}
 let $ = InpageProvider;
@@ -30,7 +21,6 @@ let isMetaMaskInstalled = false
 
 $.ZERO_ADDR = '0x0000000000000000000000000000000000000000'
 $.EMPTY_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000'
-$.BALLOT_BYTECODE = BALLOT_BYTECODE
 $.accounts = []
 $.chainId = 1
 $.tokens = {}
@@ -60,18 +50,12 @@ function getSession(key) {
 
 function getContractByName(name) {
   let abi = null
-  if(name === 'IFOFactory') {
-    abi = IFOFactoryABI
-  } else if(name === 'IFOQuery') {
-    abi = IFOQueryABI
-  } else if(name === 'DemaxProjectDeploy') {
-    abi = DemaxProjectDeployABI
-  } else if(name === 'DemaxProjectQuery') {
-    abi = DemaxProjectQueryABI
-  } else if(name === 'DemaxQueryPairWeigth') {
-    abi = DemaxQueryPairWeigthABI
-  } else if(name === 'DemaxTransferListener') {
-    abi = DemaxTransferListenerABI
+  if(name === 'Master') {
+    abi = MasterABI
+  } else if(name === 'MasterChef') {
+    abi = MasterChefABI
+  } else if(name === 'SimpleOracle') {
+    abi = SimpleOracleABI
   }
   let chainId = getNetworkVersion()
   let addr = ContractsAddr[chainId][name]
@@ -440,7 +424,7 @@ $.isConnected = () => {
 }
 
 $.updateToken = (addr, symbol, decimals) => {
-  // addr = addr.toLocaleLowerCase()
+  addr = addr.toLocaleLowerCase()
   if($.tokens[addr] == undefined) $.tokens[addr] = {}
   $.tokens[addr]['address'] = addr
   $.tokens[addr]['symbol'] = symbol
@@ -448,12 +432,12 @@ $.updateToken = (addr, symbol, decimals) => {
 }
 
 $.getToken = (addr) => {
-  // addr = addr.toLocaleLowerCase()
+  addr = addr.toLocaleLowerCase()
   return $.tokens[addr]
 }
 
 $.queryToken = async (addr) => {
-  // addr = addr.toLocaleLowerCase()
+  addr = addr.toLocaleLowerCase()
   let token = $.tokens[addr]
   if(!token) {
     let methods = getContractMethods(ERC20TokenABI, addr)
@@ -465,10 +449,10 @@ $.queryToken = async (addr) => {
   return token
 }
 
-$.getTokenDecimals = (addr) => {
-  // addr = addr.toLocaleLowerCase()
-  if($.tokens[addr]) {
-    return Number($.tokens[addr]['decimals'])
+$.getTokenDecimals = async (addr) => {
+  let token = await $.queryToken(addr)
+  if(token) {
+    return Number(token['decimals'])
   }
   console.error('getTokenDecimals not found token:', addr)
   return 18
@@ -683,270 +667,33 @@ $.tokenBalanceOf = async (token, address) => {
   // console.log('tokenBalanceOf:', token, address)
   if($.isWethAddress(token)) {
     let balance = await $.getBalance(address)
-    return new BigNumber(balance).shiftedBy(-18)
+    return new BigNumber(balance).shiftedBy(-18).toFixed()
   }
   let methods = getContractMethods(ERC20TokenABI, token)
   let decimals = await methods.decimals().call()
   let balance = await methods.balanceOf(address).call()
-  return new BigNumber(balance).shiftedBy(-1*decimals)
+  return new BigNumber(balance).shiftedBy(-1*decimals).toFixed()
 }
 
-$.queryPairWeightList = async () => {
-  let methods = getContractMethodsByName('DemaxQueryPairWeigth')
-  let pools = await methods.iteratePairWeightList(0,10000).call()
-  for (let res of pools) {
-    $.poolInfoMapWithPair[res.pair] = res
-  }
-  return pools
+$.rebase = async() => {
+  return await executeContractByName('Master', 'rebase', 0, [])
 }
 
-
-$.getPairInfo = async (pair) => {
-  let methods = getContractMethodsByName('DemaxQueryPairWeigth')
-  let res = await methods.getPairWeight(pair).call()
-  $.poolInfoMapWithPair[res.pair] = res
-  return res
+$.deposit = async(pid, amount) => {
+  return await executeContractByName('MasterChef', 'deposit', 0, [pid, amount])
 }
 
-$.updatePairPowers = async (pairs, values) => {
-  let contract = getContractByName('DemaxTransferListener')
-  return executeContract(contract, 'updatePairPowers', 0, [pairs, values])
+$.withdraw = async(pid, amount) => {
+  return await executeContractByName('MasterChef', 'withdraw', 0, [pid, amount])
 }
 
-$.ifoCreate = async (_lpToken, _offeringToken, _startBlock, _endBlock, _offeringAmount, _raisingAmount) => {
-  return await executeContractByName('IFOFactory', 'createPair', 0, [_lpToken, _offeringToken, _startBlock, _endBlock, _offeringAmount, _raisingAmount])
+$.pendingFun = async(pid) => {
+  return await getContractMethodsByName('MasterChef').pendingFun(pid).call()
 }
 
-$.ifoDeposit = async (pair, amount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'deposit', 0, [amount])
+$.harvest = async(pid) => {
+  return await executeContractByName('MasterChef', 'harvest', 0, [pid])
 }
 
-$.ifoHarvest = async (pair) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'harvest', 0, [])
-}
-
-$.ifoFinalWithdraw = async (pair, _lpAmount, _offerAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'finalWithdraw', 0, [_lpAmount, _offerAmount])
-}
-
-$.ifoLpTokenWithdraw = async (pair, _lpAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'lpTokenWithdraw', 0, [_lpAmount])
-}
-
-$.ifoOfferingTokenWithdraw = async (pair, _offerAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'offeringTokenWithdraw', 0, [_offerAmount])
-}
-
-$.ifoUpdateOfferingAmount = async (pair) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'updateOfferingAmount', 0, [])
-}
-
-$.ifoSetOfferingAmount = async (pair, _offerAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'setOfferingAmount', 0, [_offerAmount])
-}
-
-$.ifoSetRaisingAmount = async (pair, _raisingAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'setRaisingAmount', 0, [_raisingAmount])
-}
-
-$.ifoSetEndBlock = async (pair, _endBlock) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'setEndBlock', 0, [_endBlock])
-}
-
-$.ifoSetParam = async (pair, _startBlock, _endBlock, _offerAmount, _raisingAmount) => {
-  let contract = getContract(IFOABI, pair)
-  return await executeContract(contract, 'setParams', 0, [_startBlock, _endBlock, _offerAmount, _raisingAmount])
-}
-
-$.ifoHasHarvest = async (pair, user) => {
-  if(!user) {
-    user = getSelectedAddress()
-  }
-  let contract = getContract(IFOABI, pair)
-  return await contract.methods.hasHarvest(user).call()
-}
-
-function ifoStatus(start, end) {
-  // 0:pending, 1:open, 2:close
-  let now = Math.floor(new Date().getTime())
-  if(now>= start && now < end) {
-    return 1
-  } else if(now >= end) {
-    return 2
-  }
-  return 0
-}
-
-$.ifoList = async () => {
-  let methods = getContractMethodsByName('IFOQuery')
-  let pools = await methods.iterateReversePoolList(99999, 0).call()
-  let nowBlock = await $.getBlockNumber()
-  let data = []
-  for (let res of pools) {
-    let d = Object.assign({}, res)
-    d.startTime = $.getBlockToTimes(nowBlock, res.startBlock)
-    d.endTime = $.getBlockToTimes(nowBlock, res.endBlock)
-    d.status = ifoStatus(d.startTime, d.endTime)
-    $.ifoPools[d.pool.toLocaleLowerCase()] = d
-    data.push(d)
-  }
-  return data
-}
-
-$.ifoGetPool = async(pair) => {
-  let pool = $.ifoPools[pair.toLocaleLowerCase()]
-  if(pool) {
-    return pool
-  }
-  await $.ifoList()
-  return $.ifoPools[pair.toLocaleLowerCase()]
-}
-
-$.ifoIPFS = async () => {
-  let methods = getContractMethodsByName('IFOQuery')
-  let res = await methods.ipfs().call()
-  if(!res) {
-    return []
-  }
-  let url = $.ipfsUrl() + '/' + res
-  let resp = await fetch(url, {
-        method: 'get'
-    })
-
-  let text = await resp.text()
-  try {
-    return JSON.parse(text)
-  } catch(e) {
-    return []
-  }
-}
-
-$.ifoIPFSHash = async () => {
-  let methods = getContractMethodsByName('IFOQuery')
-  return await methods.ipfs().call()
-}
-
-$.ifoSetIPFS = async (value) => {
-  let contract = getContractByName('IFOQuery')
-  return executeContract(contract, 'changeIpfs', 0, [value])
-}
-
-$.ifoQueryToken = async (token, user) => {
-  if(!user) {
-    user = getSelectedAddress()
-  }
-  let methods = getContractMethodsByName('IFOQuery')
-  return await methods.queryToken(token).call({from: user})
-}
-
-$.getLpValue = async (token, baseToken, amount) => {
-  let methods = getContractMethodsByName('IFOQuery')
-  let _token = token
-  let _baseToken = baseToken
-  if(token.toLocaleLowerCase() == $.getContractAddr('IFOBaseToken').toLocaleLowerCase()) {
-    _token = baseToken
-    _baseToken = token
-  }
-  return await methods.getLpValue(_token, _baseToken, amount).call()
-}
-
-$.getDemaxLpValue = async (lpToken, amount) => {
-  let methods = getContractMethodsByName('IFOQuery')
-  return await methods.getDemaxLpValue(lpToken, $.getContractAddr('IFOBaseToken'), amount).call()
-}
-
-$.ifoManager = async() => {
-  let methods = getContractMethodsByName('IFOFactory')
-  return {
-    owner: await methods.owner().call(),
-    dev: await methods.dev().call(),
-  }
-}
-
-$.ipfsUrl = () => {
-  let url = IPFS_URL
-  if(process.env.VUE_APP_BASE_IPFS_URL) {
-    url = process.env.VUE_APP_BASE_IPFS_URL
-  }
-  return url
-}
-
-$.projectFactoryList = async () => {
-  let methods = getContractMethodsByName('DemaxProjectQuery')
-  let list = await methods.getFactoryList().call()
-  console.log('factory list:', list)
-  let nowBlock = await $.getBlockNumber()
-  let data = []
-  for (let res of list) {
-    let d = Object.assign({}, res)
-    d.status = 0
-    if(nowBlock<res.finishBlock) {
-      d.status = 1
-    } else if(nowBlock>=res.finishBlock && res.finishBlock > 0) {
-      d.status = 2
-    }
-    d.finishBlockTime = $.getBlockToTimes(nowBlock, res.finishBlock)
-    d.finishBlockTime = $.getBlockToTimes(nowBlock, res.finishBlock)
-    $.projectFactories[d.factory.toLocaleLowerCase()] = d
-    data.push(d)
-  }
-  return data
-}
-
-$.projectPoolList = async (factory) => {
-  let methods = getContractMethodsByName('DemaxProjectQuery')
-  console.log('projectPoolList-->', factory)
-  let list = await methods.getPoolList(factory).call()
-  console.log('projectPoolList-->', list)
-  for (let res of list) {
-    $.projectPools[res.pool.toLocaleLowerCase()] = res
-  }
-  return list
-}
-
-$.projectCreateFactory = async (mintToken, intro) => {
-  return await executeContractByName('DemaxProjectDeploy', 'createFactory', 0, [mintToken, intro, '0x'+DemaxProjectFactory['bytecode']])
-}
-
-$.projectCreatePool = async (factory, lpToken) => {
-  return await executeContractByName('DemaxProjectDeploy', 'createPool', 0, [factory, lpToken, '0x'+DemaxProjectPool['bytecode']])
-}
-
-$.projectSetWeights = async (factory, pools, weights) => {
-  let contract = getContract(DemaxProjectFactory['abi'], factory)
-  return await executeContract(contract, 'setWeights', 0, [pools, weights])
-}
-
-$.projectAddReward = async(factory, amount, duration) => {
-  let contract = getContract(DemaxProjectFactory['abi'], factory)
-  return await executeContract(contract, 'addReward', 0, [amount, duration])
-}
-
-$.projectSetFactory = async(factory, value) => {
-  return await executeContractByName('DemaxProjectDeploy', 'setFactory', 0, [factory, value])
-}
-
-$.projectSetPool = async(pool, value) => {
-  return await executeContractByName('DemaxProjectDeploy', 'setPool', 0, [pool, value])
-}
-
-$.isAdmin = () => {
-  return AdminUsers[getNetworkVersion()].some(res => getSelectedAddress().toLocaleLowerCase() == res.toLocaleLowerCase())
-  // AdminUsers[getNetworkVersion()].forEach((u)=>{
-  //   if(getSelectedAddress().toLocaleLowerCase() == u.toLocaleLowerCase()) {
-  //     return true;
-  //   }
-  // });
-  // return false;
-}
 
 export default InpageProvider
