@@ -1,16 +1,25 @@
 <template>
-<div>
+<div class="_dashboard">
     <Tabs :tabsList="tabsList" :active="activeIndex"/>
+    <div class="_flex _justify-content-center">
+        <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+        <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+        <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+        <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+        <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+        <Button :name="'REBASE'" class="_btn"/>
+    </div>
 </div>
 </template>
 
 <script>
 import Button from '@/components/button/index.vue';
 import Tabs from '@/components/tabs/index.vue';
+import Card from './card.vue'
 
 export default {
     name: 'index',
-    components: {Button, Tabs},
+    components: {Button, Tabs, Card},
     data() {
         return {
             tabsList: [
@@ -44,5 +53,18 @@ export default {
         padding: 0 80px;
         background: #FCFEFF;
         box-shadow: 0 4px 4px rgba(243, 243, 243, 0.8);
+    }
+
+    ._dashboard {
+        padding-top: 84px;
+
+        ._btn {
+            min-width: 256px;
+            margin: 40px 30px 0;
+
+            &::before {
+                background-color: #FAFAF1;
+            }
+        }
     }
 </style>
