@@ -8,6 +8,11 @@ export const BaseRouter = [
                 name: "staking",
                 component: () => import( "pages/staking/index.vue")
             },
+            {
+                path: 'dashboard',
+                name: "dashboard",
+                component: () => import( "pages/dashboard/index.vue")
+            },
         ],
         redirect: '/staking',
     },
