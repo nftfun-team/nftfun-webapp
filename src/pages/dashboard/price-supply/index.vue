@@ -1,11 +1,25 @@
 <template>
-<div class="_flex _justify-content-center">
+<div class="_price-supply _flex _justify-content-center">
     <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
-    <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
-    <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
-    <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
-    <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+    <Card :label="'ORACLE PRICE'" :value="'$0.97'"/>
+    <Card :label="'DITTO SUPPLY'" :value="'5,251,326.75'"/>
+    <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
+    <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
     <Button :name="'REBASE'" class="_btn"/>
+
+    <h3>PRICE</h3>
+    <div class="_chart-tabs">
+        <div>
+            <span class="active">1 DAY</span>
+            <span>30 DAY</span>
+            <span>ALL</span>
+        </div>
+
+        <div>
+            <span>ABS</span>
+            <span>%</span>
+        </div>
+    </div>
     <Charts class="chart" :options="options"/>
 </div>
 </template>
@@ -13,7 +27,8 @@
 <script>
 import Button from '@/components/button/index.vue';
 import Charts from '@/components/echarts/echarts.vue';
-import Card from './card.vue'
+import Card from './card.vue';
+import axios from 'axios';
 
 export default {
     name: 'index',
@@ -31,7 +46,9 @@ export default {
     },
     methods: {
         upDate() {
-            console.error('每次切换都走吗')
+            axios.get('../chart.json').then(res => {
+                console.error('这是什么', res)
+            })
             let dateList = this.data.map(function (item) {
                 return item[0];
             });
@@ -102,16 +119,73 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    ._btn {
-        min-width: 256px;
-        margin: 40px 30px 0;
-
-        &::before {
-            background-color: #FAFAF1;
-        }
-    }
-
-    .chart {
+    ._price-supply {
         width: 100%;
+
+        ._btn {
+            min-width: 256px;
+            margin: 40px 30px 0;
+
+            &::before {
+                background-color: #FAFAF1;
+            }
+        }
+
+        .chart {
+            width: 100%;
+            height: 368px;
+            background: #FFFFFF;
+            border: 1px solid rgba(239, 239, 239, 0.5);
+            box-shadow: -2px 5px 6px #EFEEF1;
+            border-radius: 8px;
+        }
+
+        h3 {
+            font-size: 32px;
+            line-height: 37px;
+            color: #000000;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-top: 94px;
+            width: 100%;
+        }
+
+        ._chart-tabs {
+            display: flex;
+            width: 100%;
+            margin-bottom: 30px;
+
+            div {
+                background: #FFFFFF;
+                box-shadow: -2px 5px 6px #EFEEF1;
+                border-radius: 8px;
+                height: 35px;
+                overflow: hidden;
+                margin-right: 38px;
+
+                &:nth-last-of-type(1) {
+                    margin-right: 0;
+                }
+
+                span {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 80px;
+                    height: 100%;
+                    border-right: 1px solid #F8F8F8;
+                    cursor: pointer;
+                    transition: all .2s;
+
+                    &:nth-last-of-type(1) {
+                        border-right: 0;
+                    }
+                }
+
+                .active {
+                    background-color: #F3CDC7;
+                }
+            }
+        }
     }
 </style>
