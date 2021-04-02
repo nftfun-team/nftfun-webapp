@@ -9,6 +9,7 @@ import ERC20TokenABI from './abi/ERC20Token.json'
 import MasterABI from './abi/Master.json'
 import MasterChefABI from './abi/MasterChef.json'
 import SimpleOracleABI from './abi/SimpleOracle.json'
+import QueryABI from './abi/Query.json'
 import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
 
 var InpageProvider = {}
@@ -54,6 +55,8 @@ function getContractByName(name) {
     abi = MasterChefABI
   } else if(name === 'SimpleOracle') {
     abi = SimpleOracleABI
+  } else if(name === 'Query') {
+    abi = QueryABI
   }
   let chainId = getNetworkVersion()
   let addr = ContractsAddr[chainId][name]
@@ -673,9 +676,82 @@ $.tokenBalanceOf = async (token, address) => {
   return new BigNumber(balance).shiftedBy(-1*decimals).toFixed()
 }
 
-$.getPoolList = async() => {
+$.getTokenPriceByReserve = (res, token) => {
+  let d0 = new BigNumber(res.decimals0)
+  let d1 = new BigNumber(res.decimals1)
+  let r0 = new BigNumber(res.reserve0)
+  let r1 = new BigNumber(res.reserve1)
+  let offset = d0.minus(d1)
+  r1 = r1.multipliedBy(new BigNumber(10).pow(offset))
+  if (token.toLocaleLowerCase() === res.token0.toLocaleLowerCase()) {
+    return r1.dividedBy(r0).toFixed()
+  } else {
+    return r0.dividedBy(r1).toFixed()
+  }
+}
+
+$.getTokenPrice = async (pair, token) => {
+  if (!pair || !token) {
+    return '0'
+  }
+  let methods = getContractMethodsByName('Query')
+  let res = await methods.getSwapPairReserve(pair).call()
+  return $.getTokenPriceByReserve(res, token)
+}
+
+$.getTokenPriceByTokens = async (token, baseToken) => {
+  let methods = getContractMethodsByName('Query')
+  let res = await methods.getSwapPairReserveByTokens(token, baseToken).call()
+  return $.getTokenPriceByReserve(res, token)
+}
+
+$.getFunPrice = async () => {
+  return await $.getTokenPriceByTokens($.getTokenAddress('FUN'), $.getTokenAddress('USDT'))
+}
+
+$.getWTokenPrice = async () => {
+  return await $.getTokenPriceByTokens($.getTokenAddress($.getWSymbol()), $.getTokenAddress('USDT'))
+}
+
+$.getLpValue = async (token, baseToken, amount) => {
+  let methods = getContractMethodsByName('Query')
+  return await methods.getLpValue(token, baseToken, amount).call()
+}
+
+$.getLpUsdValue = async (token, baseToken, amount) => {
+  if(baseToken.toLocaleLowerCase() == $.getTokenAddress($.getWSymbol()).toLocaleLowerCase()) {
+    let res = await $.getLpValue(token, baseToken, amount)
+    let wValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
+    let wPrice = await $.getWTokenPrice()
+    return wValue.multipliedBy(wPrice).toFixed()
+  } else if(baseToken.toLocaleLowerCase() == $.getTokenAddress('USDT').toLocaleLowerCase()) {
+    let res = await $.getLpValue(token, baseToken, amount)
+    return new BigNumber(res[0]).shiftedBy(-1*res[1]).toFixed()
+  }
+  return '0'
+}
+
+$.updatePool = async(pid) => {
+  let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
+  let pendingFun = await $.pendingFun(pid)
+  $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
+  $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
+  $.pools[pid].totalStake = await $.tokenBalanceOf($.getTokenAddress('FUN'), $.pools[pid].address)
+  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), $.pools[pid].totalStake)
+  return $.pools[pid] 
+}
+
+$.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
-  $.pools = pools
+  pools.forEach((d)=>{
+    d.userAmount = '--'
+    d.userReward = '--'
+    d.userAmount = '--'
+    d.totalStake = '--'
+    d.totalStakeValue = '--'
+    $.pools[d.pid] = d
+    $.updatePool(d.pid)
+  })
   return pools
 }
 
@@ -692,7 +768,7 @@ $.withdraw = async(pid, amount) => {
 }
 
 $.pendingFun = async(pid) => {
-  return await getContractMethodsByName('MasterChef').pendingFun(pid).call()
+  return await getContractMethodsByName('MasterChef').pendingFun(pid, getSelectedAddress()).call()
 }
 
 $.harvest = async(pid) => {
