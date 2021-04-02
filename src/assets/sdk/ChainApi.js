@@ -735,6 +735,7 @@ $.getLpUsdValue = async (token, baseToken, amount) => {
 $.updatePool = async(pid) => {
   let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
   let pendingFun = await $.pendingFun(pid)
+  $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
   $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   let totalStake = await $.balanceOf($.pools[pid].address, $.getContractAddr('MasterChef'))
@@ -747,6 +748,7 @@ $.updatePool = async(pid) => {
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
   pools.forEach((d)=>{
+    d.userBalance = '--'
     d.userAmount = '--'
     d.userReward = '--'
     d.userAmount = '--'
