@@ -28,6 +28,9 @@
         width: 100%;
         section{
             margin-top: 98px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
     }
 </style>

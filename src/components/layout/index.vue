@@ -36,6 +36,7 @@
             justify-content: space-between;
             font-size: 40px;
             background: #fff;
+            z-index: 99;
             &-connect{
                 width: 184px;
                 height: 55px;
@@ -45,7 +46,6 @@
         &-section{
             width: 1192px;
             height: 100%;
-            /*margin: 0 auto;*/
         }
     }
 </style>
