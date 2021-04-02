@@ -44,14 +44,14 @@
                 box-shadow: -2px 5px 6px #EFEEF1;
                 border-radius: 8px;
                 p{
-                    font-family: BrandonGrotesqueWeb-Bold;
+                    font-weight: 800;
                     font-size: 16px;
                     line-height: 19px;
                     color: #686666;
                 }
                 h5{
                     margin-top: 20px;
-                    font-family: BrandonGrotesqueWeb-Bold;
+                    font-weight: 800;
                     font-size: 24px;
                     line-height: 28px;
                     word-wrap: break-word;

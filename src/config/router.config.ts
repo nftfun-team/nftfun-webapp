@@ -26,7 +26,7 @@ export const BaseRouter = [
     },
     {
         path: '*',
-        redirect: '/login'
+        redirect: '/'
     },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-<el-button class="_button">
+<el-button :style="style" class="_button">
     {{name}}
 </el-button>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
     name: 'index',
-    props: ['name']
+    props: ['name', 'style']
 }
 </script>
 
