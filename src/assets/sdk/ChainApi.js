@@ -738,11 +738,12 @@ $.updatePool = async(pid) => {
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   $.pools[pid].totalStake = await $.tokenBalanceOf($.getTokenAddress('FUN'), $.pools[pid].address)
   $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), $.pools[pid].totalStake)
-  return $.pools[pid] 
+  return $.pools[pid]
 }
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
+  console.error('pools---',pools)
   pools.forEach((d)=>{
     d.userAmount = '--'
     d.userReward = '--'
