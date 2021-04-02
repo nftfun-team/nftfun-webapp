@@ -743,7 +743,6 @@ $.updatePool = async(pid) => {
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
-  console.error('pools---',pools)
   pools.forEach((d)=>{
     d.userAmount = '--'
     d.userReward = '--'
