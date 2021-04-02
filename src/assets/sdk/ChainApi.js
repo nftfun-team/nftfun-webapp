@@ -534,7 +534,7 @@ $.getTokenAddress = (name) => {
 }
 
 $.isWethAddress = (addr) => {
-  return Tokens[getNetworkVersion()]['WETH'].toLocaleLowerCase() == addr.toLocaleLowerCase()
+  return Tokens[getNetworkVersion()][$.getWSymbol()].toLocaleLowerCase() == addr.toLocaleLowerCase()
 }
 
 $.getPoolAddress = (address) => {
