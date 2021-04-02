@@ -673,6 +673,7 @@ $.tokenBalanceOf = async (token, address) => {
   let methods = getContractMethods(ERC20TokenABI, token)
   let decimals = await methods.decimals().call()
   let balance = await methods.balanceOf(address).call()
+  console.log('tokenBalanceOf:', token, decimals, balance)
   return new BigNumber(balance).shiftedBy(-1*decimals).toFixed()
 }
 
@@ -736,8 +737,10 @@ $.updatePool = async(pid) => {
   let pendingFun = await $.pendingFun(pid)
   $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
-  $.pools[pid].totalStake = await $.tokenBalanceOf($.getTokenAddress('FUN'), $.pools[pid].address)
-  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), $.pools[pid].totalStake)
+  let totalStake = await $.balanceOf($.pools[pid].address, $.getContractAddr('MasterChef'))
+  $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
+  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), totalStake)
+  console.log('updatePool:', $.pools[pid])
   return $.pools[pid]
 }
 
