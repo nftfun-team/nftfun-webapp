@@ -117,7 +117,6 @@ export default {
                 border-radius: 8px;
                 border: 1px solid #D8D8D8;
                 background-color: #F6F6F6;
-                display: flex;
                 align-items: center;
                 justify-content: center;
                 padding: 0;

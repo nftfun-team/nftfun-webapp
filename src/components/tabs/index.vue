@@ -29,7 +29,7 @@ export default {
     methods: {
         tabClick(data) {
             this.activeIndex = data.active;
-            this.$emit('tab', {name: data.name})
+            this.$emit('tab', {active: data.active})
         }
     }
 }
