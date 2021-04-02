@@ -1,5 +1,7 @@
 <template>
-
+    <div class="deposit-item">
+<!--        <h4>Deposit</h4>-->
+    </div>
 </template>
 
 <script lang="ts">
@@ -14,5 +16,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .deposit-item{
+        h4{
+            font-weight: 800;
+        }
+    }
 </style>

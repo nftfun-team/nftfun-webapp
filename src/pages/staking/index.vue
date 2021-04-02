@@ -1,9 +1,10 @@
 <template>
-    <div class="staking f-pf">
+    <div class="staking">
         <div class="staking-info">
             <staking-info/>
         </div>
         <section class="staking-cont">
+            <deposit-item v-for="(item,index) in [0,1,2,3,4]" />
         </section>
     </div>
 </template>
@@ -24,8 +25,9 @@
 
 <style lang="scss" scoped>
     .staking{
-        div {
-            margin: 0 auto;
+        width: 100%;
+        section{
+            margin-top: 98px;
         }
     }
 </style>
