@@ -20,14 +20,14 @@ const IPFS_URL = 'https://ipfs.io/ipfs'
 
 const ContractsAddr = {
     56: {
-        FunUsdPair: '',
         Master: '',
         MasterChef: '',
+        Query: '',
     },
     97: {
-        FunUsdPair: '',
         Master: '0x0B1Ae6ff6591E582950bc604C023cf050ADD8100',
         MasterChef: '0x1b3B385a0E9B52a95dA25bF00F60329ea5A15C95',
+        Query: '0xe589d34794856D85E50b087A2a9c174C6DeDB903',
     },
 }
 
@@ -37,22 +37,27 @@ const Tokens = {
     },
     97: {
         FUN: '0xB2F70423d34c9e9e63D0363167d990295CD0c5D6',
+        USDT: '0xF2ED382e6A3439Be124813842200cf6702fD6ecA',
+        WBNB: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
     },
 }
 
 const Pools = {
-    56: [
-    ],
+    56: [],
     97: [
         {
-            "name": "FUN-USDT",
-            "address": "0x455985da88818f422ef3bf9d379427f7be34c81b",
-            "weigth": 100,
+            name: "FUN-USDT",
+            address: "0x455985da88818f422ef3bf9d379427f7be34c81b",
+            pid: 0,
+            tokenSymbol: "FUN",
+            baseSymbol: "USDT"
         },
         {
-            "name": "FUN-BNB",
-            "address": "0x4195f83e2d2450d7083423c61c56631611527075",
-            "weigth": 100,
+            name: "FUN-WBNB",
+            address: "0x4195f83e2d2450d7083423c61c56631611527075",
+            pid: 1,
+            tokenSymbol: "FUN",
+            baseSymbol: "WBNB"
         }
     ],
 }
