@@ -22,6 +22,8 @@
         padding-top: 160px;
         width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
         &-head{
             padding: 0 84px;
             width: 100%;
@@ -33,7 +35,6 @@
             align-items: center;
             justify-content: space-between;
             font-size: 40px;
-
             background: #fff;
             &-connect{
                 width: 184px;
@@ -42,8 +43,9 @@
             }
         }
         &-section{
-            max-width: 1192px;
-            margin: 0 auto;
+            width: 1192px;
+            height: 100%;
+            /*margin: 0 auto;*/
         }
     }
 </style>

@@ -1,20 +1,21 @@
 <template>
     <div class="staking-info">
-        <div class="staking-info-top">
-            <div class="staking-info-top-item">
-                <p>APR</p>
-                <h5>0%</h5>
-            </div>
-            <div class="staking-info-top-item">
-                <p>Reward Multiplier</p>
-                <h5>1.0X</h5>
-            </div>
-            <div class="staking-info-top-item">
-                <p>Bonus distributions have ended.</p>
-                <h5>Click here to claim bonuses.</h5>
-            </div>
+        <div class="staking-info-item">
+            <p>APR</p>
+            <h5>0%</h5>
         </div>
-        <div class="staking-info-reward"></div>
+        <div class="staking-info-item">
+            <p>Reward Multiplier</p>
+            <h5>1.0X</h5>
+        </div>
+        <div class="staking-info-item">
+            <p>Rewards Earned</p>
+            <h5>0 FUN</h5>
+        </div>
+        <div class="staking-info-item">
+            <p>Bonus distributions have ended.</p>
+            <h5>Click here to claim bonuses.</h5>
+        </div>
     </div>
 </template>
 
@@ -32,12 +33,16 @@
 <style lang="scss" scoped>
     .staking-info{
         width: 100%;
-        &-top{
-            display: flex;
-            justify-content: space-between;
-            &-item{
+        margin-top: 64px;
+        display: flex;
+        justify-content: space-between;
+        &-item{
                 padding: 26px 20px;
                 background: #fff;
+                width: 256px;
+                border: 1px solid rgba(239, 239, 239, 0.5);
+                box-shadow: -2px 5px 6px #EFEEF1;
+                border-radius: 8px;
                 p{
                     font-family: BrandonGrotesqueWeb-Bold;
                     font-size: 16px;
@@ -53,6 +58,5 @@
                     color: #000000;
                 }
             }
-        }
     }
 </style>
