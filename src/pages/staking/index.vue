@@ -13,6 +13,8 @@
     import { Component, Vue } from "vue-property-decorator";
     import StakingInfo from './modules/staking-info.vue'
     import DepositItem from './modules/deposit-item.vue'
+    import ChinaApi from "@/assets/sdk/ChainApi.js";
+    import WebChina from "utils/sdk"
 
     @Component({
         name: 'Staking',
@@ -20,6 +22,18 @@
     })
     export default class Staking extends Vue{
         private title: string | undefined = 'Staking'
+
+        mounted(){
+            WebChina.connect().then(data => {
+                ChinaApi.getPools()
+                    .then( res => {
+                        console.log(res)
+                        // this.poolList = res
+                    })
+                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败')})
+                    .finally(_ => this.$load.hideLoading())
+            }).catch(_ => this.$load.hideLoading())
+        }
     }
 </script>
 
@@ -28,6 +42,9 @@
         width: 100%;
         section{
             margin-top: 98px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
     }
 </style>
