@@ -9,6 +9,8 @@
         <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
         <Button :name="'REBASE'" class="_btn"/>
         <Charts class="chart" :options="options"/>
+
+        <nTable/>
     </div>
 </div>
 </template>
@@ -18,10 +20,11 @@ import Button from '@/components/button/index.vue';
 import Tabs from '@/components/tabs/index.vue';
 import Charts from '@/components/echarts/echarts.vue';
 import Card from './card.vue'
+import nTable from './table'
 
 export default {
     name: 'index',
-    components: {Button, Tabs, Card, Charts},
+    components: {Button, Tabs, Card, Charts, nTable},
     data() {
         return {
             tabsList: [
