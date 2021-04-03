@@ -9,17 +9,17 @@
         <div class="deposit-item-deposit">
             <h4>Withdraw</h4>
             <div class="deposit-item-deposit-line _n-mg-bt-24">
-                Withdraw Amount (CAKE-LP) <span>Deposited:0 CAKE-LP</span>
+                Withdraw Amount (CAKE-LP) <span>Deposited:0 {{data.name}}</span>
             </div>
             <div class="deposit-item-deposit-input _n-mg-bt-29 f-pr">
                 <el-input v-model="value" placeholder="0.0" />
                 <span class="f-center-y f-fw8 f-cursor">MAX</span>
             </div>
             <div class="deposit-item-deposit-line _n-mg-bt-34">
-                Withdraw Amount <span>≈ 0 CAKE-LP</span>
+                Withdraw Amount <span>≈ 0 {{data.tokenSymbol}}</span>
             </div>
             <div class="deposit-item-deposit-line">
-                Rewards Earned: <span>0 CAKE  </span>
+                Rewards Earned: <span>0 {{data.tokenSymbol}}  </span>
             </div>
         </div>
         <div class="deposit-item-deposit">
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
+    import { Component, Vue, Prop } from "vue-property-decorator";
     import ComButton from "components/button/index.vue";
 
     @Component({
@@ -46,6 +46,9 @@
         components: {ComButton}
     })
     export default class DepositItem extends Vue{
+        @Prop({ default: "data", type: Array })
+        private data!: Array<any>;
+
         private value: string = '';
 
     }
