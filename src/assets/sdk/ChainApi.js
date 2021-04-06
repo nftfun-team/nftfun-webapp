@@ -805,7 +805,7 @@ $.getPools = async() => {
     d.totalStakeValue = '--'
     d.weight = '--'
     $.pools[d.pid] = d
-    $.updatePool(d.pid)
+    $.updatePool(d.pid, masterChefData, price)
   })
   return pools
 }
@@ -815,10 +815,12 @@ $.rebase = async() => {
 }
 
 $.deposit = async(pid, amount) => {
+  amount = new BigNumber(amount).shiftedBy(18).toFixed() 
   return await executeContractByName('MasterChef', 'deposit', 0, [pid, amount])
 }
 
 $.withdraw = async(pid, amount) => {
+  amount = new BigNumber(amount).shiftedBy(18).toFixed() 
   return await executeContractByName('MasterChef', 'withdraw', 0, [pid, amount])
 }
 
@@ -862,10 +864,9 @@ $.report = async() => {
 }
 
 $.history = async(page=1, size=10) => {
-  let url = Report_URL[getNetworkVersion()] + '/history'
+  let url = Report_URL[getNetworkVersion()] + '/history?page='+page+'&size='+size
   let resp = await fetch(url, {
-    method: 'get',
-    params: {page, size}
+    method: 'get'
   })
 
   let text = await resp.text()
