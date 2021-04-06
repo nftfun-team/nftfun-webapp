@@ -10,39 +10,62 @@
             <div>Block</div>
         </li>
         <li v-for="item of tableData">
-            <div>{{item.date}}</div>
-            <div>{{item.mix}}</div>
-            <div>{{item.before}}</div>
-            <div>{{item.after}}</div>
-            <div>{{item.block}}</div>
+            <div>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</div>
+            <div>{{item.lastTotalSupply}}</div>
+            <div>{{item.totalSupply}}</div>
+            <div>{{item.updateBlock}}</div>
         </li>
     </ul>
-    <el-pagination
-        class="_pagination"
-        layout="prev, pager, next"
-        :total="1000">
-    </el-pagination>
+    <!--    <el-pagination-->
+    <!--        class="_pagination"-->
+    <!--        layout="prev, pager, next"-->
+    <!--        :hide-on-single-page="true"-->
+    <!--        :total="total"-->
+    <!--        @current-change="currentChange"-->
+    <!--        @prev-click="prevClick"-->
+    <!--        @next-click="nextClick">-->
+    <!--    </el-pagination>-->
+    <span @click="moreClick">更多</span>
 </div>
 </template>
 
 <script>
+import ChainApi from '../../../assets/sdk/ChainApi';
+import WebSdk from '../../../utils/sdk'
+
 export default {
     name: 'nTable',
     data() {
         return {
-            tableData: [{
-                date: '2021-03-31 15:52',
-                mix: '0%',
-                before: 5251326.75,
-                after: 5251326.75,
-                block: 6154706
-            }, {
-                date: '2021-03-31 15:52',
-                mix: '0%',
-                before: 5251326.75,
-                after: 5251326.75,
-                block: 6154706
-            }]
+            params: {
+                page: 1,
+                size: 1,
+            },
+            tableData: [],
+            total: 0
+        }
+    },
+    mounted() {
+        this.getHistoryList()
+    },
+    methods: {
+        getHistoryList() {
+            WebSdk.connect().then(() => {
+                ChainApi.history(this.params.page, this.params.size).then(res => {
+                    if (res.code === 0 && res.data) {
+                        console.log('history------>', res)
+                        this.tableData = this.tableData.concat(res.data);
+                        // res.data
+                        this.total = res.data.length;
+                    }
+
+                })
+            })
+        },
+        moreClick() {
+            this.params.page++;
+            this.getHistoryList();
         }
     }
 }
@@ -103,9 +126,11 @@ export default {
             margin-top: 24px;
             margin-left: 66px;
             display: flex;
+
             .el-pager {
                 display: flex;
             }
+
             .el-pager li,
             .btn-prev,
             .btn-next {
