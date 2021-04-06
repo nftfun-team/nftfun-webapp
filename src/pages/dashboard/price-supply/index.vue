@@ -6,40 +6,27 @@
     <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
     <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
     <Button :name="'REBASE'" class="_btn"/>
-
-    <h3>PRICE</h3>
-    <div class="_chart-tabs">
-        <div>
-            <span class="active" @click="tabClick('1d')">1 DAY</span>
-            <span @click="tabClick('30d')">30 DAY</span>
-            <span @click="tabClick('all')">ALL</span>
-        </div>
-
-        <div>
-            <span>ABS</span>
-            <span>%</span>
-        </div>
-    </div>
-    <Charts class="chart" :options="options"/>
 </div>
 </template>
 
 <script>
 import Button from '@/components/button/index.vue';
-import Charts from '@/components/echarts/echarts.vue';
+
 import Card from './card.vue';
 import axios from 'axios';
 
 export default {
     name: 'index',
-    components: {Button, Card, Charts},
+    components: {Button, Card},
     data() {
         return {
             options: null,
             data: [],
             oneDayList: [],
             thirtyDaysList: [],
-            allDaysList: []
+            allDaysList: [],
+            active: '1d',
+            type: 'ABS'
         }
     },
     mounted() {
@@ -52,101 +39,50 @@ export default {
         upDate() {
             axios.get('/js/chart.json').then(res => {
                 if (res) {
-                    console.error('这是什么', res.data.info)
+                    console.log('这是什么', res.data.info)
                     this.data = res.data.info;
                     console.log('数据', this.data);
-                    this.tabClick('30d')
+                    this.tabClick(this.active, this.type);
                 }
             });
         },
-        tabClick(name) {
-            console.log('这是点击的', name, this.data[name]);
-            this.data = this.data[name];
-            this.setOptions(this.data)
+        tabClick(name, type) {
+            this.active = name;
+            this.type = type;
+            // this.data = this.data[name];
+            const newData = this.getChartData({
+                chartData: this.data,
+                activeDuration: name,
+                activeType: type,
+                map: ({x, p}) => ({x, p}),
+            })
+            console.error('这是数据吗？', newData)
+            // this.setOptions(newData)
         },
-        setOptions(item) {
-            console.log('设置数据', item)
-            let dateList = item['x'].map(x => {
-                return x;
-            });
-            let valueList = item['p'].map(y => {
-                console.log(y)
-                return new BigNumber(y).toFixed(2);
-            });
 
-            Array.prototype.max = function () {
-                return Math.max.apply({}, this)
-            };
 
-            Array.prototype.min = function () {
-                return Math.min.apply({}, this)
-            };
+        getChartData({chartData, activeDuration, activeType, map}) {
+            console.error('chartData', chartData)
+            const data = chartData[activeDuration]
+            if (!data) return
 
-            this.options = {
-                grid: {
-                    left: '2%',
-                    right: '4%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: dateList,
-                    boundaryGap: false
-                },
-                yAxis: {
-                    type: 'value',
-                    min: valueList.max(),
-                    max: valueList.min(),
-                    // splitLine: {show: false},
-                    axisLine: {
-                        show: true, //是否展示y轴坐标竖线
-                        lineStyle: {
-                            color: '#00fff2',
-                            width: 1
-                        }
-                    },
-                    // axisTick: {show: false}, //是否展示y轴坐标刻度
-                    axisLabel: {
-                        color: '#9a9b96',
-                        fontsize: '14px'
-                    },
-                },
-                series: [
-                    {
-                        type: 'line',
-                        stack: '总量',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        showSymbol: false,
-                        itemStyle: {
-                            'color': {
-                                'type': 'linear',
-                                'x': 0,
-                                'y': 0,
-                                'x2': 0,
-                                'y2': 1,
-                                'colorStops': [
-                                    {
-                                        'offset': 0,
-                                        'color': '#00fff2'
-                                    },
-                                    {
-                                        'offset': 1,
-                                        'color': '#F3CDC7'
-                                    }
-                                ],
-                                'globalCoord': false
-                            }
-                        },
-                        data: valueList
-                    },]
-            };
+            const {x, p} = map(data)
+            let y;
+            if (activeType === '%') {
+                y = [0]
+                for (let i = 1; i < p.length; i++) {
+                    const a = parseFloat(p[i])
+                    const b = parseFloat(p[i - 1])
+                    y.push(!a ? 0 : (1e2 * (a - b)) / a)
+                }
+            } else {
+                y = p.map((py) => parseFloat(py))
+            }
+            return {
+                x,
+                y,
+                xy: x.map((px, i) => ({x: px, y: y[i]})),
+            }
         }
     }
 }
