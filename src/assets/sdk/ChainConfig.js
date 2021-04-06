@@ -25,8 +25,8 @@ const ContractsAddr = {
         Query: '',
     },
     97: {
-        Master: '0x0B1Ae6ff6591E582950bc604C023cf050ADD8100',
-        MasterChef: '0x1b3B385a0E9B52a95dA25bF00F60329ea5A15C95',
+        Master: '0x80EbE98696df632e40963E60c252c41aeA2d6404',
+        MasterChef: '0x2259003904D377fb57efa13Db2684C788B58BcE8',
         Query: '0xe589d34794856D85E50b087A2a9c174C6DeDB903',
     },
 }
@@ -36,7 +36,7 @@ const Tokens = {
         FUN: '',
     },
     97: {
-        FUN: '0xB2F70423d34c9e9e63D0363167d990295CD0c5D6',
+        FUN: '0xB9f8985b884d16DedfA8de7f37651AE938949A54',
         USDT: '0xF2ED382e6A3439Be124813842200cf6702fD6ecA',
         WBNB: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
     },
@@ -47,14 +47,14 @@ const Pools = {
     97: [
         {
             name: "FUN-USDT",
-            address: "0x455985da88818f422ef3bf9d379427f7be34c81b",
+            address: "0x33763d9EdF9D8F91bBAFfA4f8df622f90EC9DDA9",
             pid: 0,
             tokenSymbol: "FUN",
             baseSymbol: "USDT"
         },
         {
             name: "FUN-WBNB",
-            address: "0x4195f83e2d2450d7083423c61c56631611527075",
+            address: "0x98655083a337b1658e0b7b818da039e5f1ce707c",
             pid: 1,
             tokenSymbol: "FUN",
             baseSymbol: "WBNB"

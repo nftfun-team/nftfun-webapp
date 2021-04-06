@@ -639,15 +639,6 @@ function sendTransaction(params) {
 
 $.getNetworkVersion = getNetworkVersion
 
-$.getDayPreBlock = async() => {
-  if(!dayPreBlock) {
-    let methods = getContractMethodsByName('AAAAConfig')
-    dayPreBlock = parseInt(await methods.DAY().call())
-  }
-  // console.log('dayPreBlock:', dayPreBlock)
-  return dayPreBlock
-}
-
 $.getBalance = async (address) => {
   if (!address) {
     address = getSelectedAddress()
