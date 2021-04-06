@@ -34,6 +34,24 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastTotalSupply",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "timestampSec",
         "type": "uint256"
       }
@@ -219,7 +237,33 @@
   },
   {
     "inputs": [],
+    "name": "lastPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "lastRebaseTimestampSec",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastTotalSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -311,6 +355,19 @@
       }
     ],
     "name": "setMarketOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_rebaseCooldown",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRebaseCooldown",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
