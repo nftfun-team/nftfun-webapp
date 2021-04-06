@@ -53,7 +53,7 @@ function getContractByName(name) {
     abi = MasterABI
   } else if(name === 'MasterChef') {
     abi = MasterChefABI
-  } else if(name === 'SimpleOracle') {
+  } else if(name === 'Oracle') {
     abi = OracleABI
   } else if(name === 'Query') {
     abi = QueryABI
@@ -773,7 +773,13 @@ $.harvest = async(pid) => {
 }
 
 $.info = async() => {
-
+  return {
+    lastRebaseTimestampSec: await getContractMethodsByName('Master').lastRebaseTimestampSec().call(),
+    cooldown: await getContractMethodsByName('Master').rebaseCooldown().call(),
+    oraclePrice: new BigNumber(await getContractMethodsByName('Oracle').getRate().call()).shiftedBy(-18).toFixed(2),
+    totalSupply: new BigNumber(await getContractMethods(ERC20TokenABI, $.getTokenAddress('FUN')).totalSupply().call()).shiftedBy(-18).toFixed(2),
+    price: new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2),
+  }
 }
 
 $.report = async() => {
