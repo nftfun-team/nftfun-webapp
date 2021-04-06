@@ -338,6 +338,11 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
   const local = localStorage.getItem(tableName);
   if (local) {
     $.contractHistory = JSON.parse(local);
+    $.contractHistory = $.contractHistory.filter((d)=> {
+      if(d.hash != item.hash) {
+        return true;
+      }
+    })
     $.contractHistory.unshift(item);
     localStorage.setItem(tableName, JSON.stringify($.contractHistory));
   } else {
