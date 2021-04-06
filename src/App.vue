@@ -44,7 +44,7 @@
         }
 
         handleNewAccounts(acc) {
-            console.error('acc----->',acc)
+            // console.error('acc----->',acc)
             if (!acc.length) {
                 Storage.removeItem('account');
                 return;
@@ -62,7 +62,7 @@
         }
 
         handleChainChanged(chainId) {
-            console.error('chainId----->',chainId)
+            // console.error('chainId----->',chainId)
             if (!chainId) return;
 
             if (chainId != this.ChainId && this.ChainId) {

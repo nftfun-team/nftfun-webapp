@@ -21,6 +21,10 @@ export const BaseRouter = [
         component: () => import('../pages/main/index.vue')
     },
     {
+        path: '/test',
+        component: () => import('../pages/test.vue')
+    },
+    {
         path: '/login',
         component: () => import( 'pages/login/index.vue'),
     },

@@ -310,9 +310,8 @@ $.handleEventLog = (web3, abi, receipt, contractName, eventName) => {
   let result = web3Util.parseEventLog(web3, abi, receipt, eventName)
   // console.log('handleEventLog:', contractName, eventName, result)
   let hash = result.hash
-  let type = contractName.toLocaleUpperCase() + '_' + eventName.toLocaleUpperCase()
-  let tableName = $.chainId + getSelectedAddress();
-  const item = {hash: hash, time: new Date().getTime(), type: type, data: result.data, address: result.address};
+  let tableName = 'contractEvent' + $.chainId + getSelectedAddress();
+  const item = {hash: hash, time: new Date().getTime(), status: 1, contractName: contractName, funcName: eventName, data: result.data};
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
   if (local) {
@@ -323,6 +322,37 @@ $.handleEventLog = (web3, abi, receipt, contractName, eventName) => {
     const list = [];
     list.unshift(item);
     localStorage.setItem(tableName, JSON.stringify(list));
+  }
+}
+
+// status, 0: pending 1:success 2:fail
+$.handleCall = (hash, contractName, methodName, status=0) => {
+  if(!hash) {
+    console.warn('handleCall hash is null ', hash, contractName, methodName)
+    return
+  }
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
+  const item = {hash: hash, time: new Date().getTime(), status: status, contractName: contractName, funcName: methodName, data: null};
+  // console.log('handleEventLog item:', item)
+  const local = localStorage.getItem(tableName);
+  if (local) {
+    const list = JSON.parse(local);
+    list.unshift(item);
+    localStorage.setItem(tableName, JSON.stringify(list));
+  } else {
+    const list = [];
+    list.unshift(item);
+    localStorage.setItem(tableName, JSON.stringify(list));
+  }
+}
+
+$.getContractCallHistory = () => {
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
+  const local = localStorage.getItem(tableName);
+  if (local) {
+    return JSON.parse(local);
+  } else {
+    return []
   }
 }
 
@@ -423,82 +453,6 @@ $.isConnected = () => {
     return false
   }
   return $.accounts.length > 0
-}
-
-$.updateToken = (addr, symbol, decimals) => {
-  addr = addr.toLocaleLowerCase()
-  if($.tokens[addr] == undefined) $.tokens[addr] = {}
-  $.tokens[addr]['address'] = addr
-  $.tokens[addr]['symbol'] = symbol
-  $.tokens[addr]['decimals'] = decimals
-}
-
-$.getToken = (addr) => {
-  addr = addr.toLocaleLowerCase()
-  return $.tokens[addr]
-}
-
-$.queryToken = async (addr) => {
-  addr = addr.toLocaleLowerCase()
-  let token = $.tokens[addr]
-  if(!token) {
-    let methods = getContractMethods(ERC20TokenABI, addr)
-    let symbol = await methods.symbol().call()
-    let decimals = await methods.decimals().call()
-    $.updateToken(addr, symbol, decimals)
-    token = $.tokens[addr]
-  }
-  return token
-}
-
-$.getTokenDecimals = async (addr) => {
-  let token = await $.queryToken(addr)
-  if(token) {
-    return Number(token['decimals'])
-  }
-  console.error('getTokenDecimals not found token:', addr)
-  return 18
-}
-
-$.allowance = async (token, spender) => {
-  if (!spender) {
-    throw('please  input spender')
-  }
-  if($.isWethAddress(token)) {
-    return new BigNumber('1000000000000000000000').toFixed()
-  }
-  console.log('allowance:', token, getSelectedAddress(), spender)
-  let methods = getContractMethods(ERC20TokenABI, token)
-  let decimals = await methods.decimals().call();
-
-  let allowance = await methods.allowance(getSelectedAddress(), spender).call();
-  return new BigNumber(allowance).shiftedBy(-1*decimals).toFixed()
-}
-
-$.approve = async (token, spender) => {
-  if (!spender) {
-    throw('please  input spender')
-  }
-  // console.log('approve:', token, spender)
-  const maxApproval = new BigNumber(2).pow(255).minus(1)
-  let contact = getContract(ERC20TokenABI, token)
-  return await executeContract(contact, 'approve', 0, [spender, maxApproval.toFixed()])
-}
-
-$.updatePairToken = (pair, supplyToken, collateralToken, lpToken0Symbol, lpToken1Symbol) => {
-  pair = pair.toLocaleLowerCase()
-  $.pairsToken[pair] = {
-    supplyToken: $.tokens[supplyToken],
-    collateralToken: $.tokens[collateralToken],
-    lpToken0Symbol: lpToken0Symbol,
-    lpToken1Symbol: lpToken1Symbol
-  }
-  // console.log('updatePairToken:', $.pairsToken[pair])
-}
-
-$.getPairToken = (pair) => {
-  pair = pair.toLocaleLowerCase()
-  return $.pairsToken[pair]
 }
 
 $.getEtherscanAddress = (address) => {
@@ -616,12 +570,22 @@ async function executeContract(contract, methodName, value, params) {
     },
   ];
 
-  let hash = await sendTransaction(tansParams)
-  return awaitTransactionMined(hash)
+  return await sendTransaction(tansParams)
+}
+
+async function executeContractAwait(contract, contractName, methodName, value, params) {
+  let hash = await executeContract(contract, methodName, value, params)
+  handleCall(hash, contractName, methodName, 0)
+  let reciept = await awaitTransactionMined(hash)
+  let status = 2
+  if(reciept.status) {
+    status = 1
+  }
+  handleCall(hash, contractName, methodName, status)
 }
 
 function executeContractByName(contractName, methodName, value, params) {
-  return executeContract(getContractByName(contractName), methodName, value, params)
+  return executeContractAwait(getContractByName(contractName), contractName, methodName, value, params)
 }
 
 function sendTransaction(params) {
@@ -639,6 +603,66 @@ function sendTransaction(params) {
 }
 
 $.getNetworkVersion = getNetworkVersion
+
+$.updateToken = (addr, symbol, decimals) => {
+  addr = addr.toLocaleLowerCase()
+  if($.tokens[addr] == undefined) $.tokens[addr] = {}
+  $.tokens[addr]['address'] = addr
+  $.tokens[addr]['symbol'] = symbol
+  $.tokens[addr]['decimals'] = decimals
+}
+
+$.getToken = (addr) => {
+  addr = addr.toLocaleLowerCase()
+  return $.tokens[addr]
+}
+
+$.queryToken = async (addr) => {
+  addr = addr.toLocaleLowerCase()
+  let token = $.tokens[addr]
+  if(!token) {
+    let methods = getContractMethods(ERC20TokenABI, addr)
+    let symbol = await methods.symbol().call()
+    let decimals = await methods.decimals().call()
+    $.updateToken(addr, symbol, decimals)
+    token = $.tokens[addr]
+  }
+  return token
+}
+
+$.getTokenDecimals = async (addr) => {
+  let token = await $.queryToken(addr)
+  if(token) {
+    return Number(token['decimals'])
+  }
+  console.error('getTokenDecimals not found token:', addr)
+  return 18
+}
+
+$.allowance = async (token, spender) => {
+  if (!spender) {
+    throw('please  input spender')
+  }
+  if($.isWethAddress(token)) {
+    return new BigNumber('1000000000000000000000').toFixed()
+  }
+  console.log('allowance:', token, getSelectedAddress(), spender)
+  let methods = getContractMethods(ERC20TokenABI, token)
+  let decimals = await methods.decimals().call();
+
+  let allowance = await methods.allowance(getSelectedAddress(), spender).call();
+  return new BigNumber(allowance).shiftedBy(-1*decimals).toFixed()
+}
+
+$.approve = async (token, spender) => {
+  if (!spender) {
+    throw('please  input spender')
+  }
+  // console.log('approve:', token, spender)
+  const maxApproval = new BigNumber(2).pow(255).minus(1)
+  let contact = getContract(ERC20TokenABI, token)
+  return await executeContractAwait(contact, 'Token', 'approve', 0, [spender, maxApproval.toFixed()])
+}
 
 $.getBalance = async (address) => {
   if (!address) {
@@ -811,7 +835,7 @@ $.info = async() => {
   let data = {
     cooldown: Number(await getContractMethodsByName('Master').lastRebaseTimestampSec().call()) + Number(await getContractMethodsByName('Master').rebaseCooldown().call()),
     oraclePrice: new BigNumber(await getContractMethodsByName('Oracle').getRate().call()).shiftedBy(-18).toFixed(2),
-    totalSupply: new BigNumber(await getContractMethods(ERC20TokenABI, $.getTokenAddress('FUN')).totalSupply().call()).shiftedBy(-18).toFixed(2),
+    totalSupply: new BigNumber(await getContractMethods(ERC20TokenABI, $.getTokenAddress('FUN')).totalSupply().call()).shiftedBy(-9).toFixed(2),
     price: new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2),
     targetPrice: 1.00,
     marketCap: 0
