@@ -324,6 +324,7 @@ $.handleEventLog = (web3, abi, receipt, contractName, eventName) => {
   }
 }
 
+// status, 0: pending 1:success 2:fail
 $.handleCall = (hash, contractName, methodName, status=0) => {
   if(!hash) {
     console.warn('handleCall hash is null ', hash, contractName, methodName)
@@ -341,6 +342,16 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
     const list = [];
     list.unshift(item);
     localStorage.setItem(tableName, JSON.stringify(list));
+  }
+}
+
+$.getContractCallHistory = () => {
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
+  const local = localStorage.getItem(tableName);
+  if (local) {
+    return JSON.parse(local);
+  } else {
+    return []
   }
 }
 
@@ -565,7 +576,11 @@ async function executeContractAwait(contract, contractName, methodName, value, p
   let hash = await executeContract(contract, methodName, value, params)
   handleCall(hash, contractName, methodName, 0)
   let reciept = await awaitTransactionMined(hash)
-  handleCall(hash, contractName, methodName, 1)
+  let status = 2
+  if(reciept.status) {
+    status = 1
+  }
+  handleCall(hash, contractName, methodName, status)
 }
 
 function executeContractByName(contractName, methodName, value, params) {
