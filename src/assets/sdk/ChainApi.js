@@ -53,7 +53,7 @@ function getContractByName(name) {
     abi = MasterABI
   } else if(name === 'MasterChef') {
     abi = MasterChefABI
-  } else if(name === 'SimpleOracle') {
+  } else if(name === 'Oracle') {
     abi = OracleABI
   } else if(name === 'Query') {
     abi = QueryABI
@@ -772,10 +772,42 @@ $.harvest = async(pid) => {
   return await executeContractByName('MasterChef', 'harvest', 0, [pid])
 }
 
+$.info = async() => {
+  let data = {
+    cooldown: Number(await getContractMethodsByName('Master').lastRebaseTimestampSec().call()) + Number(await getContractMethodsByName('Master').rebaseCooldown().call()),
+    oraclePrice: new BigNumber(await getContractMethodsByName('Oracle').getRate().call()).shiftedBy(-18).toFixed(2),
+    totalSupply: new BigNumber(await getContractMethods(ERC20TokenABI, $.getTokenAddress('FUN')).totalSupply().call()).shiftedBy(-18).toFixed(2),
+    price: new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2),
+    targetPrice: 1.00,
+    marketCap: 0
+  }
+  data.marketCap = new BigNumber(data.totalSupply).multipliedBy(data.price).toFixed(2)
+  return data
+}
+
 $.report = async() => {
   let url = Report_URL[getNetworkVersion()] + '/report'
   let resp = await fetch(url, {
     method: 'get'
+  })
+
+  let text = await resp.text()
+  try {
+    return JSON.parse(text)
+  } catch(e) {
+    return {
+      code: 1,
+      msg: 'fail',
+      data: []
+    }
+  }
+}
+
+$.history = async(page=1, size=10) => {
+  let url = Report_URL[getNetworkVersion()] + '/history'
+  let resp = await fetch(url, {
+    method: 'get',
+    params: {page, size}
   })
 
   let text = await resp.text()

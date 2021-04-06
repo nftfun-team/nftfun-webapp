@@ -276,6 +276,19 @@
   },
   {
     "inputs": [],
+    "name": "latestSupplyDelta",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "marketOracle",
     "outputs": [
       {
