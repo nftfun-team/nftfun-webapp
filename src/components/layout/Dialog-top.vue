@@ -52,7 +52,7 @@
 <script lang="ts">
     import {Component, Vue, Prop, Emit} from "vue-property-decorator";
     import {Getter, Mutation} from "vuex-class";
-    import {M_CHAIN_WALLETADDRESS, G_HASH_CACHE, M_HASH_CLEANCACHE} from "store/modules/chain/types";
+    import {M_CHAIN_WALLETADDRESS, G_HASH_CACHE, M_HASH_CLEANCACHE, M_CHAIN_CHAINID} from "store/modules/chain/types";
 
 
     @Component({
@@ -60,6 +60,7 @@
     })
     export default class DialogTop extends Vue {
         @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAdress!: Function;
+        @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
         @Mutation(M_HASH_CLEANCACHE) private clearCache!: Function;
         @Getter(G_HASH_CACHE) private actionCache!: Array<any>;
 
@@ -99,6 +100,7 @@
 
         private logoutClick(): void {
             this.close();
+            this.setChainId('');
             this.setWalletAdress('');
             this.showLogin()
         }

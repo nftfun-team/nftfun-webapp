@@ -24,6 +24,7 @@ const state = {
 
 const getters: GetterTree<any, any> = {
     [G_CHAIN_WALLETADDRESS](state) {
+        console.log('G_CHAIN_WALLETADDRESS=--->', state.walletAddress)
         return state.walletAddress;
     },
     [G_CHAIN_CHAINID](state) {
