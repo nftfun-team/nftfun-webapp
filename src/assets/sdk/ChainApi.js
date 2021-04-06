@@ -309,7 +309,7 @@ $.handleEventLog = (web3, abi, receipt, contractName, eventName) => {
   let result = web3Util.parseEventLog(web3, abi, receipt, eventName)
   // console.log('handleEventLog:', contractName, eventName, result)
   let hash = result.hash
-  let tableName = $.chainId + getSelectedAddress();
+  let tableName = 'contractEvent' + $.chainId + getSelectedAddress();
   const item = {hash: hash, time: new Date().getTime(), status: 1, contractName: contractName, funcName: eventName, data: result.data};
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
@@ -329,7 +329,7 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
     console.warn('handleCall hash is null ', hash, contractName, methodName)
     return
   }
-  let tableName = $.chainId + getSelectedAddress();
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
   const item = {hash: hash, time: new Date().getTime(), status: status, contractName: contractName, funcName: methodName, data: null};
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
