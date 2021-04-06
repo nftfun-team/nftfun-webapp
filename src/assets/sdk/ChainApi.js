@@ -773,13 +773,16 @@ $.harvest = async(pid) => {
 }
 
 $.info = async() => {
-  return {
-    lastRebaseTimestampSec: await getContractMethodsByName('Master').lastRebaseTimestampSec().call(),
-    cooldown: await getContractMethodsByName('Master').rebaseCooldown().call(),
+  let data = {
+    cooldown: Number(await getContractMethodsByName('Master').lastRebaseTimestampSec().call()) + Number(await getContractMethodsByName('Master').rebaseCooldown().call()),
     oraclePrice: new BigNumber(await getContractMethodsByName('Oracle').getRate().call()).shiftedBy(-18).toFixed(2),
     totalSupply: new BigNumber(await getContractMethods(ERC20TokenABI, $.getTokenAddress('FUN')).totalSupply().call()).shiftedBy(-18).toFixed(2),
     price: new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2),
+    targetPrice: 1.00,
+    marketCap: 0
   }
+  data.marketCap = new BigNumber(data.totalSupply).multipliedBy(data.price).toFixed(2)
+  return data
 }
 
 $.report = async() => {
