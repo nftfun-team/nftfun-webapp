@@ -1,0 +1,14 @@
+
+// CHAIN
+export const A_CHAIN_COONNECT = 'A_CHAIN_COONNECT';
+
+export const M_CHAIN_WALLETADDRESS = 'M_GET_WALLETADDRESS';
+export const M_CHAIN_CHAINID = 'M_CHAIN_CHAINID';
+export const M_HASH_CACHE = 'M_HASH_CACHE';
+export const M_HASH_CLEANCACHE = 'M_HASH_CACHE';
+export const M_HASH_ADDCACHE = 'M_HASH_CACHE';
+
+export const G_CHAIN_WALLETADDRESS = 'G_GET_WALLETADDRESS';
+export const G_CHAIN_CHAINID = 'G_CHAIN_CHAINID';
+export const G_HASH_CACHE = 'G_HASH_CACHE';
+
