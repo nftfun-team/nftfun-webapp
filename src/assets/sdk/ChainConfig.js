@@ -17,6 +17,10 @@ const CHAIN_BROWSER = {
 }
 
 const IPFS_URL = 'https://ipfs.io/ipfs'
+const Report_URL = {
+    56: '',
+    97: 'https://api-test.nftfun.org'
+}
 
 const ContractsAddr = {
     56: {
@@ -81,4 +85,4 @@ const ChainSymbol = {
     }
 }
 
-export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL};
+export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL};
