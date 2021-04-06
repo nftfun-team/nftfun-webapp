@@ -6,6 +6,7 @@
     <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
     <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
     <Button :name="'REBASE'" class="_btn"/>
+
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type"/>
     <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
@@ -23,6 +24,8 @@ import SupplyChart from '../chart-data/supply-chart';
 import MktCapChart from '../chart-data/mktcap-chart';
 import Tabs from '../chart-data/tabs';
 import axios from 'axios';
+import WebSdk from '../../../utils/sdk'
+import ChainApi from '../../../assets/sdk/ChainApi'
 
 export default {
     name: 'index',
@@ -41,9 +44,6 @@ export default {
         this.upDate();
     },
     methods: {
-        init() {
-
-        },
         upDate() {
             axios.get('/js/chart.json').then(res => {
                 if (res) {
@@ -51,6 +51,11 @@ export default {
                     this.tabClick({name: this.active, type: this.type});
                 }
             });
+            WebSdk.connect().then(res => {
+                // ChainApi.info().then(res => {
+                //     console.log('info====>', res)
+                // })
+            })
         },
         tabClick($event) {
             this.active = $event.name;
