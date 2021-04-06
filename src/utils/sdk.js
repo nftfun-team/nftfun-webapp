@@ -14,6 +14,7 @@ class WebChain {
     }
 
     connect = (data) => {
+        console.error('---->', data)
         return ChainApi.connect(data).then(acc => {
             let is = acc && acc.length > 0;
             this.walletAddress = is ? acc[0] : '';

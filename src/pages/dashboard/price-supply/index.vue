@@ -51,11 +51,11 @@ export default {
                     this.tabClick({name: this.active, type: this.type});
                 }
             });
-            // WebSdk.connect(() => {
-                ChainApi.info().then(res => {
-                    console.log('info====>', res)
-                })
-            // })
+            WebSdk.connect().then(res => {
+                // ChainApi.info().then(res => {
+                //     console.log('info====>', res)
+                // })
+            })
         },
         tabClick($event) {
             this.active = $event.name;
