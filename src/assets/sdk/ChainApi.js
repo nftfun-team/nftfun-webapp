@@ -59,6 +59,7 @@ function getContractByName(name) {
     abi = QueryABI
   }
   let chainId = getNetworkVersion()
+  console.log('getContractByName contract:', chainId, name)
   let addr = ContractsAddr[chainId][name]
   console.log('getContractByName contract address:', chainId, name, addr)
   return getContract(abi, addr)

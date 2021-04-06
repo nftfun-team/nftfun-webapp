@@ -19,8 +19,9 @@ export default {
     watch: {
         data: {
             handler(val) {
-                if (val) {
+                if (val && val !== null) {
                     this.setOptions();
+                    console.log('走到这里了吗。。。。。', val)
                 }
             },
             immediate: true,

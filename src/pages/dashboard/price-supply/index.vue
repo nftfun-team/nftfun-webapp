@@ -1,11 +1,11 @@
 <template>
 <div class="_price-supply _flex _justify-content-center">
     <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
-    <Card :label="'ORACLE PRICE'" :value="'$0.97'"/>
-    <Card :label="'DITTO SUPPLY'" :value="'5,251,326.75'"/>
-    <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
-    <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
-    <Button :name="'REBASE'" class="_btn"/>
+    <Card :label="'ORACLE PRICE'" :value="`$ ${price}` || '--'"/>
+    <Card :label="'DITTO SUPPLY'" :value="totalSupply || '--'"/>
+    <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
+    <Card :label="'DITTO MARKET CAP'" :value="`$ ${marketCap}` || '--'"/>
+    <Button :name="'REBASE'" class="_btn" :loading="load" :disabled="disabled" @click="rebaseClick"/>
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type"/>
@@ -37,7 +37,13 @@ export default {
             supplyData: null,
             mktCapChartData: null,
             active: '1d',
-            type: 'ABS'
+            type: 'ABS',
+            price: null,
+            totalSupply: null,
+            targetPrice: 0,
+            marketCap: null,
+            load: false,
+            disabled: false,
         }
     },
     mounted() {
@@ -45,16 +51,23 @@ export default {
     },
     methods: {
         upDate() {
-            axios.get('/js/chart.json').then(res => {
-                if (res) {
-                    this.data = res.data.info;
-                    this.tabClick({name: this.active, type: this.type});
-                }
-            });
-            WebSdk.connect().then(res => {
-                // ChainApi.info().then(res => {
-                //     console.log('info====>', res)
-                // })
+            WebSdk.connect().then(() => {
+                ChainApi.info().then(res => {
+                    console.log('info====>', res)
+                    this.price = res.price;
+                    this.totalSupply = res.totalSupply;
+                    this.targetPrice = res.targetPrice;
+                    this.marketCap = res.marketCap;
+                })
+
+                axios.get('/js/chart.json').then(res => {
+                    if (res) {
+                        this.data = res.data.info;
+                        if (this.data) {
+                            this.tabClick({name: this.active, type: this.type});
+                        }
+                    }
+                });
             })
         },
         tabClick($event) {
@@ -113,6 +126,17 @@ export default {
                 y,
                 xy: x.map((px, i) => ({x: px, y: y[i]})),
             }
+        },
+        rebaseClick() {
+            this.load = true;
+            ChainApi.rebase().then(res=>{
+                console.log('res', res)
+                this.load = false
+            }).catch(c=>{
+                this.load = false
+            }).finally(f=>{
+                this.load = false
+            });
         }
     }
 }
