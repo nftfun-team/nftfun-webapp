@@ -8,7 +8,7 @@ import Web3Util from './Web3Util.js'
 import ERC20TokenABI from './abi/ERC20Token.json'
 import MasterABI from './abi/Master.json'
 import MasterChefABI from './abi/MasterChef.json'
-import SimpleOracleABI from './abi/SimpleOracle.json'
+import OracleABI from './abi/Oracle.json'
 import QueryABI from './abi/Query.json'
 import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
 
@@ -54,7 +54,7 @@ function getContractByName(name) {
   } else if(name === 'MasterChef') {
     abi = MasterChefABI
   } else if(name === 'SimpleOracle') {
-    abi = SimpleOracleABI
+    abi = OracleABI
   } else if(name === 'Query') {
     abi = QueryABI
   }
