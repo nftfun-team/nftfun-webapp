@@ -772,10 +772,33 @@ $.harvest = async(pid) => {
   return await executeContractByName('MasterChef', 'harvest', 0, [pid])
 }
 
+$.info = async() => {
+
+}
+
 $.report = async() => {
   let url = Report_URL[getNetworkVersion()] + '/report'
   let resp = await fetch(url, {
     method: 'get'
+  })
+
+  let text = await resp.text()
+  try {
+    return JSON.parse(text)
+  } catch(e) {
+    return {
+      code: 1,
+      msg: 'fail',
+      data: []
+    }
+  }
+}
+
+$.history = async(page=1, size=10) => {
+  let url = Report_URL[getNetworkVersion()] + '/history'
+  let resp = await fetch(url, {
+    method: 'get',
+    params: {page, size}
   })
 
   let text = await resp.text()
