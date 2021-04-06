@@ -36,6 +36,6 @@ export default {
 
 <style scoped>
     .chart-item {
-        height: 310px;
+        height: 100%;
     }
 </style>
