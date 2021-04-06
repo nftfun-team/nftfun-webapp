@@ -2,18 +2,22 @@
     <section class="common">
         <div class="common-head f-pf f-fw8">
             {{title}}
-            <el-button class="common-head-connect">CONNECT WALLET</el-button>
+            <com-button style="{width: 184px;height: 55px}" name="CONNECT WALLET" />
         </div>
         <div class="common-section"> <router-view /> </div>
     </section>
 </template>
 
 <script lang="ts">
-    import { Component, Vue, Watch } from "vue-property-decorator";
+    import { Component, Vue } from "vue-property-decorator";
+    import ComButton from "components/button/index.vue";
 
-    @Component
+    @Component({
+        name: 'Layout',
+        components: { ComButton }
+    })
     export default class AppLayout extends Vue{
-        private title: string | undefined = 'Staking'
+        private title: string = 'Staking'
     }
 </script>
 
@@ -37,11 +41,6 @@
             font-size: 40px;
             background: #fff;
             z-index: 99;
-            &-connect{
-                width: 184px;
-                height: 55px;
-                box-shadow: 4px 4px 2px rgba(0, 0, 0,.9);
-            }
         }
         &-section{
             width: 1192px;

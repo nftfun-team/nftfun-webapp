@@ -8,9 +8,9 @@ import Web3Util from './Web3Util.js'
 import ERC20TokenABI from './abi/ERC20Token.json'
 import MasterABI from './abi/Master.json'
 import MasterChefABI from './abi/MasterChef.json'
-import SimpleOracleABI from './abi/SimpleOracle.json'
+import OracleABI from './abi/Oracle.json'
 import QueryABI from './abi/Query.json'
-import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL} from './ChainConfig.js'
+import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL} from './ChainConfig.js'
 
 var InpageProvider = {}
 let $ = InpageProvider;
@@ -54,7 +54,7 @@ function getContractByName(name) {
   } else if(name === 'MasterChef') {
     abi = MasterChefABI
   } else if(name === 'SimpleOracle') {
-    abi = SimpleOracleABI
+    abi = OracleABI
   } else if(name === 'Query') {
     abi = QueryABI
   }
@@ -639,15 +639,6 @@ function sendTransaction(params) {
 
 $.getNetworkVersion = getNetworkVersion
 
-$.getDayPreBlock = async() => {
-  if(!dayPreBlock) {
-    let methods = getContractMethodsByName('AAAAConfig')
-    dayPreBlock = parseInt(await methods.DAY().call())
-  }
-  // console.log('dayPreBlock:', dayPreBlock)
-  return dayPreBlock
-}
-
 $.getBalance = async (address) => {
   if (!address) {
     address = getSelectedAddress()
@@ -747,6 +738,7 @@ $.updatePool = async(pid) => {
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
+  console.log('pools---->', pools, getNetworkVersion())
   pools.forEach((d)=>{
     d.userBalance = '--'
     d.userAmount = '--'
@@ -780,5 +772,22 @@ $.harvest = async(pid) => {
   return await executeContractByName('MasterChef', 'harvest', 0, [pid])
 }
 
+$.report = async() => {
+  let url = Report_URL[getNetworkVersion()] + '/report'
+  let resp = await fetch(url, {
+    method: 'get'
+  })
+
+  let text = await resp.text()
+  try {
+    return JSON.parse(text)
+  } catch(e) {
+    return {
+      code: 1,
+      msg: 'fail',
+      data: []
+    }
+  }
+}
 
 export default InpageProvider

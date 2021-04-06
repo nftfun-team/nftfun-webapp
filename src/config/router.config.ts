@@ -14,7 +14,7 @@ export const BaseRouter = [
                 component: () => import( "pages/dashboard/index.vue")
             },
         ],
-        redirect: '/staking',
+        redirect: '/main',
     },
     {
         path: '/main',
@@ -26,7 +26,7 @@ export const BaseRouter = [
     },
     {
         path: '*',
-        redirect: '/'
+        redirect: '/main'
     },
 ];
 

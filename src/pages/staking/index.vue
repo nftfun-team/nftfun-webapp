@@ -4,7 +4,7 @@
             <staking-info/>
         </div>
         <section class="staking-cont">
-            <deposit-item v-for="(item,index) in [0,1,2,3,4]" />
+            <deposit-item v-for="(item,index) in poolList" key="index" :data="item" />
         </section>
     </div>
 </template>
@@ -22,15 +22,16 @@
     })
     export default class Staking extends Vue{
         private title: string | undefined = 'Staking'
+        private poolList: Array<any> = []
 
         mounted(){
             WebChina.connect().then(data => {
                 ChinaApi.getPools()
                     .then( res => {
                         console.log(res)
-                        // this.poolList = res
+                        this.poolList = res
                     })
-                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败')})
+                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败'); console.error(e)})
                     .finally(_ => this.$load.hideLoading())
             }).catch(_ => this.$load.hideLoading())
         }
@@ -45,6 +46,18 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
+            & > div:nth-child(odd){
+                margin-right: 35px;
+            }
+        }
+        @media (max-width: 1192px){
+            section{
+                justify-content: center;
+                & > div{
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+            }
         }
     }
 </style>
