@@ -31,7 +31,7 @@
                         console.log(res)
                         this.poolList = res
                     })
-                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败')})
+                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败'); console.error(e)})
                     .finally(_ => this.$load.hideLoading())
             }).catch(_ => this.$load.hideLoading())
         }
