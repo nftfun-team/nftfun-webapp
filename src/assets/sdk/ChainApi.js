@@ -738,6 +738,7 @@ $.updatePool = async(pid) => {
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
+  console.log('pools---->', pools, getNetworkVersion())
   pools.forEach((d)=>{
     d.userBalance = '--'
     d.userAmount = '--'
