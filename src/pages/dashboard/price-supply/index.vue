@@ -6,40 +6,35 @@
     <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
     <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
     <Button :name="'REBASE'" class="_btn"/>
-
-    <h3>PRICE</h3>
-    <div class="_chart-tabs">
-        <div>
-            <span class="active" @click="tabClick('1d')">1 DAY</span>
-            <span @click="tabClick('30d')">30 DAY</span>
-            <span @click="tabClick('all')">ALL</span>
-        </div>
-
-        <div>
-            <span>ABS</span>
-            <span>%</span>
-        </div>
-    </div>
-    <Charts class="chart" :options="options"/>
+    <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
+    <PriceChart :data="priceData" :type="type"/>
+    <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
+    <SupplyChart :data="supplyData" :type="type"/>
+    <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
+    <MktCapChart :data="mktCapChartData" :type="type"/>
 </div>
 </template>
 
 <script>
 import Button from '@/components/button/index.vue';
-import Charts from '@/components/echarts/echarts.vue';
 import Card from './card.vue';
+import PriceChart from '../chart-data/price-chart';
+import SupplyChart from '../chart-data/supply-chart';
+import MktCapChart from '../chart-data/mktcap-chart';
+import Tabs from '../chart-data/tabs';
 import axios from 'axios';
 
 export default {
     name: 'index',
-    components: {Button, Card, Charts},
+    components: {Button, Card, PriceChart, SupplyChart, MktCapChart, Tabs},
     data() {
         return {
-            options: null,
-            data: [],
-            oneDayList: [],
-            thirtyDaysList: [],
-            allDaysList: []
+            data: null,
+            priceData: null,
+            supplyData: null,
+            mktCapChartData: null,
+            active: '1d',
+            type: 'ABS'
         }
     },
     mounted() {
@@ -52,101 +47,67 @@ export default {
         upDate() {
             axios.get('/js/chart.json').then(res => {
                 if (res) {
-                    console.error('这是什么', res.data.info)
                     this.data = res.data.info;
-                    console.log('数据', this.data);
-                    this.tabClick('30d')
+                    this.tabClick({name: this.active, type: this.type});
                 }
             });
         },
-        tabClick(name) {
-            console.log('这是点击的', name, this.data[name]);
-            this.data = this.data[name];
-            this.setOptions(this.data)
+        tabClick($event) {
+            this.active = $event.name;
+            this.type = $event.type;
+            this.getPriceData();
+            this.getSupplyData();
+            this.getMktCapData();
         },
-        setOptions(item) {
-            console.log('设置数据', item)
-            let dateList = item['x'].map(x => {
-                return x;
+        getPriceData() {
+            this.priceData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, p}) => ({x, p}),
             });
-            let valueList = item['p'].map(y => {
-                console.log(y)
-                return new BigNumber(y).toFixed(2);
+        },
+        getSupplyData() {
+            this.supplyData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, s: p}) => ({x, p}),
             });
+        },
+        getMktCapData() {
+            this.mktCapChartData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, s, p}) => {
+                    const y = s.map((a, i) => parseFloat(a) + parseFloat(p[i]))
+                    return {x, p: y}
+                },
+            });
+        },
+        getChartData({chartData, activeDuration, activeType, map}) {
+            console.error('chartData', chartData)
+            const data = chartData[activeDuration]
+            if (!data) return
 
-            Array.prototype.max = function () {
-                return Math.max.apply({}, this)
-            };
-
-            Array.prototype.min = function () {
-                return Math.min.apply({}, this)
-            };
-
-            this.options = {
-                grid: {
-                    left: '2%',
-                    right: '4%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: dateList,
-                    boundaryGap: false
-                },
-                yAxis: {
-                    type: 'value',
-                    min: valueList.max(),
-                    max: valueList.min(),
-                    // splitLine: {show: false},
-                    axisLine: {
-                        show: true, //是否展示y轴坐标竖线
-                        lineStyle: {
-                            color: '#00fff2',
-                            width: 1
-                        }
-                    },
-                    // axisTick: {show: false}, //是否展示y轴坐标刻度
-                    axisLabel: {
-                        color: '#9a9b96',
-                        fontsize: '14px'
-                    },
-                },
-                series: [
-                    {
-                        type: 'line',
-                        stack: '总量',
-                        areaStyle: {},
-                        emphasis: {
-                            focus: 'series'
-                        },
-                        showSymbol: false,
-                        itemStyle: {
-                            'color': {
-                                'type': 'linear',
-                                'x': 0,
-                                'y': 0,
-                                'x2': 0,
-                                'y2': 1,
-                                'colorStops': [
-                                    {
-                                        'offset': 0,
-                                        'color': '#00fff2'
-                                    },
-                                    {
-                                        'offset': 1,
-                                        'color': '#F3CDC7'
-                                    }
-                                ],
-                                'globalCoord': false
-                            }
-                        },
-                        data: valueList
-                    },]
-            };
+            const {x, p} = map(data)
+            let y;
+            if (activeType === '%') {
+                y = [0]
+                for (let i = 1; i < p.length; i++) {
+                    const a = parseFloat(p[i])
+                    const b = parseFloat(p[i - 1])
+                    y.push(!a ? 0 : (1e2 * (a - b)) / a)
+                }
+            } else {
+                y = p.map((py) => parseFloat(py))
+            }
+            return {
+                x,
+                y,
+                xy: x.map((px, i) => ({x: px, y: y[i]})),
+            }
         }
     }
 }
@@ -162,63 +123,6 @@ export default {
 
             &::before {
                 background-color: #FAFAF1;
-            }
-        }
-
-        .chart {
-            width: 100%;
-            height: 368px;
-            background: #FFFFFF;
-            border: 1px solid rgba(239, 239, 239, 0.5);
-            box-shadow: -2px 5px 6px #EFEEF1;
-            border-radius: 8px;
-        }
-
-        h3 {
-            font-size: 32px;
-            line-height: 37px;
-            color: #000000;
-            font-weight: bold;
-            margin-bottom: 10px;
-            margin-top: 94px;
-            width: 100%;
-        }
-
-        ._chart-tabs {
-            display: flex;
-            width: 100%;
-            margin-bottom: 30px;
-
-            div {
-                background: #FFFFFF;
-                box-shadow: -2px 5px 6px #EFEEF1;
-                border-radius: 8px;
-                height: 35px;
-                overflow: hidden;
-                margin-right: 38px;
-
-                &:nth-last-of-type(1) {
-                    margin-right: 0;
-                }
-
-                span {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 80px;
-                    height: 100%;
-                    border-right: 1px solid #F8F8F8;
-                    cursor: pointer;
-                    transition: all .2s;
-
-                    &:nth-last-of-type(1) {
-                        border-right: 0;
-                    }
-                }
-
-                .active {
-                    background-color: #F3CDC7;
-                }
             }
         }
     }

@@ -1,14 +1,20 @@
 <template>
-<el-button :style="style" class="_button">
+<el-button :style="style" class="_button" @click="handleClick()">
     {{name}}
 </el-button>
 </template>
 
-<script>
-export default {
-    name: 'index',
-    props: ['name', 'style']
-}
+<script lang="ts">
+    import { Component, Vue, Prop, Emit } from "vue-property-decorator";
+
+    @Component({ name: 'ComButton'})
+    export default class ComButton extends Vue{
+        @Prop({type: String || undefined}) name
+        @Prop({type: Object || undefined, default: {}}) style
+
+        @Emit('click')
+        private handleClick(): void{}
+    }
 </script>
 
 <style scoped lang="scss">

@@ -15,14 +15,14 @@ const filters:any = {
         return ChinaApi.getBlockToTimes(_currentBlock, block)
     },
 
-    hash: (txHash:any) => {
+    hash: (txHash:any, length: number = 4) => {
         if (!txHash) {
             return '--';
         }
         return (
-            txHash.substring(0, 4) +
+            txHash.substring(0, length) +
             '...' +
-            txHash.substring(txHash.length - 4, txHash.length)
+            txHash.substring(txHash.length - length, txHash.length)
         );
     },
     shiftedBy: (data:any, decimals:any) => {

@@ -1,7 +1,7 @@
 import ChainApi from '../assets/sdk/ChainApi.js'
 import {Storage} from "utils/storage"
 import store from 'store'
-import {A_GET_WALLETADDRESS} from 'store/modules/chainSdk/types'
+import { M_CHAIN_WALLETADDRESS } from 'store/modules/chain/types'
 import ChinaApi from "@/assets/sdk/ChainApi";
 
 class WebChain {
@@ -18,8 +18,7 @@ class WebChain {
             let is = acc && acc.length > 0;
             this.walletAddress = is ? acc[0] : '';
             if (is) {
-                Storage.setItem("walletAddress", this.walletAddress)
-                store.dispatch(A_GET_WALLETADDRESS, this.walletAddress)
+                store.commit(M_CHAIN_WALLETADDRESS, this.walletAddress)
             }
             return {account: acc, isConnect: is};
         });

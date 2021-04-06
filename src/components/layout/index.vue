@@ -2,22 +2,45 @@
     <section class="common">
         <div class="common-head f-pf f-fw8">
             {{title}}
-            <com-button style="{width: 184px;height: 55px}" name="CONNECT WALLET" />
+            <span class="f-cursor" v-if="walletAddress" @click="visible = true">{{walletAddress | hash(6)}}</span>
+            <com-button v-else style="{width: 184px;height: 55px}" @click="isShow = true" name="CONNECT WALLET" />
         </div>
         <div class="common-section"> <router-view /> </div>
+        <connect-wallet v-if="isShow" @closeModal="isShow = false" @connect="connect" />
+        <dialog-top
+                :account="walletAddress"
+                :visible.sync="visible"
+                @close="visible = false"
+                @showLogin="isShow = true"
+        ></dialog-top>
     </section>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
+    import {Action, Getter} from "vuex-class";
     import ComButton from "components/button/index.vue";
+    import ConnectWallet from "components/connectWallet/index.vue";
+    import DialogTop from "./Dialog-top.vue";
+    import {A_CHAIN_COONNECT, G_CHAIN_WALLETADDRESS} from "store/modules/chain/types";
 
     @Component({
         name: 'Layout',
-        components: { ComButton }
+        components: { ComButton, ConnectWallet, DialogTop }
     })
     export default class AppLayout extends Vue{
-        private title: string = 'Staking'
+        @Action(A_CHAIN_COONNECT) private connectWallet!: Function;
+        @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
+        private title: string = 'Staking';
+        private isShow: Boolean = false;
+        private visible: Boolean = false;
+
+        private connect(type: string): void{
+            this.connectWallet(type).then(res => {
+                this.isShow = false;
+                console.error('res----->',res)
+            })
+        }
     }
 </script>
 

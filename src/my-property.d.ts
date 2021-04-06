@@ -44,6 +44,7 @@ declare module 'vue/types/vue' {
 declare global {
     interface Window {
         downFlies: (data:any, filesName:string) => {}
-        BigNumber: any
+        BigNumber: any,
+        copy: Function
     }
 }

@@ -1,53 +1,97 @@
 <template>
-  <div id="app" class="body-main">
-    <router-view/>
-  </div>
+    <div id="app" class="body-main">
+        <router-view/>
+    </div>
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  @Component
-  export default class App extends Vue {
-      created(){
-          this.listenerMateMsket()
-          // this.realBlock('2021-03-30 14:39:50','2021-03-30 15:00:16', 10000, 0.03773485, 100.13773485)
-          // this.realBlock('2021-03-30 14:39:50','2021-03-30 15:00:16', 10000, 0.1, 100.13773485)
-          // this.realBlock('2021-03-30 14:39:50','2021-03-30 15:00:16', 10000, 100, 100.13773485)
-      }
+    import {Component, Vue, } from 'vue-property-decorator';
+    import ChainApi from "@/assets/sdk/ChainApi.js";
+    import { Storage } from 'utils/storage'
+    import { Getter, Mutation} from "vuex-class";
+    import { M_CHAIN_CHAINID, M_CHAIN_WALLETADDRESS, G_CHAIN_CHAINID, G_CHAIN_WALLETADDRESS } from "store/modules/chain/types";
 
-      realBlock(start: string, end: string, total: number, tokenNumber: number, totalTokenNumber: number, blockTimes: number = 3000){
-          const _time = new Date(end).getTime() - new Date(start).getTime();
-          const _totalBlock = Math.floor(_time / blockTimes);
-          const _blockAvgToken = total / _totalBlock
-          const _scaleToken =  tokenNumber / totalTokenNumber
-          console.error('getToken----->', _blockAvgToken * _scaleToken * _totalBlock)
-      }
+    @Component
+    export default class App extends Vue {
+        @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
+        @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAddress!: Function;
+        @Getter(G_CHAIN_CHAINID) private ChainId!: string;
+        @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
 
-      /**
-       * Listener MateMsket Address Change
-       */
-      public listenerMateMsket(){
-          if(window['ethereum']){
-              window['ethereum'].on('accountsChanged', res=>{
-                  if(res && res.length > 0 && this.$route.path != '/login'){
-                      window.location.href = window.location.origin + '/login' ;
-                  }
-              })
-          }
-      }
+        created() {
+            this.init()
+        }
 
 
-  }
+        private reload(): void{
+            window.location.reload();
+        }
+
+        public init(): void {
+            this.onChainStatus();
+            this.onChainChanged();
+            this.onAccountsChanged();
+        }
+
+        onChainStatus() {
+            ChainApi.onChainStatus(this.handleChainStatus);
+        }
+        onChainChanged() {
+            ChainApi.onChainChanged(this.handleChainChanged);
+        }
+        onAccountsChanged() {
+            ChainApi.onAccountsChanged(this.handleNewAccounts);
+        }
+
+        handleNewAccounts(acc) {
+            if (!acc.length) {
+                Storage.removeItem('account');
+                return;
+            }
+
+            let user = this.walletAddress;
+            if (acc.length) {
+                if (user !== null) {
+                    if (user !== acc[0]) {
+                        this.setWalletAddress(acc[0]);
+                        this.reload();
+                    }
+                }
+            }
+        }
+
+        handleChainChanged(chainId) {
+            if (!chainId) return;
+
+            if (chainId != this.ChainId && this.ChainId) {
+                this.setChainId(chainId)
+                this.reload();
+            }else{
+                this.setChainId(chainId)
+            }
+        }
+
+        handleChainStatus(status) {
+            console.error('test handleChainStatus:', status);
+            if (status === 2) {
+                //console.log('连接成功');
+                // this.$store.commit('isInstall', true);
+                // this.isOpen = !this.account;
+            } else {
+                //console.log('未安装')
+                // this.$store.commit('isInstall', false);
+                // this.isOpen = true;
+            }
+        }
+    }
 
 </script>
 
 <style lang="scss">
-#app {
-  font-size: 14px;
-  color: rgba(0, 0, 0);
-  width: 100%;
-  height: 100%;
-  /*justify-items: center;*/
-  /*align-items: center;*/
-}
+    #app {
+        font-size: 14px;
+        color: rgba(0, 0, 0);
+        width: 100%;
+        height: 100%;
+    }
 </style>

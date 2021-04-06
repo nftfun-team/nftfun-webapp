@@ -70,19 +70,6 @@ module.exports = {
         host: '0.0.0.0',
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器
-        proxy: {
-            '/vbk': {
-                target: 'http://chauffeur-vbk.qa.moderntrip.cn', //请求本地 需要jeecg-boot后台项目
-            },
-            '/wxapp/chauffeur': {
-                target: 'https://apis.qa.moderntrip.cn', //请求本地 需要jeecg-boot后台项目
-            },
-            '/enterprise': {
-                // target: 'http://10.100.15.242:9200', //请求本地 需要jeecg-boot后台项目
-                // target: 'http://10.100.19.8:9200', //请求本地 需要jeecg-boot后台项目
-                // target: 'http://localhost:9200', //请求本地 需要jeecg-boot后台项目
-                target: 'https://chauffeur-enterprise.qa.moderntrip.cn', //请求本地 需要jeecg-boot后台项目
-            },
-        },
+        proxy: {},
     }
 }

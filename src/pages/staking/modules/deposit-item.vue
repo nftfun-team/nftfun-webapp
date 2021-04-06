@@ -9,14 +9,15 @@
         <div class="deposit-item-deposit">
             <h4>Withdraw</h4>
             <div class="deposit-item-deposit-line _n-mg-bt-24">
-                Withdraw Amount (CAKE-LP) <span>Deposited:0 {{data.name}}</span>
+<!--                Withdraw Amount (CAKE-LP) -->
+                <span>Deposited:0 {{data.name}}</span>
             </div>
             <div class="deposit-item-deposit-input _n-mg-bt-29 f-pr">
                 <el-input v-model="value" placeholder="0.0" />
                 <span class="f-center-y f-fw8 f-cursor">MAX</span>
             </div>
             <div class="deposit-item-deposit-line _n-mg-bt-34">
-                Withdraw Amount <span>≈ 0 {{data.tokenSymbol}}</span>
+                Withdraw Amount <span>≈ 0 FUN</span>
             </div>
             <div class="deposit-item-deposit-line">
                 Rewards Earned: <span>0 {{data.tokenSymbol}}  </span>
@@ -32,7 +33,7 @@
             </div>
         </div>
         <div class="deposit-item-btn">
-            <com-button style="width: 215px; height: 48px" name="CONNECT WALLET"/>
+            <com-button style="height: 48px" name="CONNECT WALLET"/>
         </div>
     </div>
 </template>
@@ -50,7 +51,6 @@
         private data!: Array<any>;
 
         private value: string = '';
-
     }
 </script>
 

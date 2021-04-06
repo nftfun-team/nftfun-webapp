@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Menu from './modules/menu'
-import Dict from './modules/dict'
-import ChainSdk from './modules/chainSdk'
+import Chain from './modules/chain'
 
 Vue.use(Vuex);
 
@@ -14,8 +12,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    Menu,
-    Dict,
-    ChainSdk
+    Chain
   },
 });

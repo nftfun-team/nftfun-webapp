@@ -19,8 +19,11 @@ export const Storage = {
     getArray(key:string) {
         return JSON.parse(window.localStorage[key] || '[]');
     },
-    remove(key:string) {
+    removeItem(key:string) {
         window.localStorage.removeItem(key);
+    },
+    clear() {
+        window.localStorage.clear();
     },
 }
 
