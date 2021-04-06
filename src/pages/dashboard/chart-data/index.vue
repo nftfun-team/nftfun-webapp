@@ -6,6 +6,7 @@
 
 <script>
 import Charts from '@/components/echarts/echarts.vue';
+
 export default {
     name: 'index',
     components: {Charts},
@@ -15,13 +16,21 @@ export default {
         }
     },
     props: ['data', 'type'],
-    mounted() {
-        this.setOptions()
+    watch: {
+        data: {
+            handler(val) {
+                if (val) {
+                    this.setOptions();
+                }
+            },
+            immediate: true,
+            deep: true
+        }
     },
     methods: {
         setOptions() {
             const type = this.type;
-            console.log('设置数据', item, type)
+            console.log('设置数据', this.data, type)
             let XList = this.data.x;
             let YList = this.data.y;
 
@@ -123,6 +132,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .chart {
+        width: 100%;
+        height: 368px;
+        background: #FFFFFF;
+        border: 1px solid rgba(239, 239, 239, 0.5);
+        box-shadow: -2px 5px 6px #EFEEF1;
+        border-radius: 8px;
+    }
 </style>

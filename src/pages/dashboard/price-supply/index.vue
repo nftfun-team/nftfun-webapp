@@ -6,25 +6,33 @@
     <Card :label="'PRICE TARGET'" :value="'$1.00'"/>
     <Card :label="'DITTO MARKET CAP'" :value="'$5,119,175.15'"/>
     <Button :name="'REBASE'" class="_btn"/>
+    <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
+    <PriceChart :data="priceData" :type="type"/>
+    <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
+    <SupplyChart :data="supplyData" :type="type"/>
+    <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
+    <MktCapChart :data="mktCapChartData" :type="type"/>
 </div>
 </template>
 
 <script>
 import Button from '@/components/button/index.vue';
-
 import Card from './card.vue';
+import PriceChart from '../chart-data/price-chart';
+import SupplyChart from '../chart-data/supply-chart';
+import MktCapChart from '../chart-data/mktcap-chart';
+import Tabs from '../chart-data/tabs';
 import axios from 'axios';
 
 export default {
     name: 'index',
-    components: {Button, Card},
+    components: {Button, Card, PriceChart, SupplyChart, MktCapChart, Tabs},
     data() {
         return {
-            options: null,
-            data: [],
-            oneDayList: [],
-            thirtyDaysList: [],
-            allDaysList: [],
+            data: null,
+            priceData: null,
+            supplyData: null,
+            mktCapChartData: null,
             active: '1d',
             type: 'ABS'
         }
@@ -39,28 +47,45 @@ export default {
         upDate() {
             axios.get('/js/chart.json').then(res => {
                 if (res) {
-                    console.log('这是什么', res.data.info)
                     this.data = res.data.info;
-                    console.log('数据', this.data);
-                    this.tabClick(this.active, this.type);
+                    this.tabClick({name: this.active, type: this.type});
                 }
             });
         },
-        tabClick(name, type) {
-            this.active = name;
-            this.type = type;
-            // this.data = this.data[name];
-            const newData = this.getChartData({
-                chartData: this.data,
-                activeDuration: name,
-                activeType: type,
-                map: ({x, p}) => ({x, p}),
-            })
-            console.error('这是数据吗？', newData)
-            // this.setOptions(newData)
+        tabClick($event) {
+            this.active = $event.name;
+            this.type = $event.type;
+            this.getPriceData();
+            this.getSupplyData();
+            this.getMktCapData();
         },
-
-
+        getPriceData() {
+            this.priceData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, p}) => ({x, p}),
+            });
+        },
+        getSupplyData() {
+            this.supplyData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, s: p}) => ({x, p}),
+            });
+        },
+        getMktCapData() {
+            this.mktCapChartData = this.getChartData({
+                chartData: this.data,
+                activeDuration: this.active,
+                activeType: this.type,
+                map: ({x, s, p}) => {
+                    const y = s.map((a, i) => parseFloat(a) + parseFloat(p[i]))
+                    return {x, p: y}
+                },
+            });
+        },
         getChartData({chartData, activeDuration, activeType, map}) {
             console.error('chartData', chartData)
             const data = chartData[activeDuration]
@@ -98,63 +123,6 @@ export default {
 
             &::before {
                 background-color: #FAFAF1;
-            }
-        }
-
-        .chart {
-            width: 100%;
-            height: 368px;
-            background: #FFFFFF;
-            border: 1px solid rgba(239, 239, 239, 0.5);
-            box-shadow: -2px 5px 6px #EFEEF1;
-            border-radius: 8px;
-        }
-
-        h3 {
-            font-size: 32px;
-            line-height: 37px;
-            color: #000000;
-            font-weight: bold;
-            margin-bottom: 10px;
-            margin-top: 94px;
-            width: 100%;
-        }
-
-        ._chart-tabs {
-            display: flex;
-            width: 100%;
-            margin-bottom: 30px;
-
-            div {
-                background: #FFFFFF;
-                box-shadow: -2px 5px 6px #EFEEF1;
-                border-radius: 8px;
-                height: 35px;
-                overflow: hidden;
-                margin-right: 38px;
-
-                &:nth-last-of-type(1) {
-                    margin-right: 0;
-                }
-
-                span {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 80px;
-                    height: 100%;
-                    border-right: 1px solid #F8F8F8;
-                    cursor: pointer;
-                    transition: all .2s;
-
-                    &:nth-last-of-type(1) {
-                        border-right: 0;
-                    }
-                }
-
-                .active {
-                    background-color: #F3CDC7;
-                }
             }
         }
     }
