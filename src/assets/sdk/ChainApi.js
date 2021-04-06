@@ -29,6 +29,7 @@ $.poolsMapWithIndex = {}
 $.poolInfoMapWithPair = {}
 $.pairsToken = {}
 $.pools = {}
+$.contractHistory = []
 let web3Util = new Web3Util()
 
 let chainStatusHandles = []
@@ -336,23 +337,13 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
   if (local) {
-    const list = JSON.parse(local);
-    list.unshift(item);
-    localStorage.setItem(tableName, JSON.stringify(list));
+    $.contractHistory = JSON.parse(local);
+    $.contractHistory.unshift(item);
+    localStorage.setItem(tableName, JSON.stringify($.contractHistory));
   } else {
-    const list = [];
-    list.unshift(item);
-    localStorage.setItem(tableName, JSON.stringify(list));
-  }
-}
-
-$.getContractCallHistory = () => {
-  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
-  const local = localStorage.getItem(tableName);
-  if (local) {
-    return JSON.parse(local);
-  } else {
-    return []
+    $.contractHistory = [];
+    $.contractHistory.unshift(item);
+    localStorage.setItem(tableName, JSON.stringify($.contractHistory));
   }
 }
 
