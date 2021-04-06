@@ -168,7 +168,6 @@ export default {
       let platform = ChainApi.getContractAddr('MasterChef')
       ChainApi.allowance(token, platform).then(res => {
         console.log(res);
-        console.log(res.toFixed());
       });
 
     },
