@@ -723,8 +723,33 @@ $.getLpUsdValue = async (token, baseToken, amount) => {
   return '0'
 }
 
-$.updatePool = async(pid) => {
+$.poolRewardApr = async (poolData, masterChefData, funPrice) => {
+  if(masterChefData.funPerBlock == 0 || masterChefData.totalAllocPoint == 0 || masterChefData.totalSupply == 0 || poolData.totalStake == 0 || funPrice ==0) {
+    console.log('poolRewardApr param is 0 ', masterChefData, poolData.totalStake, funPrice)
+    return '0'
+  }
+
+  let userBalanceValue = await $.getLpUsdValue($.getTokenAddress(poolData.tokenSymbol), $.getTokenAddress(poolData.baseSymbol), '1000000000000000000')
+  let userBalance = '1'
+  if(new BigNumber(userBalance).isGreaterThan(new BigNumber(poolData.totalStake))) {
+    userBalance = poolData.totalStake
+  }
+
+  let aYearAmount = new BigNumber(masterChefData.funPerBlock).shiftedBy(-9).div($.getBlockSpanTime()).multipliedBy(24*3600*365)
+  aYearAmount = aYearAmount.multipliedBy(poolData.weight).div(masterChefData.totalAllocPoint)
+  aYearAmount = aYearAmount.multipliedBy(userBalance).div(poolData.totalStake)
+  let earned = aYearAmount.multipliedBy(funPrice)
+  if(earned.isGreaterThan(0)) {
+    console.log('poolRewardApr earned is ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice)
+    return earned.div(new BigNumber(userBalanceValue)).multipliedBy(100).toFixed(2)
+  }
+  console.log('poolRewardApr earned is 0 ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice, aYearAmount.toFixed())
+  return '0'
+}
+
+$.updatePool = async(pid, masterChefData, price) => {
   let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
+  let poolInfo = await getContractMethodsByName('MasterChef').poolInfo(pid).call()
   let pendingFun = await $.pendingFun(pid)
   $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
   $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
@@ -732,19 +757,29 @@ $.updatePool = async(pid) => {
   let totalStake = await $.balanceOf($.pools[pid].address, $.getContractAddr('MasterChef'))
   $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
   $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), totalStake)
+  $.pools[pid].weight = poolInfo.allocPoint
+  await $.poolRewardApr($.pools[pid], masterChefData, price)
   console.log('updatePool:', $.pools[pid])
   return $.pools[pid]
 }
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
+  let price = new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2)
+  let masterChefData = {
+    totalAllocPoint: await getContractMethodsByName('MasterChef').totalAllocPoint().call(),
+    totalSupply: await getContractMethodsByName('MasterChef').totalSupply().call(),
+    funPerBlock: await getContractMethodsByName('MasterChef').funPerBlock().call(),
+  }
   pools.forEach((d)=>{
+    d.apr = '--'
     d.userBalance = '--'
     d.userAmount = '--'
     d.userReward = '--'
     d.userAmount = '--'
     d.totalStake = '--'
     d.totalStakeValue = '--'
+    d.weight = '--'
     $.pools[d.pid] = d
     $.updatePool(d.pid)
   })

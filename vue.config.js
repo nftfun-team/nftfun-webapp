@@ -70,6 +70,5 @@ module.exports = {
         host: '0.0.0.0',
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器
-        proxy: {},
     }
 }
