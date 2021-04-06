@@ -5,7 +5,7 @@
     <Card :label="'DITTO SUPPLY'" :value="totalSupply || '--'"/>
     <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
     <Card :label="'DITTO MARKET CAP'" :value="`$ ${marketCap}` || '--'"/>
-    <Button :name="'REBASE'" class="_btn"/>
+    <Button :name="'REBASE'" class="_btn" :loading="load" :disabled="disabled" @click="rebaseClick"/>
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type"/>
@@ -41,7 +41,9 @@ export default {
             price: null,
             totalSupply: null,
             targetPrice: 0,
-            marketCap: null
+            marketCap: null,
+            load: false,
+            disabled: false,
         }
     },
     mounted() {
@@ -124,6 +126,17 @@ export default {
                 y,
                 xy: x.map((px, i) => ({x: px, y: y[i]})),
             }
+        },
+        rebaseClick() {
+            this.load = true;
+            ChainApi.rebase().then(res=>{
+                console.log('res', res)
+                this.load = false
+            }).catch(c=>{
+                this.load = false
+            }).finally(f=>{
+                this.load = false
+            });
         }
     }
 }
