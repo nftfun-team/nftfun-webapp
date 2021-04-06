@@ -17,15 +17,21 @@ const CHAIN_BROWSER = {
 }
 
 const IPFS_URL = 'https://ipfs.io/ipfs'
+const Report_URL = {
+    56: '',
+    97: 'https://api-test.nftfun.org'
+}
 
 const ContractsAddr = {
     56: {
         Master: '',
+        Oracle: '',
         MasterChef: '',
         Query: '',
     },
     97: {
         Master: '0x80EbE98696df632e40963E60c252c41aeA2d6404',
+        Oracle: '0xbe3d3708A6c50457834Fce564677e6cce72fdc8b',
         MasterChef: '0x2259003904D377fb57efa13Db2684C788B58BcE8',
         Query: '0xe589d34794856D85E50b087A2a9c174C6DeDB903',
     },
@@ -81,4 +87,4 @@ const ChainSymbol = {
     }
 }
 
-export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL};
+export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL};
