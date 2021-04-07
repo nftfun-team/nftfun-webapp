@@ -341,6 +341,7 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
   if (local) {
+
     let foundI = -1;
     $.contractHistory.forEach((d, i)=>{
       if(d.hash == item.hash) {
