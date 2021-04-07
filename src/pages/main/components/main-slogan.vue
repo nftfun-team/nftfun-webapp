@@ -1,43 +1,49 @@
 <template>
-<div class="_main-slogan f-pr">
-    <img src="~img/banner.png" alt="">
-    <div class="_container f-center-x f-pa">
-        <div class="_rt">
-            <h3>FUN Protocol</h3>
-            <h5>
-                DeFi&Gamefi&DAO Protocol prospering with NFT Market
-            </h5>
-            <h6><img src="~img/img-1.svg" alt=""></h6>
+    <div class="_main-slogan">
+        <div class="_container">
+            <div class="_lf">
+                <img src="~img/banner-2.png" alt="">
+            </div>
+            <div class="_rt">
+                <h3>FUN Protocol</h3>
+                <h5>
+                    DeFi&Gamefi&DAO Protocol prospering with NFT Market
+                </h5>
+                <h6><img src="~img/img-1.svg" alt=""></h6>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-export default {
-    name: 'main-slogan'
-}
+    export default {
+        name: 'main-slogan'
+    }
 </script>
 
 <style scoped lang="scss">
     ._main-slogan {
+        height: 580px;
         width: 100%;
-        & > img{
-            width: 100%;
-        }
-
+        background-image: url("~img/banner-1.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
         ._container {
             height: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            top: 0;
+            justify-content: space-between;
         }
-
+        ._lf {
+            width: 518px;
+            img {
+                max-width: 100%;
+            }
+        }
         ._rt {
             width: 400px;
         }
-
         h3 {
             font-size: 64px;
             line-height: 75px;
@@ -45,7 +51,6 @@ export default {
             font-weight: bold;
             margin-bottom: 30px;
         }
-
         h5 {
             font-size: 24px;
             line-height: 28px;
@@ -53,7 +58,6 @@ export default {
             font-weight: bold;
             margin-bottom: 30px;
         }
-
         h6 {
             text-align: center;
         }

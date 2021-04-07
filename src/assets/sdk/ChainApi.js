@@ -780,19 +780,12 @@ $.poolRewardApr = async (poolData, masterChefData, funPrice) => {
     return '0'
   }
 
-  let userBalanceValue = await $.getLpUsdValue($.getTokenAddress(poolData.tokenSymbol), $.getTokenAddress(poolData.baseSymbol), '1000000000000000000')
-  let userBalance = '1'
-  if(new BigNumber(userBalance).isGreaterThan(new BigNumber(poolData.totalStake))) {
-    userBalance = poolData.totalStake
-  }
-
   let aYearAmount = new BigNumber(masterChefData.funPerBlock).shiftedBy(-9).div($.getBlockSpanTime()).multipliedBy(24*3600*365)
   aYearAmount = aYearAmount.multipliedBy(poolData.weight).div(masterChefData.totalAllocPoint)
-  aYearAmount = aYearAmount.multipliedBy(userBalance).div(poolData.totalStake)
   let earned = aYearAmount.multipliedBy(funPrice)
   if(earned.isGreaterThan(0)) {
     console.log('poolRewardApr earned is ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice)
-    return earned.div(new BigNumber(userBalanceValue)).multipliedBy(100).toFixed(2)
+    return earned.div(new BigNumber(poolData.totalStakeValue)).multipliedBy(100).toFixed(2)
   }
   console.log('poolRewardApr earned is 0 ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice, aYearAmount.toFixed())
   return '0'

@@ -5,13 +5,18 @@
         :isRebase="time.down"
         :load="load"
         @rebase="rebaseClick"/>
+
     <Card :label="'PRICE TARGET'"
-        :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"
+        :value="targetPrice || '--'"
         :isRebase="true"/>
-    <Card :label="'NFT MARKET CAP'" :value="`$ ${nftMarketCap}` || '--'" :isRebase="true"/>
+
+    <Card :label="'NFT MARKET CAP'" :value="nftMarketCap || '--'" :isRebase="true"/>
+
     <Card :label="'FUN SUPPLY'" :value="totalSupply || '--'" :isRebase="true"/>
-    <Card :label="'ORACLE PRICE'" :value="`$ ${price}` || '--'" :isRebase="true"/>
-    <Card :label="'FUN MARKET CAP'" :value="`$ ${funMarketCap}` || '--'" :isRebase="true"/>
+
+    <Card :label="'ORACLE PRICE'" :value="price || '--'" :isRebase="true"/>
+
+    <Card :label="'FUN MARKET CAP'" :value="funMarketCap || '--'" :isRebase="true"/>
 
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
@@ -24,7 +29,6 @@
 </template>
 
 <script>
-
 import Card from './card.vue';
 import PriceChart from '../chart-data/price-chart';
 import SupplyChart from '../chart-data/supply-chart';
@@ -70,17 +74,8 @@ export default {
         upDate() {
             console.log('CountDown', count);
             WebSdk.connect().then(() => {
-                ChainApi.info().then(res => {
-                    console.log('info====>', res);
-                    this.coolDown = res.cooldown * 1000;
-                    this.price = res.price;
-                    this.totalSupply = res.totalSupply;
-                    this.targetPrice = res.targetPrice;
-                    this.funMarketCap = res.marketCap;
-                    this.nftMarketCap = res.nftCurrentValue;
-                });
-
-                ChainApi.report().then(res => {
+                this.getInfo();
+                this.$ChainApi.report().then(res => {
                     console.log('res.....', res)
                     if (res.code === 0 && res.data) {
                         this.data = res.data;
@@ -88,18 +83,6 @@ export default {
                     }
                 })
             });
-
-            if (new Date().getTime() < Number(this.coolDown) * 1000) {
-                this.timer = setInterval(() => {
-                    const date = count(new Date().getTime(), this.coolDown, () => {
-                        window.location.reload();
-                        clearInterval(this.timer)
-                    });
-                    this.time = {...date}
-                }, 1000)
-            } else {
-                this.time.down = false
-            }
         },
         tabClick($event) {
             this.active = $event.name;
@@ -158,13 +141,44 @@ export default {
                 xy: x.map((px, i) => ({x: px, y: y[i]})),
             }
         },
+        getInfo() {
+            this.$ChainApi.info().then(res => {
+                console.log('info====>', res);
+                this.coolDown = res.cooldown * 1000;
+                this.price = `$ ${this.verifyNumber(res.price)}`;
+                this.totalSupply = this.verifyNumber(res.totalSupply);
+                this.targetPrice = `$ ${this.verifyNumber(res.targetPrice.toFixed(2, 1))}`;
+                this.funMarketCap = `$ ${this.verifyNumber(res.marketCap)}`;
+                this.nftMarketCap = `$ ${this.verifyNumber(new BigNumber(res.nftCurrentValue).toFixed(2, 1))}`;
+                this.setCountDown();
+            });
+        },
+        setCountDown() {
+            if (new Date().getTime() < Number(this.coolDown) * 1000) {
+                this.timer = setInterval(() => {
+                    const date = count(new Date().getTime(), this.coolDown, () => {
+                        // window.location.reload();
+                        this.time.down = false;
+                        clearInterval(this.timer)
+                    });
+                    this.time = {...date}
+                }, 1000)
+            } else {
+                this.time.down = false
+            }
+        },
+        verifyNumber(val) {
+            return val.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, '$1,')
+        },
         rebaseClick() {
             this.load = true;
             ChainApi.rebase().then(res => {
                 console.log('res', res)
-                this.load = false
+                this.load = false;
+                this.getInfo();
             }).catch(c => {
-                this.load = false
+                this.load = false;
+                this.getInfo();
             }).finally(f => {
                 this.load = false
             });
