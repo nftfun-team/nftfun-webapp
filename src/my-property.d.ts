@@ -37,6 +37,7 @@ declare module 'vue/types/vue' {
         $modelOperating: (data: Operating) => {},
         $router: VueRouter
         $route: Route,
+        $ChainApi: any,
     }
 }
 

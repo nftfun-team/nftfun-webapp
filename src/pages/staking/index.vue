@@ -1,8 +1,8 @@
 <template>
     <div class="staking">
-        <div class="staking-info">
-            <staking-info/>
-        </div>
+<!--        <div class="staking-info">-->
+<!--            <staking-info/>-->
+<!--        </div>-->
         <section class="staking-cont">
             <deposit-item v-for="(item,index) in poolList" key="index" :data="item" />
         </section>
@@ -41,8 +41,9 @@
 <style lang="scss" scoped>
     .staking{
         width: 100%;
+        padding-bottom: 50px;
         section{
-            margin-top: 98px;
+            margin-top: 88px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
