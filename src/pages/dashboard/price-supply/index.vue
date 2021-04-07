@@ -5,7 +5,9 @@
     <Card :label="'DITTO SUPPLY'" :value="totalSupply || '--'"/>
     <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
     <Card :label="'DITTO MARKET CAP'" :value="`$ ${marketCap}` || '--'"/>
-    <Button :name="'REBASE'" class="_btn" :loading="load" :disabled="disabled" @click="rebaseClick"/>
+    <Button :name="'REBASE'" class="_btn" :loading="load"
+        :disabled="coolDown * 1000 < new Date().getTime()"
+        @click="rebaseClick"/>
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type"/>
@@ -25,7 +27,8 @@ import MktCapChart from '../chart-data/mktcap-chart';
 import Tabs from '../chart-data/tabs';
 import axios from 'axios';
 import WebSdk from '../../../utils/sdk'
-import ChainApi from '../../../assets/sdk/ChainApi'
+import ChainApi from '../../../assets/sdk/ChainApi';
+import CountDown from '../../../assets/js/countDown';
 
 export default {
     name: 'index',
@@ -38,12 +41,21 @@ export default {
             mktCapChartData: null,
             active: '1d',
             type: 'ABS',
+            coolDown: 0,
             price: null,
             totalSupply: null,
             targetPrice: 0,
             marketCap: null,
             load: false,
             disabled: false,
+            timer: null,
+            time: {
+                down: true,
+                d: '00',
+                h: '00',
+                m: '00',
+                s: '00'
+            },
         }
     },
     mounted() {
@@ -51,9 +63,11 @@ export default {
     },
     methods: {
         upDate() {
+            console.log(CountDown);
             WebSdk.connect().then(() => {
                 ChainApi.info().then(res => {
-                    console.log('info====>', res)
+                    console.log('info====>', res);
+                    this.coolDown = res.cooldown * 1000;
                     this.price = res.price;
                     this.totalSupply = res.totalSupply;
                     this.targetPrice = res.targetPrice;
@@ -68,7 +82,16 @@ export default {
                         }
                     }
                 });
-            })
+            });
+
+            this.timer = setInterval(() => {
+                const date = CountDown.count(new Date().getTime(), this.coolDown, () => {
+                    window.location.reload();
+                    clearInterval(this.timer)
+                });
+                this.time = {...date}
+            }, 1000)
+
         },
         tabClick($event) {
             this.active = $event.name;
@@ -129,12 +152,12 @@ export default {
         },
         rebaseClick() {
             this.load = true;
-            ChainApi.rebase().then(res=>{
+            ChainApi.rebase().then(res => {
                 console.log('res', res)
                 this.load = false
-            }).catch(c=>{
+            }).catch(c => {
                 this.load = false
-            }).finally(f=>{
+            }).finally(f => {
                 this.load = false
             });
         }
