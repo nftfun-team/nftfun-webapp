@@ -15,6 +15,7 @@
     <div style="display: flex; background: #fff; justify-content: space-between;">
       <div>
         <a href="javascript:;" class="btn btn-bg">Common</a>
+        <a href="javascript:;" class="btn btn-line" @click="test">test</a>
         <a href="javascript:;" class="btn btn-line" @click="disconnect">Logout</a>
         <a href="javascript:;" class="btn btn-line" @click="isChainConnected">isChainConnected</a>
         <a href="javascript:;" class="btn btn-line" @click="isConnected">isConnected</a>
@@ -86,9 +87,6 @@ export default {
     },
     handleChainChanged(chainId) {
       // console.log('test handleChainChanged:', Number(chainId))
-      if(ChainApi.web3()) {
-        SwapInstance.onInit(ChainApi.web3());
-      }
     },
     isChainConnected() {
       // console.log('isChainConnected:', ChainApi.isChainConnected())
@@ -109,12 +107,15 @@ export default {
       // console.log('connectWallet:', type)
       ChainApi.connect(type).then((acc) => {
             this.handleNewAccounts(acc);
-            SwapInstance.onInit(ChainApi.web3());
         }).finally(() => {
             // if (fn) {
             //     fn('success');
             // }
         });
+    },
+    test() {
+      let res = new BigNumber('0').shiftedBy(-18).toFixed()
+      console.log('test:', res)
     },
     disconnect(){
       ChainApi.disconnect();
@@ -177,7 +178,13 @@ export default {
         console.log(res);
       });
     },
-
+    rebase() {
+      ChainApi.rebase().then(receipt => {
+            console.log('rebase receipt:', receipt);
+        }).finally(() => {
+            console.log('rebase finally')
+        });
+    },
     deposit() {
       let amount = '0.001'
       if(this.balance) {
