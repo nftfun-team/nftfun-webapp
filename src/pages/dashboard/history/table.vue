@@ -31,7 +31,7 @@ export default {
         return {
             params: {
                 page: 1,
-                size: 1,
+                size: 10,
             },
             tableData: [],
             empty: false
@@ -47,7 +47,7 @@ export default {
                     if (res.code === 0 && res.data) {
                         console.log('history------>', res)
                         this.tableData = this.tableData.concat(res.data);
-                        this.empty = this.tableData.length > res.count
+                        this.empty = this.tableData.length >= res.count;
                     }
                 })
             })
