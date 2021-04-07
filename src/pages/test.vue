@@ -30,7 +30,7 @@
         <a href="javascript:;" class="btn btn-line" @click="allowance('LP')">allowance LP</a>
 
         <a href="javascript:;" class="btn btn-line" @click="getPools">getPools</a>
-        <a href="javascript:;" class="btn btn-line" @click="info">info</a>
+<!--        <a href="javascript:;" class="btn btn-line" @click="info">info</a>-->
         <a href="javascript:;" class="btn btn-line" @click="rebase">rebase</a>
         <a href="javascript:;" class="btn btn-line" @click="deposit">deposit</a>
         <a href="javascript:;" class="btn btn-line" @click="withdraw">withdraw</a>

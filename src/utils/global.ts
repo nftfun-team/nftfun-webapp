@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import ChainApi from "@/assets/sdk/ChainApi.js";
 (window as any).Vue = Vue;
 
 // @ts-ignore
@@ -18,6 +19,7 @@ const install = function(Vue:any, opts = {}) {
     Vue.prototype.$serviceApi = service;
     Vue.prototype.$event = new Vue();
     Vue.prototype.$load = new Loadings();
+    Vue.prototype.$ChainApi = ChainApi;
 };
 
 /* istanbul ignore if */
