@@ -341,7 +341,7 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
   // console.log('handleEventLog item:', item)
   const local = localStorage.getItem(tableName);
   if (local) {
-    $.contractHistory = JSON.parse(local);
+    $.contractHistory = [...JSON.parse(local)];
     $.contractHistory = $.contractHistory.filter((d)=> {
       if(d.hash != item.hash) {
         return true;
@@ -350,7 +350,6 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
     $.contractHistory.unshift(item);
     localStorage.setItem(tableName, JSON.stringify($.contractHistory));
   } else {
-    $.contractHistory = [];
     $.contractHistory.unshift(item);
     localStorage.setItem(tableName, JSON.stringify($.contractHistory));
   }
@@ -360,7 +359,7 @@ $.loadContractHistory = () => {
   let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
   const local = localStorage.getItem(tableName);
   if (local) {
-    $.contractHistory = JSON.parse(local);
+    $.contractHistory = [...JSON.parse(local)];
   }
 }
 
