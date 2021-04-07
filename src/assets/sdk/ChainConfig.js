@@ -22,6 +22,11 @@ const Report_URL = {
     97: 'https://api-test.nftfun.org'
 }
 
+const Swap_URL = {
+    56: 'https://exchange.pancakeswap.finance/#',
+    97: 'https://www.bakeryswap.org/#'
+}
+
 const ContractsAddr = {
     56: {
         Master: '',
@@ -87,4 +92,4 @@ const ChainSymbol = {
     }
 }
 
-export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL};
+export {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL, Swap_URL};

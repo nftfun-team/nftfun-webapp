@@ -10,7 +10,7 @@ import MasterABI from './abi/Master.json'
 import MasterChefABI from './abi/MasterChef.json'
 import OracleABI from './abi/Oracle.json'
 import QueryABI from './abi/Query.json'
-import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL} from './ChainConfig.js'
+import {CHAIN_RPC, CHAIN_BROWSER, Tokens, Pools, ContractsAddr, ChainSymbol, IPFS_URL, Report_URL, Swap_URL} from './ChainConfig.js'
 
 var InpageProvider = {}
 let $ = InpageProvider;
@@ -478,6 +478,14 @@ $.getEtherscanAddress = (address) => {
 
 $.getEtherscanTx = (tx) => {
   return CHAIN_BROWSER[getNetworkVersion()] + "/tx/" + tx
+}
+
+$.getSwapTradeUrl = (tokenIn, tokenOut) => {
+  return Swap_URL[getNetworkVersion()] + '/swap?inputCurrency='+tokenIn+'&outputCurrency='+tokenOut
+}
+
+$.getSwapAddLpUrl = (token0, token1) => {
+  return Swap_URL[getNetworkVersion()] + '/add/'+token0+'/'+token1
 }
 
 function transactionReceiptAsync(hash, resolve, reject) {
