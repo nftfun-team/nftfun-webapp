@@ -1,4 +1,4 @@
-function count(startTime, endTime, cb) {
+export default function count(startTime, endTime, cb) {
     const now = new Date(startTime).getTime();
     const end = new Date(endTime).getTime();
     const leftTime = end - now;

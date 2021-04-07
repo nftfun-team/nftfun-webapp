@@ -6,7 +6,7 @@
     <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
     <Card :label="'DITTO MARKET CAP'" :value="`$ ${marketCap}` || '--'"/>
     <Button :name="'REBASE'" class="_btn" :loading="load"
-        :disabled="coolDown * 1000 < new Date().getTime()"
+        :disabled="Number(coolDown) * 1000 < Number(new Date().getTime())"
         @click="rebaseClick"/>
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
@@ -28,7 +28,7 @@ import Tabs from '../chart-data/tabs';
 import axios from 'axios';
 import WebSdk from '../../../utils/sdk'
 import ChainApi from '../../../assets/sdk/ChainApi';
-import CountDown from '../../../assets/js/countDown';
+import count from '../../../assets/js/countDown';
 
 export default {
     name: 'index',
@@ -42,10 +42,10 @@ export default {
             active: '1d',
             type: 'ABS',
             coolDown: 0,
-            price: null,
-            totalSupply: null,
+            price: 0,
+            totalSupply: 0,
             targetPrice: 0,
-            marketCap: null,
+            marketCap: 0,
             load: false,
             disabled: false,
             timer: null,
@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         upDate() {
-            console.log(CountDown);
+            console.log('CountDown', count);
             WebSdk.connect().then(() => {
                 ChainApi.info().then(res => {
                     console.log('info====>', res);
@@ -84,14 +84,15 @@ export default {
                 });
             });
 
-            this.timer = setInterval(() => {
-                const date = CountDown.count(new Date().getTime(), this.coolDown, () => {
-                    window.location.reload();
-                    clearInterval(this.timer)
-                });
-                this.time = {...date}
-            }, 1000)
-
+            if (new Date().getTime() < Number(this.coolDown) * 1000) {
+                this.timer = setInterval(() => {
+                    const date = count(new Date().getTime(), this.coolDown, () => {
+                        window.location.reload();
+                        clearInterval(this.timer)
+                    });
+                    this.time = {...date}
+                }, 1000)
+            }
         },
         tabClick($event) {
             this.active = $event.name;
