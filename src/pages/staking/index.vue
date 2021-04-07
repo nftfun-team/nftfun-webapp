@@ -23,15 +23,13 @@
         private poolList: Array<any> = []
 
         mounted(){
-            // this.$formatMoney('1212.1212')
-
             WebChina.connect().then(data => {
                 this.$ChainApi.getPools()
                     .then( res => {
                         console.log(res)
                         this.poolList = res
                     })
-                    .catch(e => { this.$load.tipErrorShow('获取合约列表失败'); console.error(e)})
+                    .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error(e)})
                     .finally(_ => this.$load.hideLoading())
             }).catch(_ => this.$load.hideLoading())
         }
