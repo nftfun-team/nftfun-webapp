@@ -30,6 +30,8 @@ $.poolInfoMapWithPair = {}
 $.pairsToken = {}
 $.pools = {}
 $.contractHistory = []
+$.funPrice = '0'
+$.masterChefData = {}
 let web3Util = new Web3Util()
 
 let chainStatusHandles = []
@@ -769,7 +771,7 @@ $.poolRewardApr = async (poolData, masterChefData, funPrice) => {
   return '0'
 }
 
-$.updatePool = async(pid, masterChefData, price) => {
+$.updatePool = async(pid) => {
   let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
   let poolInfo = await getContractMethodsByName('MasterChef').poolInfo(pid).call()
   let pendingFun = await $.pendingFun(pid)
@@ -780,7 +782,7 @@ $.updatePool = async(pid, masterChefData, price) => {
   $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
   $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), totalStake)
   $.pools[pid].weight = poolInfo.allocPoint
-  $.pools[pid].apr = await $.poolRewardApr($.pools[pid], masterChefData, price)
+  $.pools[pid].apr = await $.poolRewardApr($.pools[pid], $.masterChefData, $.funPrice)
   $.pools[pid].userAllowance = await $.allowance($.pools[pid].address, $.getContractAddr('MasterChef'))
   console.log('updatePool:', $.pools[pid])
   return $.pools[pid]
@@ -788,8 +790,8 @@ $.updatePool = async(pid, masterChefData, price) => {
 
 $.getPools = async() => {
   let pools = Pools[getNetworkVersion()]
-  let price = new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2)
-  let masterChefData = {
+  $.funPrice = new BigNumber(await getContractMethodsByName('Oracle').getCurrentRate().call()).shiftedBy(-18).toFixed(2)
+  $.masterChefData = {
     totalAllocPoint: await getContractMethodsByName('MasterChef').totalAllocPoint().call(),
     totalSupply: await getContractMethodsByName('MasterChef').totalSupply().call(),
     funPerBlock: await getContractMethodsByName('MasterChef').funPerBlock().call(),
