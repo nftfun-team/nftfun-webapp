@@ -60,7 +60,7 @@ export default {
                     top: 35,
                     itemWidth: 18,
                     itemHeight: 18,
-                    itemGap: 25, // 设置legend的间距
+                    itemGap: 25,
                     formatter: '{name}',
                     textStyle: {
                         color: '#000000',
@@ -87,11 +87,11 @@ export default {
                             position: 'center',
                             normal: {
                                 show: true,
-                                position: 'inner', //标签的位置
+                                position: 'inner',
                                 textStyle: {
                                     fontFamily: 'BrandonGrotesqueWebRegular',
                                     fontWeight: 'bold',
-                                    fontSize: 16,    //文字的字体大小
+                                    fontSize: 16,
                                 },
                                 formatter: '{d}%'
                             }

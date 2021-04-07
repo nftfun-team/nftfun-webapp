@@ -21,7 +21,6 @@ export default {
             handler(val) {
                 if (val && val !== null) {
                     this.setOptions();
-                    console.log('走到这里了吗。。。。。', val)
                 }
             },
             immediate: true,
@@ -31,7 +30,7 @@ export default {
     methods: {
         setOptions() {
             const type = this.type;
-            console.log('设置数据', this.data, type)
+            // console.log('data', this.data, type)
             let XList = this.data.x;
             let YList = this.data.y;
 
@@ -55,7 +54,6 @@ export default {
                     formatter: function (params) {
                         var result = params[0].name;
                         params.forEach(function (item) {
-                            console.log('item===>', item)
                             result += '<br/>';
                             result += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background:' + item.color + '"></span>';
                             result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : '$' + new BigNumber(item.value).toFixed(2));
@@ -77,10 +75,10 @@ export default {
                     },
                     splitLine: {
                         lineStyle: {
-                            type: 'dashed',    //设置网格线类型 dotted：虚线   solid:实线
+                            type: 'dashed',
                             color: 'rgba(0, 0, 0, 0.3)'
                         },
-                        show: true //隐藏或显示
+                        show: true
                     }
                 },
                 yAxis: {
@@ -88,36 +86,35 @@ export default {
                     min: YList.max(),
                     max: YList.min(),
                     axisLine: {
-                        show: true, //是否展示y轴坐标竖线
+                        show: true,
                         lineStyle: {
                             color: '#9a9b96',
                             width: 1
                         }
                     },
-                    splitLine: {    //网格线
+                    splitLine: {
                         lineStyle: {
-                            type: 'dashed',    //设置网格线类型 dotted：虚线   solid:实线
+                            type: 'dashed',
                             color: 'rgba(0, 0, 0, 0.3)'
                         },
-                        show: true //隐藏或显示
+                        show: true
                     },
-                    // axisTick: {show: false}, //是否展示y轴坐标刻度
                     axisLabel: {
                         color: '#9a9b96',
                         fontsize: '14px',
                         formatter: function (value) {
                             return type === '%' ? new BigNumber(value).toFixed(2) + '%' : '$' + new BigNumber(value).toFixed(2);
-                        }  //刻度标签的内容格式器，支持字符串模板和回调函数两种形式，按照自己需求设置
+                        }
                     },
                 },
                 series: [
                     {
                         type: 'line',
                         stack: '总量',
-                        smooth: true, // 曲线平滑
+                        smooth: true,
                         areaStyle: {
                             normal: {
-                                color: 'rgba(99, 216, 241, 0.3)' //改变区域颜色
+                                color: 'rgba(99, 216, 241, 0.3)'
                             },
                         },
                         emphasis: {
@@ -126,9 +123,9 @@ export default {
                         showSymbol: false,
                         itemStyle: {
                             normal: {
-                                color: '#67DEF8', //改变折线点的颜色
+                                color: '#67DEF8',
                                 lineStyle: {
-                                    color: '#67DEF8' //改变折线颜色
+                                    color: '#67DEF8'
                                 },
                             }
                         },
