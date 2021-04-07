@@ -211,6 +211,7 @@ export default {
                         line-height: 19px;
                         color: #686666;
                         margin-bottom: 32px;
+                        font-weight: bold;
 
                         span {
                             color: #000000;

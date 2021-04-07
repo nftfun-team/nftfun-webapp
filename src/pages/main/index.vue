@@ -13,7 +13,7 @@
         <MainSlogan/>
         <MainIncludes/>
         <MainToken/>
-        <MainDescribe :title="title1" :subTitle="subTitle1"/>
+        <MainFaq/>
     </div>
     <Footer/>
 </div>
@@ -25,19 +25,13 @@ import Logo from '@/components/logo/index.vue';
 import Button from '@/components/button/index.vue';
 import Footer from '@/components/footer/index.vue';
 import MainSlogan from './components/main-slogan.vue';
-import MainDescribe from './components/main-describe.vue';
+import MainFaq from './components/main-faq';
 import MainIncludes from './components/main-includes';
 import MainToken from './components/main-token'
 
 export default {
     name: 'index',
-    components: {NavLink, Logo, Button, MainSlogan, MainDescribe, Footer, MainIncludes, MainToken},
-    data() {
-        return {
-            title1: 'Elastic supply',
-            subTitle1: 'Our supply is like ditto. It has the ability to rearrange its entire cell structure according to the current price.'
-        }
-    }
+    components: {NavLink, Logo, Button, MainSlogan, MainFaq, Footer, MainIncludes, MainToken},
 }
 </script>
 
