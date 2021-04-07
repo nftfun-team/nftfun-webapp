@@ -31,7 +31,7 @@ export default {
         return {
             params: {
                 page: 1,
-                size: 1,
+                size: 10,
             },
             tableData: [],
             empty: false
