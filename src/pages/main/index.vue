@@ -1,11 +1,10 @@
 <template>
-
 <div class="_main">
     <div class="_main-header">
         <div class="_container">
             <Logo/>
             <NavLink/>
-            <Button :name="'BUY NFTFUN'"/>
+            <Button :name="'BUY NFTFUN'" :loading="loading" @click="buyClick"/>
         </div>
     </div>
 
@@ -27,11 +26,27 @@ import Footer from '@/components/footer/index.vue';
 import MainSlogan from './components/main-slogan.vue';
 import MainFaq from './components/main-faq';
 import MainIncludes from './components/main-includes';
-import MainToken from './components/main-token'
+import MainToken from './components/main-token';
+import WebSdk from '../../utils/sdk'
 
 export default {
     name: 'index',
     components: {NavLink, Logo, Button, MainSlogan, MainFaq, Footer, MainIncludes, MainToken},
+    data() {
+        return {
+            loading: false
+        }
+    },
+    methods: {
+        buyClick() {
+            this.loading = true;
+            WebSdk.connect().then(() => {
+                const url = this.$ChainApi.getSwapTradeUrl(this.$ChainApi.getTokenAddress('USDT'), this.$ChainApi.getTokenAddress('FUN'));
+                this.loading = false;
+                window.open(url)
+            })
+        }
+    }
 }
 </script>
 

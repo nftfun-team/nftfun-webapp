@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import ChinaApi from "@/assets/sdk/ChainApi"
 
 const filters:any = {
     convert: (val:any) => {
@@ -10,9 +9,18 @@ const filters:any = {
         return (new Date(val) as any).format(format)
     },
 
-    blockToTimes: async (block:string | number) => {
-        const _currentBlock = await ChinaApi.getBlockNumber();
-        return ChinaApi.getBlockToTimes(_currentBlock, block)
+    toFixed: (value, decimal = 0, shiftBy = false, fixed = 4) => {
+        if (value === '' || value === undefined || isNaN(value)) {
+            return '--';
+        }
+        let res = shiftBy
+            ? window.BigNumber(value).shiftedBy(-decimal).toFixed(fixed)
+            : window.BigNumber(value).toFixed(decimal, 1);
+        let min = window.BigNumber(1).shiftedBy(-fixed).toFixed();
+        if (Number(value) > 0 && res < min) {
+            res = '< ' + min;
+        }
+        return res;
     },
 
     hash: (txHash:any, length: number = 4) => {
