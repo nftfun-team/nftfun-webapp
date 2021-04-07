@@ -9,7 +9,7 @@
         <div class="deposit-item-over">
             <h4>Overview </h4>
             <p class="deposit-item-over-line">APR <span class="f-fr">{{data.apr}}%</span></p>
-            <p class="deposit-item-over-line">Total Deposits <span class="f-fr">{{data.totalStakeValue}} USD</span></p>
+            <p class="deposit-item-over-line">Total Deposits <span class="f-fr">{{data.totalStakeValue | toFixed(2)}} USD</span></p>
         </div>
 
         <div class="deposit-item-handle">
@@ -36,7 +36,7 @@
                     </div>
                     <el-button class="deposit-item-handle-cont-btn f-pm-family" :loading="withdrawLoad" :disabled="!withdrawNumber || Number(withdrawNumber) == 0" @click="withdraw()">Withdraw</el-button>
                 </template>
-                <p class="deposit-item-handle-cont-link f-cursor">Get Liquidity Pool Tokens</p>
+                <p class="deposit-item-handle-cont-link f-cursor" @click="jump()">Get Liquidity Pool Tokens</p>
             </div>
         </div>
 
@@ -72,7 +72,6 @@
         private depositLoad: boolean = false;
         private withdrawLoad: boolean = false;
         private claimLoad: boolean = false;
-
 
         private approve(token:string): void{
             this.approveLoad = true;
@@ -152,6 +151,10 @@
             }).finally(() => {
                 this.claimLoad = false;
             });
+        }
+
+        private jump(): void{
+            window.open(this.$ChainApi.getSwapAddLpUrl(this.$ChainApi.getTokenAddress(this.data.baseSymbol), this.$ChainApi.getTokenAddress(this.data.tokenSymbol)))
         }
     }
 </script>
