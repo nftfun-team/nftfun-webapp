@@ -6,6 +6,9 @@
             <h3>{{el.title}}</h3>
             <p v-html="el.txt"></p>
         </div>
+        <div class="_faq-more">
+           <span>Show More</span>
+        </div>
     </div>
 </div>
 </template>
@@ -70,6 +73,19 @@ export default {
             font-weight: 300;
             ::v-deep a {
                 color: #EF8969;
+            }
+        }
+
+        ._faq-more {
+            font-size: 18px;
+            line-height: 21px;
+            color: #EF8969;
+            font-weight: 300;
+            height: 82px;
+            display: flex;
+            align-items: center;
+            span {
+                cursor: pointer;
             }
         }
     }
