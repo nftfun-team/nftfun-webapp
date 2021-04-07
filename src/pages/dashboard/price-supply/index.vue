@@ -1,6 +1,6 @@
 <template>
 <div class="_price-supply _flex _justify-content-center">
-    <Card :label="'REBASE COOLDOWN'" :value="'0d:3h:29m:51s'"/>
+    <Card :label="'REBASE COOLDOWN'" :value="`${time.d}d:${time.h}h:${time.m}m:${time.s}s`"/>
     <Card :label="'ORACLE PRICE'" :value="`$ ${price}` || '--'"/>
     <Card :label="'DITTO SUPPLY'" :value="totalSupply || '--'"/>
     <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
