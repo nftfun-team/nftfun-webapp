@@ -24,8 +24,8 @@
         <a href="javascript:;" class="btn btn-line" @click="onChainChanged">onChainChanged</a>
         <a href="javascript:;" class="btn btn-line" @click="onAccountsChanged">onAccountsChanged</a>
 
-        <a href="javascript:;" class="btn btn-line" @click="balanceOf('FUN')">balanceOf FUN</a>
-        <a href="javascript:;" class="btn btn-line" @click="tokenBalanceOf('FUN')">tokenBalanceOf FUN</a>
+        <a href="javascript:;" class="btn btn-line" @click="balanceOf('LP')">balanceOf LP</a>
+        <a href="javascript:;" class="btn btn-line" @click="tokenBalanceOf('LP')">tokenBalanceOf LP</a>
         <a href="javascript:;" class="btn btn-line" @click="approve('LP')">approve LP</a>
         <a href="javascript:;" class="btn btn-line" @click="allowance('LP')">allowance LP</a>
 
@@ -35,6 +35,11 @@
         <a href="javascript:;" class="btn btn-line" @click="deposit">deposit</a>
         <a href="javascript:;" class="btn btn-line" @click="withdraw">withdraw</a>
         <a href="javascript:;" class="btn btn-line" @click="harvest">harvest</a>
+      </div>
+      <div>
+        <a href="javascript:;" class="btn btn-bg">Manage</a>
+        <input name="nftCurrentValue" v-model="nftCurrentValue">
+        <a href="javascript:;" class="btn btn-line" @click="updateNftCurrentValue">updateNftCurrentValue</a>
       </div>
     </div>
   </div>
@@ -54,6 +59,7 @@ export default {
     return {
       walletAddress: '',
       balance:'',
+      nftCurrentValue: '0'
     }
   },
   created() {
@@ -70,9 +76,7 @@ export default {
       alert(navigator.userAgent)
     },
     init() {
-      if (this.isConnect) {
-        this.queryPoolList()
-      }
+      this.connectWallet()
     },
     connectChain() {
       this.onChainChanged()
@@ -104,9 +108,13 @@ export default {
     	});
   	},
     connectWallet(type){
-      // console.log('connectWallet:', type)
+      console.log('connectWallet:', type)
       ChainApi.connect(type).then((acc) => {
             this.handleNewAccounts(acc);
+            ChainApi.nftCurrentValue().then(res=>{
+              this.nftCurrentValue = res;
+              console.log('nftCurrentValue:', res)
+            })
         }).finally(() => {
             // if (fn) {
             //     fn('success');
@@ -136,6 +144,12 @@ export default {
                // ...this.state
            // };
         //});
+    },
+    updateNftCurrentValue() {
+      console.log('nftCurrentValue:', this.nftCurrentValue)
+      ChainApi.updateNftCurrentValue(this.nftCurrentValue).then((res) => {
+    		console.log(res);
+    	});
     },
     getBalance() {
       ChainApi.getBalance().then((res) => {
@@ -186,7 +200,7 @@ export default {
         });
     },
     deposit() {
-      let amount = '0.001'
+      let amount = '0.00001'
       if(this.balance) {
         amount = new BigNumber(this.balance).dividedBy(10).toFixed(0)
       }
@@ -197,7 +211,7 @@ export default {
         });
     },
     withdraw() {
-      let amount = '0.001'
+      let amount = '0.00001'
       if(this.balance) {
         amount = new BigNumber(this.balance).dividedBy(20).toFixed(0)
       }
