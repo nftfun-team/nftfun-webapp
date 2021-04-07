@@ -35,11 +35,11 @@ export default {
             let YList = this.data.y;
 
             Array.prototype.max = function () {
-                return Math.max.apply({}, this).toFixed(2)
+                return Math.max.apply({}, this)
             };
 
             Array.prototype.min = function () {
-                return Math.min.apply({}, this).toFixed(2)
+                return Math.min.apply({}, this)
             };
 
             this.options = {
