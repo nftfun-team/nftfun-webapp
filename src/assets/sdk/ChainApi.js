@@ -779,7 +779,7 @@ $.updatePool = async(pid, masterChefData, price) => {
   $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
   $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), totalStake)
   $.pools[pid].weight = poolInfo.allocPoint
-  await $.poolRewardApr($.pools[pid], masterChefData, price)
+  $.pools[pid].apr = await $.poolRewardApr($.pools[pid], masterChefData, price)
   console.log('updatePool:', $.pools[pid])
   return $.pools[pid]
 }
