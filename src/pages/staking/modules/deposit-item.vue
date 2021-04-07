@@ -67,13 +67,9 @@
 
 
         private approve(token:string): void{
-            ChainApi.awaitTransactionMined("hash")
-            return
             this.approveLoad = true;
             let platform = ChainApi.getContractAddr('MasterChef')
-            ChainApi.approve(token, platform).then(hash => {
-                return ChainApi.awaitTransactionMined(hash);
-            }).then(tx => {
+            ChainApi.approve(token, platform).then(tx => {
                 console.log('approve tx:', tx);
             }).finally(() => {
                 this.approveLoad = false;

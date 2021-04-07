@@ -170,9 +170,7 @@ export default {
     approve(name) {
       let token = Pools[ChainApi.chainId][0].address
       let platform = ChainApi.getContractAddr('MasterChef')
-      ChainApi.approve(token, platform).then(hash => {
-            return ChainApi.awaitTransactionMined(hash);
-        }).then(tx => {
+      ChainApi.approve(token, platform).then(tx => {
             console.log('approve tx:', tx);
         }).finally(() => {
             console.log('approve finally')
