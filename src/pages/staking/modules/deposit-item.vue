@@ -73,12 +73,24 @@
         private withdrawLoad: boolean = false;
         private claimLoad: boolean = false;
 
-
         private approve(token:string): void{
             this.approveLoad = true;
             let platform = this.$ChainApi.getContractAddr('MasterChef')
             this.$ChainApi.approve(token, platform).then(res => {
-                if(res.status) this.approveFlag = true
+                if(res.status){
+                    this.$notify({
+                        title: 'Approve',
+                        message: 'Approve Success',
+                        type: 'success'
+                    });
+                    this.approveFlag = true
+                } else {
+                    this.$notify({
+                        title: 'Approve',
+                        message: 'Approve Error',
+                        type: 'error'
+                    });
+                }
             }).finally(() => {
                 this.approveLoad = false;
             });
@@ -99,6 +111,11 @@
             let amount = this.$BigNumber(this.depositNumber).toFixed()
 
             this.$ChainApi.deposit(0, amount).then(receipt => {
+                this.$notify({
+                    title: 'Deposit',
+                    message: 'Deposit Success',
+                    type: 'success'
+                });
                 this.$ChainApi.updatePool(this.data.pid)
             }).finally(() => {
                 this.depositLoad = false;
@@ -108,6 +125,11 @@
             this.withdrawLoad = true;
             let amount = this.$BigNumber(this.withdrawNumber).toFixed()
             this.$ChainApi.withdraw(0, amount).then(receipt => {
+                this.$notify({
+                    title: 'Withdraw',
+                    message: 'Withdraw Success',
+                    type: 'success'
+                });
                 this.$ChainApi.updatePool(this.data.pid)
             }).finally(() => {
                 this.withdrawLoad = false;
@@ -117,6 +139,11 @@
         private harvest(): void{
             this.claimLoad = true;
             this.$ChainApi.harvest(this.data.pid).then(receipt => {
+                this.$notify({
+                    title: 'Claim',
+                    message: 'Claim Success',
+                    type: 'success'
+                });
                 this.$ChainApi.updatePool(this.data.pid)
             }).finally(() => {
                 this.claimLoad = false;
