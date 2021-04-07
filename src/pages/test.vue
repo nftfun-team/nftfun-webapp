@@ -186,7 +186,11 @@ export default {
       });
 
     },
-    
+    info() {
+      ChainApi.info().then(res => {
+        console.log(res);
+      });
+    },
     getPools() {
       ChainApi.getPools().then(res => {
         console.log(res);
