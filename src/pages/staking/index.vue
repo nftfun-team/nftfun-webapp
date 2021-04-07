@@ -4,7 +4,7 @@
 <!--            <staking-info/>-->
 <!--        </div>-->
         <section class="staking-cont">
-            <deposit-item v-for="(item,index) in poolList" key="index" :data="item" />
+            <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
         </section>
     </div>
 </template>
@@ -13,7 +13,6 @@
     import { Component, Vue } from "vue-property-decorator";
     import StakingInfo from './modules/staking-info.vue'
     import DepositItem from './modules/deposit-item.vue'
-    import ChinaApi from "@/assets/sdk/ChainApi.js";
     import WebChina from "utils/sdk"
 
     @Component({
@@ -21,12 +20,11 @@
         components: {StakingInfo, DepositItem}
     })
     export default class Staking extends Vue{
-        private title: string | undefined = 'Staking'
         private poolList: Array<any> = []
 
         mounted(){
             WebChina.connect().then(data => {
-                ChinaApi.getPools()
+                this.$ChainApi.getPools()
                     .then( res => {
                         console.log(res)
                         this.poolList = res
