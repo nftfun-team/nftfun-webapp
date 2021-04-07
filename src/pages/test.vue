@@ -30,7 +30,7 @@
         <a href="javascript:;" class="btn btn-line" @click="allowance('LP')">allowance LP</a>
 
         <a href="javascript:;" class="btn btn-line" @click="getPools">getPools</a>
-        <a href="javascript:;" class="btn btn-line" @click="info">info</a>
+<!--        <a href="javascript:;" class="btn btn-line" @click="info">info</a>-->
         <a href="javascript:;" class="btn btn-line" @click="rebase">rebase</a>
         <a href="javascript:;" class="btn btn-line" @click="deposit">deposit</a>
         <a href="javascript:;" class="btn btn-line" @click="withdraw">withdraw</a>
@@ -170,9 +170,7 @@ export default {
     approve(name) {
       let token = Pools[ChainApi.chainId][0].address
       let platform = ChainApi.getContractAddr('MasterChef')
-      ChainApi.approve(token, platform).then(hash => {
-            return ChainApi.awaitTransactionMined(hash);
-        }).then(tx => {
+      ChainApi.approve(token, platform).then(tx => {
             console.log('approve tx:', tx);
         }).finally(() => {
             console.log('approve finally')
