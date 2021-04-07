@@ -345,7 +345,7 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
     $.contractHistory.forEach((d, i)=>{
       if(d.hash == item.hash) {
         foundI = i
-        break
+        return
       }
     })
     if(foundI > -1) {
@@ -825,7 +825,7 @@ $.getPools = async() => {
     d.totalStakeValue = '--'
     d.weight = '--'
     $.pools[d.pid] = d
-    $.updatePool(d.pid, masterChefData, price)
+    $.updatePool(d.pid)
   })
   return pools
 }
@@ -835,12 +835,12 @@ $.rebase = async() => {
 }
 
 $.deposit = async(pid, amount) => {
-  amount = new BigNumber(amount).shiftedBy(18).toFixed() 
+  amount = new BigNumber(amount).shiftedBy(18).toFixed()
   return await executeContractByName('MasterChef', 'deposit', 0, [pid, amount])
 }
 
 $.withdraw = async(pid, amount) => {
-  amount = new BigNumber(amount).shiftedBy(18).toFixed() 
+  amount = new BigNumber(amount).shiftedBy(18).toFixed()
   return await executeContractByName('MasterChef', 'withdraw', 0, [pid, amount])
 }
 

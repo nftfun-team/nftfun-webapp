@@ -74,7 +74,7 @@
         }
 
         handleChainStatus(status) {
-            console.error('test handleChainStatus:', status);
+            // console.error('test handleChainStatus:', status);
             if (status === 2) {
                 //console.log('连接成功');
                 // this.$store.commit('isInstall', true);
