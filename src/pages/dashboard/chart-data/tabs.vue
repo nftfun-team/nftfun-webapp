@@ -3,7 +3,7 @@
     <h3>{{title}}</h3>
     <div class="_chart-tabs">
         <div>
-            <span :class="{'active': active==='1d'}" @click="tabClick('1d', type)">1 DAY</span>
+            <span :class="{'active': active==='7d'}" @click="tabClick('7d', type)">7 DAY</span>
             <span :class="{'active': active==='30d'}" @click="tabClick('30d', type)">30 DAY</span>
             <span :class="{'active': active==='all'}" @click="tabClick('all', type)">ALL</span>
         </div>
