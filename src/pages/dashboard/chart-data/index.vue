@@ -55,6 +55,7 @@ export default {
                     formatter: function (params) {
                         var result = params[0].name;
                         params.forEach(function (item) {
+                            console.log('item===>', item)
                             result += '<br/>';
                             result += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background:' + item.color + '"></span>';
                             result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : '$' + new BigNumber(item.value).toFixed(2));
@@ -65,24 +66,38 @@ export default {
                 xAxis: {
                     type: 'category',
                     data: XList,
-                    boundaryGap: false
+                    boundaryGap: false,
+                    axisLabel: {
+                        color: '#9a9b96'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#9a9b96'
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed',    //设置网格线类型 dotted：虚线   solid:实线
+                            color: 'rgba(0, 0, 0, 0.3)'
+                        },
+                        show: true //隐藏或显示
+                    }
                 },
                 yAxis: {
                     type: 'value',
                     min: YList.max(),
                     max: YList.min(),
-                    // splitLine: {show: false},
                     axisLine: {
                         show: true, //是否展示y轴坐标竖线
                         lineStyle: {
-                            color: '#00fff2',
+                            color: '#9a9b96',
                             width: 1
                         }
                     },
                     splitLine: {    //网格线
                         lineStyle: {
                             type: 'dashed',    //设置网格线类型 dotted：虚线   solid:实线
-                            color: 'red'
+                            color: 'rgba(0, 0, 0, 0.3)'
                         },
                         show: true //隐藏或显示
                     },
@@ -100,29 +115,21 @@ export default {
                         type: 'line',
                         stack: '总量',
                         smooth: true, // 曲线平滑
-                        areaStyle: {},
+                        areaStyle: {
+                            normal: {
+                                color: 'rgba(99, 216, 241, 0.3)' //改变区域颜色
+                            },
+                        },
                         emphasis: {
                             focus: 'series'
                         },
                         showSymbol: false,
                         itemStyle: {
-                            'color': {
-                                'type': 'linear',
-                                'x': 0,
-                                'y': 0,
-                                'x2': 0,
-                                'y2': 1,
-                                'colorStops': [
-                                    {
-                                        'offset': 0,
-                                        'color': '#00fff2'
-                                    },
-                                    {
-                                        'offset': 1,
-                                        'color': '#F3CDC7'
-                                    }
-                                ],
-                                'globalCoord': false
+                            normal: {
+                                color: '#67DEF8', //改变折线点的颜色
+                                lineStyle: {
+                                    color: '#67DEF8' //改变折线颜色
+                                },
                             }
                         },
                         data: YList

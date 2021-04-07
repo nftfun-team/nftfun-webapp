@@ -57,6 +57,6 @@ export default {
     }
 
     ._dashboard {
-        padding-top: 84px;
+        padding: 84px 0;
     }
 </style>
