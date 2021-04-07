@@ -1,6 +1,9 @@
 <template>
 <div class="_main-slogan">
     <div class="_container">
+        <div class="_lf">
+            <img src="~img/banner-2.png" alt="">
+        </div>
         <div class="_rt">
             <h3>FUN Protocol</h3>
             <h5>
@@ -22,7 +25,7 @@ export default {
     ._main-slogan {
         height: 580px;
         width: 100%;
-        background-image: url("~img/banner.png");
+        background-image: url("~img/banner-1.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
@@ -31,7 +34,15 @@ export default {
             height: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
+        }
+
+        ._lf {
+            width: 518px;
+
+            img {
+                max-width: 100%;
+            }
         }
 
         ._rt {
