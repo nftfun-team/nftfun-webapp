@@ -24,8 +24,8 @@
         <a href="javascript:;" class="btn btn-line" @click="onChainChanged">onChainChanged</a>
         <a href="javascript:;" class="btn btn-line" @click="onAccountsChanged">onAccountsChanged</a>
 
-        <a href="javascript:;" class="btn btn-line" @click="balanceOf('FUN')">balanceOf FUN</a>
-        <a href="javascript:;" class="btn btn-line" @click="tokenBalanceOf('FUN')">tokenBalanceOf FUN</a>
+        <a href="javascript:;" class="btn btn-line" @click="balanceOf('LP')">balanceOf LP</a>
+        <a href="javascript:;" class="btn btn-line" @click="tokenBalanceOf('LP')">tokenBalanceOf LP</a>
         <a href="javascript:;" class="btn btn-line" @click="approve('LP')">approve LP</a>
         <a href="javascript:;" class="btn btn-line" @click="allowance('LP')">allowance LP</a>
 
@@ -186,7 +186,7 @@ export default {
         });
     },
     deposit() {
-      let amount = '0.001'
+      let amount = '0.00001'
       if(this.balance) {
         amount = new BigNumber(this.balance).dividedBy(10).toFixed(0)
       }
@@ -197,7 +197,7 @@ export default {
         });
     },
     withdraw() {
-      let amount = '0.001'
+      let amount = '0.00001'
       if(this.balance) {
         amount = new BigNumber(this.balance).dividedBy(20).toFixed(0)
       }
