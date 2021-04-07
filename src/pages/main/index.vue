@@ -8,8 +8,11 @@
             <Button :name="'BUY NFTFUN'"/>
         </div>
     </div>
-    <div class="_container">
+
+    <div class="_content">
         <MainSlogan/>
+        <MainIncludes/>
+        <MainToken/>
         <MainDescribe :title="title1" :subTitle="subTitle1"/>
     </div>
     <Footer/>
@@ -23,10 +26,12 @@ import Button from '@/components/button/index.vue';
 import Footer from '@/components/footer/index.vue';
 import MainSlogan from './components/main-slogan.vue';
 import MainDescribe from './components/main-describe.vue';
+import MainIncludes from './components/main-includes';
+import MainToken from './components/main-token'
 
 export default {
     name: 'index',
-    components: {NavLink, Logo, Button, MainSlogan, MainDescribe, Footer},
+    components: {NavLink, Logo, Button, MainSlogan, MainDescribe, Footer, MainIncludes, MainToken},
     data() {
         return {
             title1: 'Elastic supply',
@@ -56,7 +61,7 @@ export default {
         height: 100%;
         background: #ffffff;
 
-        & > ._container {
+        & > ._content {
             min-height: 100%;
             padding-top: 160px;
             padding-bottom: 115px;

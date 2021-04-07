@@ -1,11 +1,14 @@
 <template>
 <div class="_main-slogan">
-    <h3>Nftfun Money</h3>
-    <h5>
-        <img src="~img/img-1.svg" alt="">
-        <span>The first elastic supply token on the
-        Binance Smart Chain.</span>
-    </h5>
+    <div class="_container">
+        <div class="_rt">
+            <h3>FUN Protocol</h3>
+            <h5>
+                DeFi&Gamefi&DAO Protocol prospering with NFT Market
+            </h5>
+            <h6><img src="~img/img-1.svg" alt=""></h6>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -17,34 +20,42 @@ export default {
 
 <style scoped lang="scss">
     ._main-slogan {
-        text-align: center;
-        padding: 100px 0;
+        height: 580px;
+        width: 100%;
+        background-image: url("~img/banner.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+
+        ._container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        ._rt {
+            width: 400px;
+        }
 
         h3 {
-            height: 115px;
             font-size: 64px;
             line-height: 75px;
             color: #28292B;
             font-weight: bold;
+            margin-bottom: 30px;
         }
 
         h5 {
-            height: 90px;
             font-size: 24px;
             line-height: 28px;
             color: #28292B;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 30px;
+        }
 
-            span {
-                display: inline-flex;
-                width: 337px;
-                height: 100%;
-                align-items: center;
-                margin-left: 25px;
-            }
+        h6 {
+            text-align: center;
         }
     }
 </style>
