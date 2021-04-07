@@ -87,15 +87,6 @@ export default {
                         this.tabClick({name: this.active, type: this.type});
                     }
                 })
-
-                // axios.get('/js/chart.json').then(res => {
-                //     if (res) {
-                //         this.data = res.data.info;
-                //         if (this.data) {
-                //             this.tabClick({name: this.active, type: this.type});
-                //         }
-                //     }
-                // });
             });
 
             if (new Date().getTime() < Number(this.coolDown) * 1000) {

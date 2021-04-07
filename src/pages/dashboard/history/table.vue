@@ -9,24 +9,33 @@
             <div>Supply After Rebase</div>
             <div>Block</div>
         </li>
-        <li v-for="item of tableData">
-            <div>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</div>
-            <div>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</div>
-            <div>{{item.lastTotalSupply}}</div>
-            <div>{{item.totalSupply}}</div>
-            <div>{{item.updateBlock}}</div>
-        </li>
+        <Loading :loading="load">
+            <li v-for="item of tableData">
+                <div>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</div>
+                <div>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</div>
+                <div>{{item.lastTotalSupply}}</div>
+                <div>{{item.totalSupply}}</div>
+                <div>{{item.updateBlock}}</div>
+            </li>
+            <div class="_more">
+                <div @click="moreClick" v-if="!empty">
+                    <img src="~img/more.svg" alt="">
+                    <span>More</span>
+                </div>
+            </div>
+        </Loading>
     </ul>
-    <span @click="moreClick" v-if="!empty">更多</span>
 </div>
 </template>
 
 <script>
+import Loading from '@/components/loading/index.vue'
 import ChainApi from '../../../assets/sdk/ChainApi';
-import WebSdk from '../../../utils/sdk'
+import WebSdk from '../../../utils/sdk';
 
 export default {
     name: 'nTable',
+    components: {Loading},
     data() {
         return {
             params: {
@@ -34,7 +43,8 @@ export default {
                 size: 10,
             },
             tableData: [],
-            empty: false
+            empty: false,
+            load: true
         }
     },
     mounted() {
@@ -44,6 +54,7 @@ export default {
         getHistoryList() {
             WebSdk.connect().then(() => {
                 ChainApi.history(this.params.page, this.params.size).then(res => {
+                    this.load = false;
                     if (res.code === 0 && res.data) {
                         console.log('history------>', res)
                         this.tableData = this.tableData.concat(res.data);
@@ -83,26 +94,26 @@ export default {
                 color: #000000;
 
                 div {
-                    width: 20%;
-                    /*&:nth-of-type(1) {*/
-                    /*    width: 200px;*/
-                    /*}*/
+                    /*width: 20%;*/
+                    &:nth-of-type(1) {
+                        width: 20%;
+                    }
 
-                    /*&:nth-of-type(2) {*/
-                    /*    width: 200px;*/
-                    /*}*/
+                    &:nth-of-type(2) {
+                        width: 20%;
+                    }
 
-                    /*&:nth-of-type(3) {*/
-                    /*    width: 200px;*/
-                    /*}*/
+                    &:nth-of-type(3) {
+                        width: 25%;
+                    }
 
-                    /*&:nth-of-type(4) {*/
-                    /*    width: 200px;*/
-                    /*}*/
+                    &:nth-of-type(4) {
+                        width: 25%;
+                    }
 
-                    /*&:nth-of-type(5) {*/
-                    /*    width: 200px;*/
-                    /*}*/
+                    &:nth-of-type(5) {
+                        width: 10%;
+                    }
                 }
             }
 
@@ -141,6 +152,25 @@ export default {
             .el-pager li.active {
                 color: inherit;
                 background-color: #EBEBEB;
+            }
+        }
+
+        ._more {
+            text-align: center;
+            margin-top: 44px;
+            &>div {
+                display: inline;
+                font-size: 18px;
+                line-height: 21px;
+                color: #EF8969;
+                font-weight: 300;
+                cursor: pointer;
+                span, img {
+                    display: block;
+                }
+                img {
+                    margin: 0 auto 8px;
+                }
             }
         }
     }

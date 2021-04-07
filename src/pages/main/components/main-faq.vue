@@ -8,6 +8,7 @@
         </div>
         <div class="_faq-more">
            <span>Show More</span>
+            <img src="~img/show-more.svg" alt="">
         </div>
     </div>
 </div>
@@ -86,6 +87,9 @@ export default {
             align-items: center;
             span {
                 cursor: pointer;
+            }
+            img {
+                margin-left: 6px;
             }
         }
     }
