@@ -39,7 +39,7 @@ export default {
             priceData: null,
             supplyData: null,
             mktCapChartData: null,
-            active: '1d',
+            active: '7d',
             type: 'ABS',
             coolDown: 0,
             price: 0,
@@ -72,16 +72,24 @@ export default {
                     this.totalSupply = res.totalSupply;
                     this.targetPrice = res.targetPrice;
                     this.marketCap = res.marketCap;
+                });
+
+                ChainApi.report().then(res => {
+                    console.log('res.....', res)
+                    if (res.code === 0 && res.data) {
+                        this.data = res.data;
+                        this.tabClick({name: this.active, type: this.type});
+                    }
                 })
 
-                axios.get('/js/chart.json').then(res => {
-                    if (res) {
-                        this.data = res.data.info;
-                        if (this.data) {
-                            this.tabClick({name: this.active, type: this.type});
-                        }
-                    }
-                });
+                // axios.get('/js/chart.json').then(res => {
+                //     if (res) {
+                //         this.data = res.data.info;
+                //         if (this.data) {
+                //             this.tabClick({name: this.active, type: this.type});
+                //         }
+                //     }
+                // });
             });
 
             if (new Date().getTime() < Number(this.coolDown) * 1000) {
