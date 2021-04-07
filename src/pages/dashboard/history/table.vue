@@ -17,16 +17,7 @@
             <div>{{item.updateBlock}}</div>
         </li>
     </ul>
-    <!--    <el-pagination-->
-    <!--        class="_pagination"-->
-    <!--        layout="prev, pager, next"-->
-    <!--        :hide-on-single-page="true"-->
-    <!--        :total="total"-->
-    <!--        @current-change="currentChange"-->
-    <!--        @prev-click="prevClick"-->
-    <!--        @next-click="nextClick">-->
-    <!--    </el-pagination>-->
-    <span @click="moreClick">更多</span>
+    <span @click="moreClick" v-if="!empty">更多</span>
 </div>
 </template>
 
@@ -43,7 +34,7 @@ export default {
                 size: 1,
             },
             tableData: [],
-            total: 0
+            empty: false
         }
     },
     mounted() {
@@ -56,10 +47,8 @@ export default {
                     if (res.code === 0 && res.data) {
                         console.log('history------>', res)
                         this.tableData = this.tableData.concat(res.data);
-                        // res.data
-                        this.total = res.data.length;
+                        this.empty = this.tableData.length > res.count
                     }
-
                 })
             })
         },
