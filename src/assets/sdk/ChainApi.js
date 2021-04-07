@@ -30,6 +30,7 @@ $.poolInfoMapWithPair = {}
 $.pairsToken = {}
 $.pools = {}
 $.contractHistory = []
+
 $.funPrice = '0'
 $.masterChefData = {}
 let web3Util = new Web3Util()
@@ -83,6 +84,7 @@ function handleNewChain (chainId) {
   let cid = Number(chainId)
   console.log('handleNewChain id:', cid)
   $.chainId = cid
+  $.loadContractHistory()
   for (const cb of newChainHandles) {
     cb(cid)
   }
@@ -351,6 +353,14 @@ $.handleCall = (hash, contractName, methodName, status=0) => {
     $.contractHistory = [];
     $.contractHistory.unshift(item);
     localStorage.setItem(tableName, JSON.stringify($.contractHistory));
+  }
+}
+
+$.loadContractHistory = () => {
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
+  const local = localStorage.getItem(tableName);
+  if (local) {
+    $.contractHistory = JSON.parse(local);
   }
 }
 
