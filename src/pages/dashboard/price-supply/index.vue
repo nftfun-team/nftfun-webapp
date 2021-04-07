@@ -1,13 +1,18 @@
 <template>
 <div class="_price-supply _flex _justify-content-center">
-    <Card :label="'REBASE COOLDOWN'" :value="`${time.d}d:${time.h}h:${time.m}m:${time.s}s`"/>
-    <Card :label="'ORACLE PRICE'" :value="`$ ${price}` || '--'"/>
-    <Card :label="'DITTO SUPPLY'" :value="totalSupply || '--'"/>
-    <Card :label="'PRICE TARGET'" :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"/>
-    <Card :label="'DITTO MARKET CAP'" :value="`$ ${marketCap}` || '--'"/>
-    <Button :name="'REBASE'" class="_btn" :loading="load"
-        :disabled="Number(coolDown) * 1000 < Number(new Date().getTime())"
-        @click="rebaseClick"/>
+    <Card :label="'REBASE COOLDOWN'"
+        :value="`${time.d}d:${time.h}h:${time.m}m:${time.s}s`"
+        :isRebase="time.down"
+        :load="load"
+        @rebase="rebaseClick"/>
+    <Card :label="'PRICE TARGET'"
+        :value="`$ ${targetPrice.toFixed(2, 1)}` || '--'"
+        :isRebase="true"/>
+    <Card :label="'NFT MARKET CAP'" :value="`$ ${nftMarketCap}` || '--'" :isRebase="true"/>
+    <Card :label="'FUN SUPPLY'" :value="totalSupply || '--'" :isRebase="true"/>
+    <Card :label="'ORACLE PRICE'" :value="`$ ${price}` || '--'" :isRebase="true"/>
+    <Card :label="'FUN MARKET CAP'" :value="`$ ${funMarketCap}` || '--'" :isRebase="true"/>
+
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type"/>
@@ -19,20 +24,19 @@
 </template>
 
 <script>
-import Button from '@/components/button/index.vue';
+
 import Card from './card.vue';
 import PriceChart from '../chart-data/price-chart';
 import SupplyChart from '../chart-data/supply-chart';
 import MktCapChart from '../chart-data/mktcap-chart';
 import Tabs from '../chart-data/tabs';
-import axios from 'axios';
 import WebSdk from '../../../utils/sdk'
 import ChainApi from '../../../assets/sdk/ChainApi';
 import count from '../../../assets/js/countDown';
 
 export default {
     name: 'index',
-    components: {Button, Card, PriceChart, SupplyChart, MktCapChart, Tabs},
+    components: {Card, PriceChart, SupplyChart, MktCapChart, Tabs},
     data() {
         return {
             data: null,
@@ -45,7 +49,8 @@ export default {
             price: 0,
             totalSupply: 0,
             targetPrice: 0,
-            marketCap: 0,
+            funMarketCap: 0,
+            nftMarketCap: 0,
             load: false,
             disabled: false,
             timer: null,
@@ -71,7 +76,8 @@ export default {
                     this.price = res.price;
                     this.totalSupply = res.totalSupply;
                     this.targetPrice = res.targetPrice;
-                    this.marketCap = res.marketCap;
+                    this.funMarketCap = res.marketCap;
+                    this.nftMarketCap = res.nftCurrentValue;
                 });
 
                 ChainApi.report().then(res => {
@@ -100,6 +106,8 @@ export default {
                     });
                     this.time = {...date}
                 }, 1000)
+            } else {
+                this.time.down = false
             }
         },
         tabClick($event) {

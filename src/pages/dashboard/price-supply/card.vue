@@ -1,14 +1,29 @@
 <template>
 <div class="_card">
     <p>{{label}}</p>
-    <p>{{value}}</p>
+    <p>
+        <span v-if="isRebase">{{value}}</span>
+        <Button :name="'REBASE'"
+            class="_btn"
+            v-else
+            :loading="load"
+            @click="rebaseClick"/>
+    </p>
 </div>
 </template>
 
 <script>
+import Button from '@/components/button/index.vue';
+
 export default {
     name: 'card',
-    props: ['label', 'value']
+    props: ['label', 'value', 'isRebase', 'load'],
+    components: {Button},
+    methods: {
+        rebaseClick() {
+            this.$emit('rebase')
+        }
+    }
 }
 </script>
 
@@ -38,6 +53,24 @@ export default {
                 font-size: 24px;
                 line-height: 28px;
                 color: #000000;
+            }
+        }
+
+        ._btn {
+            width: 146px;
+            height: 32px;
+            padding: 0;
+            font-size: 18px;
+            border-radius: 6px;
+
+            &::before {
+                background-color: #FAFAF1;
+            }
+
+            &::after {
+                border-radius: 6px;
+                top: 3px;
+                left: 3px;
             }
         }
     }
