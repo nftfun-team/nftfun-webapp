@@ -31,7 +31,6 @@ const filters:any = {
     filterStatus: (status:string | number, statusList: Record<string | number, any>) => {
         return statusList[status]
     }
-
 };
 
 Object.keys(filters).forEach(key => {

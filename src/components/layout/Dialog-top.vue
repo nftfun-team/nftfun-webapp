@@ -32,14 +32,16 @@
                 <div class="clear-box">
                     <span class="left">Recent Transactions</span>
                     <div class="clear-history" @click="clearCache">
-                        Your transactions will appear here...
+                        Clean All
                     </div>
                 </div>
-                <div v-for="item in actionCache" class="history" :key="item.timestamp">
-                    <span class="left" @click="winAddress(item)">{{item.params.describe}}</span>
-                    <span class="state">
-                <img :src="iconMap[item.code] || iconMap.default" alt=""/>
-            </span>
+                <div v-for="item in actionCache" class="history f-pm-dinpro" :key="item.timestamp">
+                    <div>
+                        {{item.time | getDate('yyyy-MM-dd hh:mm:ss')}}
+                        <span class="handle">{{item.funcName}}</span>
+                        <span class="hash" @click="winAddress(item.hash)">{{item.hash | hash(6)}}</span>
+                    </div>
+                    <span class="state"> <img :src="iconMap[item.status] || iconMap.default" alt=""/> </span>
                 </div>
             </template>
         </div>
@@ -50,9 +52,11 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue, Prop, Emit} from "vue-property-decorator";
-    import {Getter, Mutation} from "vuex-class";
-    import {M_CHAIN_WALLETADDRESS, G_HASH_CACHE, M_HASH_CLEANCACHE, M_CHAIN_CHAINID} from "store/modules/chain/types";
+    import {Component, Vue, Prop, Emit, Watch} from "vue-property-decorator";
+    import { Mutation } from "vuex-class";
+    import WebChain from "utils/sdk.js";
+    import {M_CHAIN_WALLETADDRESS, M_CHAIN_CHAINID} from "store/modules/chain/types";
+    import vi from "element-ui/src/locale/lang/vi";
 
 
     @Component({
@@ -61,8 +65,6 @@
     export default class DialogTop extends Vue {
         @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAdress!: Function;
         @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
-        @Mutation(M_HASH_CLEANCACHE) private clearCache!: Function;
-        @Getter(G_HASH_CACHE) private actionCache!: Array<any>;
 
         @Prop({type: Boolean, default: false}) private visible!: Boolean
         @Prop({type: String, default: ''}) private account!: Boolean
@@ -73,26 +75,41 @@
             4: require('../../assets/images/success.svg'),
             default: require('../../assets/images/error.svg'),
         };
+        public actionCache: Array<any> = []
+
+        mounted(){
+            this.getContractHistory()
+        }
+
+        // @Watch('visible')
+        // private changeVisible(val:boolean){
+        //     if(val) this.getContractHistory()
+        // }
 
         @Emit('close')
         public close() {}
 
-        private winAddress(): void {
-            // window.open(this.$swap.getBscscanTx(data.result));
+        private getContractHistory(): void{
+            WebChain.connect().then(res => {
+                this.actionCache = this.$ChainApi.contractHistory
+            })
+        }
+
+        private winAddress(hash:string): void {
+            window.open(this.$ChainApi.getEtherscanTx(hash));
         }
 
         private copyClick(address: string): void {
             window.copy(address)
         }
 
+        private clearCache(address: string): void {
+            this.actionCache = []
+            this.$ChainApi.cleanContractHistory()
+        }
+
         private winOpen(): void {
-            // this.$store
-            //     .dispatch('bsc', {
-            //         account: this.account,
-            //     })
-            //     .then((res) => {
-            //         window.open(res);
-            //     });
+            window.open(this.$ChainApi.getEtherscanAddress(this.account));
         }
 
         @Emit('showLogin')
@@ -437,6 +454,7 @@
         max-height: 250px;
         overflow-y: scroll;
         background-color: rgba(30, 34, 38, 0.05);
+        padding-bottom: 13px;
     }
 
     .history {
@@ -446,7 +464,12 @@
         align-items: center;
         padding: 0 20px;
 
-        .left {
+        .handle{
+            width: 85px;
+            display: inline-block;
+            text-indent: 10px;
+        }
+        .hash {
             color: #3b8cff;
             font-size: 12px;
             cursor: pointer;
@@ -459,18 +482,21 @@
         justify-content: space-between;
         align-items: center;
         font-size: 16px;
-
         .left {
             color: #1e2226;
+            position: relative;
+            top: 4px;
+        }
+        .state{
+            width: 78px;
         }
 
         .clear-history {
             cursor: pointer;
-            border-radius: 0.26667rem;
+            border-radius: 22px;
             color: #f0b80b;
             background: rgba(30, 34, 38, 0.05);
-            padding: 10px;
-            text-align: center;
+            padding: 10px 18px 7px;
         }
     }
 </style>

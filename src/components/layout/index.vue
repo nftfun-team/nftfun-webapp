@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
+    import { Component, Vue, Watch } from "vue-property-decorator";
     import {Action, Getter} from "vuex-class";
     import ComButton from "components/button/index.vue";
     import ConnectWallet from "components/connectWallet/index.vue";
@@ -31,6 +31,15 @@
     export default class AppLayout extends Vue{
         @Action(A_CHAIN_COONNECT) private connectWallet!: Function;
         @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
+
+        @Watch("$route",{immediate: true, deep: true})
+        getRoute(to:any){
+            switch (to.path) {
+                case '/staking': this.title = 'Staking'; break;
+                case '/dashboard': this.title = 'Dashboard'; break;
+            }
+        }
+
         private title: string = 'Staking';
         private isShow: Boolean = false;
         private visible: Boolean = false;
@@ -38,7 +47,6 @@
         private connect(type: string): void{
             this.connectWallet(type).then(res => {
                 this.isShow = false;
-                console.error('res----->',res)
             })
         }
     }
