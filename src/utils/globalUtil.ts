@@ -55,27 +55,6 @@ const load = new Loadings;
 };
 
 
-/**
- * 下载文件
- * @param data 二进制文本流
- * @param filesName  下载文件的名字
- */
-(Window as any).prototype.downFlies = function(data:any, filesName:string){
-    if (typeof window.navigator.msSaveBlob !== 'undefined') {
-        window.navigator.msSaveBlob(new Blob([data]), filesName)
-    }else{
-        let url = window.URL.createObjectURL(new Blob([data]));
-        let link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = url;
-        link.setAttribute('download', filesName);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); //下载完成移除元素
-        window.URL.revokeObjectURL(url); //释放掉blob对象
-    }
-};
-
 //复制
 (Window as any).prototype.copy = (text:any) => {
     var textArea:any = document.createElement('textarea')

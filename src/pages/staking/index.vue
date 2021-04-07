@@ -23,6 +23,8 @@
         private poolList: Array<any> = []
 
         mounted(){
+            // this.$formatMoney('1212.1212')
+
             WebChina.connect().then(data => {
                 this.$ChainApi.getPools()
                     .then( res => {

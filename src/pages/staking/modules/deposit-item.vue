@@ -73,6 +73,7 @@
         private withdrawLoad: boolean = false;
         private claimLoad: boolean = false;
 
+
         private approve(token:string): void{
             this.approveLoad = true;
             let platform = this.$ChainApi.getContractAddr('MasterChef')
@@ -110,26 +111,29 @@
             this.depositLoad = true;
             let amount = this.$BigNumber(this.depositNumber).toFixed()
 
-            this.$ChainApi.deposit(0, amount).then(receipt => {
+            this.$ChainApi.deposit(this.data.pid, amount).then(receipt => {
                 this.$notify({
                     title: 'Deposit',
                     message: 'Deposit Success',
                     type: 'success'
                 });
+                this.depositNumber = ''
                 this.$ChainApi.updatePool(this.data.pid)
             }).finally(() => {
                 this.depositLoad = false;
             });
         }
+
         private withdraw(): void{
             this.withdrawLoad = true;
             let amount = this.$BigNumber(this.withdrawNumber).toFixed()
-            this.$ChainApi.withdraw(0, amount).then(receipt => {
+            this.$ChainApi.withdraw(this.data.pid, amount).then(receipt => {
                 this.$notify({
                     title: 'Withdraw',
                     message: 'Withdraw Success',
                     type: 'success'
                 });
+                this.withdrawNumber = ''
                 this.$ChainApi.updatePool(this.data.pid)
             }).finally(() => {
                 this.withdrawLoad = false;
