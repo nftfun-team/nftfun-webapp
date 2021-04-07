@@ -578,6 +578,7 @@ async function executeContractAwait(contract, contractName, methodName, value, p
     status = 1
   }
   $.handleCall(hash, contractName, methodName, status)
+  return reciept
 }
 
 function executeContractByName(contractName, methodName, value, params) {
