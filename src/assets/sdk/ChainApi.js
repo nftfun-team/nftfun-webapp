@@ -364,6 +364,11 @@ $.loadContractHistory = () => {
   }
 }
 
+$.cleanContractHistory = () => {
+  let tableName = 'contractCall'+ $.chainId + getSelectedAddress();
+  localStorage.removeItem(tableName);
+}
+
 $.getBlockNumber = async() => {
   return await getWeb3().eth.getBlockNumber();
 }
