@@ -829,6 +829,14 @@ $.harvest = async(pid) => {
   return await executeContractByName('MasterChef', 'harvest', 0, [pid])
 }
 
+$.nftCurrentValue = async() => {
+  return await getContractMethodsByName('Oracle').nftCurrentValue().call()
+}
+
+$.updateNftCurrentValue = async(value) => {
+  return await executeContractByName('Oracle', 'updateNftCurrentValue', 0, [value])
+}
+
 $.info = async() => {
   let data = {
     cooldown: Number(await getContractMethodsByName('Master').lastRebaseTimestampSec().call()) + Number(await getContractMethodsByName('Master').rebaseCooldown().call()),
