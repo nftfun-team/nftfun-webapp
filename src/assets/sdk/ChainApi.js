@@ -60,7 +60,7 @@ function getContractByName(name) {
     abi = QueryABI
   }
   let chainId = getNetworkVersion()
-  console.log('getContractByName contract:', chainId, name)
+  // console.log('getContractByName contract:', chainId, name)
   let addr = ContractsAddr[chainId][name]
   console.log('getContractByName contract address:', chainId, name, addr)
   return getContract(abi, addr)
@@ -571,13 +571,13 @@ async function executeContract(contract, methodName, value, params) {
 
 async function executeContractAwait(contract, contractName, methodName, value, params) {
   let hash = await executeContract(contract, methodName, value, params)
-  handleCall(hash, contractName, methodName, 0)
+  $.handleCall(hash, contractName, methodName, 0)
   let reciept = await awaitTransactionMined(hash)
   let status = 2
   if(reciept.status) {
     status = 1
   }
-  handleCall(hash, contractName, methodName, status)
+  $.handleCall(hash, contractName, methodName, status)
 }
 
 function executeContractByName(contractName, methodName, value, params) {
@@ -792,7 +792,7 @@ $.getPools = async() => {
     totalSupply: await getContractMethodsByName('MasterChef').totalSupply().call(),
     funPerBlock: await getContractMethodsByName('MasterChef').funPerBlock().call(),
   }
-  pools.forEach((d)=>{
+  pools.forEach(async (d)=>{
     d.apr = '--'
     d.userBalance = '--'
     d.userAmount = '--'
