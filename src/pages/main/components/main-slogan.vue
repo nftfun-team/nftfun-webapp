@@ -1,6 +1,7 @@
 <template>
-<div class="_main-slogan">
-    <div class="_container">
+<div class="_main-slogan f-pr">
+    <img src="~img/banner.png" alt="">
+    <div class="_container f-center-x f-pa">
         <div class="_rt">
             <h3>FUN Protocol</h3>
             <h5>
@@ -20,18 +21,17 @@ export default {
 
 <style scoped lang="scss">
     ._main-slogan {
-        height: 580px;
         width: 100%;
-        background-image: url("~img/banner.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
+        & > img{
+            width: 100%;
+        }
 
         ._container {
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-end;
+            top: 0;
         }
 
         ._rt {
