@@ -87,7 +87,6 @@
         .com-button{
             height: 28px;
             font-size: 12px;
-            line-height: 32px;
         }
     }
 </style>

@@ -24,7 +24,7 @@ export default class ComButton extends Vue {
 <style scoped lang="scss">
     ._button {
         height: 55px;
-        padding: 0 36px;
+        padding: 4px 36px 0;
         background: #FFFFFF;
         border-radius: 8px;
         font-weight: 400;
