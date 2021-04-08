@@ -4,11 +4,11 @@
         <h3>$FUN：An exponential algorithms stable coin pegged to NFT segments.</h3>
         <div class="_flex">
             <div>
-                <p>Initial Supply</p>
+                <p class="f-khc-family">Initial Supply</p>
                 <p>1,500,000</p>
             </div>
             <div>
-                <p>Prepared for</p>
+                <p class="f-khc-family">Prepared for</p>
                 <p>Private Sale,Public Sale, Liquidity Mining, Initial liquidity and Ecosystem
                     Fund.</p>
             </div>
@@ -149,11 +149,11 @@ export default {
 
         h3 {
             font-size: 40px;
-            line-height: 40px;
+            line-height: 50px;
             color: #28292B;
-            font-weight: bold;
+            font-family: PoppinsBold;
             margin-bottom: 58px;
-            padding-right: 470px;
+            padding-right: 400px;
         }
 
         ._flex {
@@ -170,7 +170,6 @@ export default {
                 padding-top: 26px;
 
                 p {
-                    font-weight: bold;
                     width: 100%;
                     text-align: center;
 
@@ -178,13 +177,14 @@ export default {
                         font-size: 16px;
                         line-height: 19px;
                         color: #686666;
-                        margin-bottom: 28px;
+                        margin-bottom: 20px;
                     }
 
                     &:nth-of-type(2) {
                         font-size: 24px;
-                        line-height: 28px;
+                        line-height: 30px;
                         color: #000000;
+                        padding: 0 20px;
                     }
                 }
 
@@ -212,6 +212,7 @@ export default {
                         color: #686666;
                         margin-bottom: 32px;
                         font-weight: bold;
+                        font-family: KhContent;
 
                         span {
                             color: #000000;
@@ -221,6 +222,7 @@ export default {
                             font-size: 24px;
                             line-height: 28px;
                             color: #000000;
+                            font-family: Poppins;
                         }
 
                         &:nth-last-of-type(1) {
