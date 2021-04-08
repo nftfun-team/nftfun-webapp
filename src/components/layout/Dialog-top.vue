@@ -513,10 +513,10 @@
             }
         }
         .bsc-scan{
-            font-size: 8px !important;
+            font-size: 12px !important;
             &>div:last-child{
-                margin-top: 15px;
-                margin-left: 0;
+                /*margin-top: 15px;*/
+                /*margin-left: 0;*/
                 margin-right: 50px;
             }
         }
