@@ -27,6 +27,7 @@
             </div>
             <div>
                 <Charts class="chart" :options="options"/>
+                <img src="~img/token-1.png" alt="" class="img">
             </div>
         </div>
     </div>
@@ -236,6 +237,10 @@ export default {
         .chart {
             width: 100%;
         }
+
+        .img {
+            display: none;
+        }
     }
 
     @media (max-width: 768px) {
@@ -269,13 +274,24 @@ export default {
 
             ._token-info {
                 display: block;
-                &>div {
+
+                & > div {
                     &:nth-of-type(1) {
                         p {
                             margin-bottom: 10px;
                             line-height: 22px;
                         }
                     }
+                }
+
+                .chart {
+                    display: none;
+                }
+
+                .img {
+                    display: block;
+                    max-width: 100%;
+                    margin-top: 20px;
                 }
             }
         }
