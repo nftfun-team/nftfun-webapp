@@ -6,7 +6,8 @@
             :before-close="close"
             :close-on-click-modal="false"
     >
-        <div class="pd">
+        <div class="pd f-pr">
+            <div class="hr f-pa"></div>
             <div class="dialog-title _wallet-title">
                 <span class="title-account">Account</span>
             </div>
@@ -126,6 +127,13 @@
 <style lang="scss">
     .pd {
         padding: 10px 20px 0 20px;
+        .hr{
+            top: 9px;
+            width: 100%;
+            height: 1px;
+            left: 0px;
+            background: rgba(216, 216, 216, 0.5);
+        }
     }
 
     .el-dialog {
@@ -152,7 +160,7 @@
             display: flex;
             align-items: center;
             position: absolute;
-            top: -14px;
+            top: -36px;
             left: 0;
             color: #1e2226;
             padding: 0 40px 0 30px;
@@ -320,13 +328,13 @@
 
             .connect-account {
                 color: #1e2226;
-                font-size: 19px;
-                padding: 10px 0 30px 0;
+                font-size: 16px;
+                padding: 20px 0 24px 0;
             }
 
             .hash {
-                color: #f0b80b;
-                font-size: 40px;
+                color: #FDAC9F;
+                font-size: 36px;
                 word-break: break-word;
                 font-weight: 700;
                 margin-bottom: 30px;
@@ -345,13 +353,13 @@
                 height: 40px;
                 line-height: 40px;
                 text-align: center;
-                color: #f0b80b;
-                background-color: rgba(240, 184, 11, 0.2);
+                color: #252525;
+                background-color: #F3CDC7;
                 padding: 0 10px;
                 transition: all .2s;
-
+                font-size: 14px;
                 &:hover {
-                    background-color: #FFF8DE;
+                    background-color: #F0B3A9;
                 }
             }
 
@@ -384,12 +392,6 @@
             }
         }
 
-        //.select {
-        //  .el-input__inner,
-        //  .el-input-group__append {
-        //    height: 40px;
-        //  }
-        //}
         .el-input__suffix {
             display: flex;
             align-items: center;
@@ -443,8 +445,8 @@
 </style>
 <style scoped lang="scss">
     ::v-deep .el-dialog__headerbtn{
-        font-size: 30px;
-        top: 15px;
+        /*font-size: 30px;*/
+        /*top: 15px;*/
     }
 
     .dialog-footer {
@@ -480,7 +482,7 @@
     }
 
     .clear-box {
-        padding: 20px;
+        padding: 18px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -497,32 +499,75 @@
         .clear-history {
             cursor: pointer;
             border-radius: 22px;
-            color: #f0b80b;
-            background: rgba(30, 34, 38, 0.05);
+            color: #252525;
+            background-color: #F3CDC7;
+            font-size: 14px;
             padding: 10px 18px 7px;
+            &:hover {
+                background-color: #F0B3A9;
+            }
         }
     }
     @media (max-width: 450px){
+        ::v-deep .el-dialog{
+            width: 90%;
+            /*height: 50%;*/
+        }
+        .connect-account{
+            font-size: 16px !important;
+            padding: 10px 0 10px 0 !important;
+        }
+        .dialog-body > .hash{
+            font-size: 26px !important;
+            margin-bottom: 10px !important;
+        }
+        .history-box{
+            max-height: 210px !important;
+        }
+        .dialog-body{
+            padding-bottom: 15px !important;
+        }
         .history-box {
-            .handle{
-                width: 130px;
-                text-indent: 0px;
+
+            .clear-box{
+                padding: 20px 20px 10px;
+                .clear-history{
+                    padding: 5px 14px;
+                    font-size: 14px;
+                }
+                .left{
+                    position: relative;
+                    top: -1px;
+                }
             }
-            .time{
-                display: none;
+            .history{
+                height: 30px;
+                .handle{
+                    width: 90px;
+                    text-indent: 0px;
+                }
+                .time{
+                    display: none;
+                }
             }
         }
+
         .bsc-scan{
-            font-size: 12px !important;
+            font-size: 8px !important;
+            .open, .copy{
+                height: 30px;
+                line-height: 30px;
+                font-size: 12px;
+            }
             &>div:last-child{
-                /*margin-top: 15px;*/
-                /*margin-left: 0;*/
+                margin-top: 10px;
+                margin-left: 0;
                 margin-right: 50px;
             }
         }
         ::v-deep .el-dialog__headerbtn{
-            font-size: 36px;
-            top: 10px;
+            /*font-size: 36px;*/
+            /*top: 10px;*/
         }
     }
 </style>

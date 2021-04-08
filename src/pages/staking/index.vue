@@ -64,5 +64,12 @@
                 }
             }
         }
+        @media (max-width: 768px){
+            .staking{
+                section{
+                    margin-top: 60px;
+                }
+            }
+        }
     }
 </style>
