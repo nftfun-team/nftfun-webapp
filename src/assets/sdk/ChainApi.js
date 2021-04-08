@@ -775,7 +775,7 @@ $.getLpUsdValue = async (token, baseToken, amount) => {
 }
 
 $.poolRewardApr = async (poolData, masterChefData, funPrice) => {
-  if(masterChefData.funPerBlock == 0 || masterChefData.totalAllocPoint == 0 || masterChefData.totalSupply == 0 || poolData.totalStake == 0 || funPrice ==0) {
+  if(masterChefData.funPerBlock == 0 || masterChefData.totalAllocPoint == 0 || masterChefData.totalSupply == 0 || funPrice ==0) {
     console.log('poolRewardApr param is 0 ', masterChefData, poolData.totalStake, funPrice)
     return '0'
   }
@@ -783,12 +783,12 @@ $.poolRewardApr = async (poolData, masterChefData, funPrice) => {
   let aYearAmount = new BigNumber(masterChefData.funPerBlock).shiftedBy(-9).div($.getBlockSpanTime()).multipliedBy(24*3600*365)
   aYearAmount = aYearAmount.multipliedBy(poolData.weight).div(masterChefData.totalAllocPoint)
   let earned = aYearAmount.multipliedBy(funPrice)
-  if(earned.isGreaterThan(0)) {
+  if(poolData.totalStakeValue > 0) {
     console.log('poolRewardApr earned is ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice)
     return earned.div(new BigNumber(poolData.totalStakeValue)).multipliedBy(100).toFixed(2)
   }
   console.log('poolRewardApr earned is 0 ', poolData.tokenSymbol+'/'+poolData.baseSymbol, earned.toFixed(), funPrice, aYearAmount.toFixed())
-  return '0'
+  return earned.toFixed(2)
 }
 
 $.updatePool = async(pid) => {
