@@ -1,12 +1,12 @@
 <template>
 <div class="_footer">
-    <a href="">
+    <a href="https://twitter.com/NFTFunProtocol" target="_blank">
         <img src="~img/twitter.svg" alt="">
     </a>
-    <a href="">
+    <a href="https://t.me/NftFunProtocol" target="_blank">
         <img src="~img/telegram.svg" alt="">
     </a>
-    <a href="">
+    <a href="https://medium.com/@NFTFunProtocol" target="_blank">
         <img src="~img/medium.svg" alt="">
     </a>
     <a href="">

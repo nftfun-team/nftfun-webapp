@@ -27,6 +27,7 @@
             </div>
             <div>
                 <Charts class="chart" :options="options"/>
+                <img src="~img/token-1.png" alt="" class="img">
             </div>
         </div>
     </div>
@@ -153,7 +154,7 @@ export default {
             color: #28292B;
             font-family: PoppinsBold;
             margin-bottom: 58px;
-            padding-right: 400px;
+            padding-right: 10%;
         }
 
         ._flex {
@@ -183,7 +184,7 @@ export default {
                     &:nth-of-type(2) {
                         font-size: 24px;
                         line-height: 30px;
-                        color: #000000;
+                        color: #252525;
                         padding: 0 20px;
                     }
                 }
@@ -236,24 +237,88 @@ export default {
         .chart {
             width: 100%;
         }
+
+        .img {
+            display: none;
+        }
     }
 
-    @media (max-width: 768px) {
+    @media (min-width: 769px) and (max-width: 1025px) {
         ._token {
-            padding: 20px;
             h3 {
-                padding: 0;
+                padding-right: 0;
             }
+            ._flex {
+                margin-bottom: 0;
 
-            ._flex>div {
-                width: 100% !important;
-                height: auto;
-                min-height: 138px;
-                margin-bottom: 20px;
+                & > div {
+                    width: 100% !important;
+                    height: auto;
+                    min-height: 138px;
+                    margin-bottom: 24px;
+                }
             }
 
             ._token-info {
                 display: block;
+                margin-top: 24px;
+                &>div {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        ._token {
+            padding: 24px 18px;
+
+            h3 {
+                padding: 0;
+                font-size: 24px;
+                line-height: 30px;
+                margin-bottom: 24px;
+            }
+
+            ._flex {
+                margin-bottom: 0;
+
+                & > div {
+                    width: 100% !important;
+                    height: auto;
+                    min-height: 138px;
+                    margin-bottom: 24px;
+
+                    p {
+                        &:nth-of-type(2) {
+                            font-size: 16px;
+                            line-height: 30px;
+                        }
+                    }
+                }
+            }
+
+            ._token-info {
+                display: block;
+
+                & > div {
+                    &:nth-of-type(1) {
+                        p {
+                            margin-bottom: 10px;
+                            line-height: 22px;
+                        }
+                    }
+                }
+
+                .chart {
+                    display: none;
+                }
+
+                .img {
+                    display: block;
+                    max-width: 100%;
+                    margin-top: 20px;
+                }
             }
         }
     }

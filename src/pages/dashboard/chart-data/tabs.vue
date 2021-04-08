@@ -31,10 +31,10 @@ export default {
 <style scoped lang="scss">
     h3 {
         font-size: 32px;
-        line-height: 37px;
+        line-height: 32px;
         color: #000000;
-        font-weight: bold;
-        margin-bottom: 10px;
+        font-weight: 400;
+        margin-bottom: 30px;
         margin-top: 94px;
         width: 100%;
     }
@@ -65,6 +65,9 @@ export default {
                 border-right: 1px solid #F8F8F8;
                 cursor: pointer;
                 transition: all .2s;
+                font-family: KhContent;
+                font-size: 12px;
+                color: #000000;
 
                 &:nth-last-of-type(1) {
                     border-right: 0;

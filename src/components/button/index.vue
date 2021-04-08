@@ -27,11 +27,11 @@ export default class ComButton extends Vue {
         padding: 0 36px;
         background: #FFFFFF;
         border-radius: 8px;
-        font-weight: 500;
+        font-weight: 400;
         font-size: 18px;
         position: relative;
         z-index: 0;
-        font-family: PitchMedium;
+        font-family: KhContent;
 
         &::before {
             position: absolute;
