@@ -22,6 +22,13 @@
             this.init()
         }
 
+        mounted() {
+            this.$nextTick(()=>{
+
+                (<any> document).getElementById('screen-loading').style.display = 'none';
+            })
+        }
+
 
         private reload(): void{
             window.location.reload();
