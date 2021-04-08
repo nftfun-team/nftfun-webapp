@@ -56,7 +56,7 @@
                     },
                     {
                         title: 'AUDIT',
-                        path: 'https://docs.nftfun.org/',
+                        path: '',
                         isRouter: false
                     },
                     {
@@ -66,7 +66,7 @@
                     },
                     {
                         title: 'BLOG',
-                        path: '',
+                        path: 'https://docs.nftfun.org/',
                         isRouter: false
                     }
                 ]
