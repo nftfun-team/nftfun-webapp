@@ -2,7 +2,7 @@
 /*=========================Reset_start==========================*/
 body,h1,h2,h3,h4,h5,h6,div,p,dl,dt,dd,ol,ul,li,form,table,th,td,a,img,span,strong,var,em,input,textarea,select,option,section{margin: 0; padding: 0;box-sizing: border-box}
 html, body {
-    font-family: BrandonGrotesqueWebRegular;
+    font-family: Poppins;
     font-size: 14px;
     width: 100%;
     height: 100%;
@@ -60,6 +60,21 @@ a {
     src: url("~@/assets/pitch-medium.woff.ttf");
 }
 
+@font-face {
+    font-family: 'KhContent';
+    src: url("~@/assets/Kh-Content.ttf");
+}
+
+@font-face {
+    font-family: 'KhSystem';
+    src: url("~@/assets/Kh-System.ttf");
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url("~@/assets/Poppins-Regular.otf");
+}
+
 .f-bgwr-family {
     font-family: 'BrandonGrotesqueWebRegular';
 }
@@ -69,6 +84,18 @@ a {
 }
 .f-pm-dinpro {
     font-family: 'DINPro' !important;
+}
+
+.f-khc-family {
+    font-family: 'KhContent' !important;
+}
+
+.f-khs-family {
+    font-family: 'KhSystem' !important;
+}
+
+.f-pop-family {
+    font-family: 'Poppins' !important;
 }
 
 .max-content {
