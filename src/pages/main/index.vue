@@ -74,6 +74,7 @@
         },
         methods: {
             buyClick() {
+                return;
                 this.loading = true;
                 WebSdk.connect().then(() => {
                     const url = this.$ChainApi.getSwapTradeUrl(this.$ChainApi.getTokenAddress('USDT'), this.$ChainApi.getTokenAddress('FUN'));
