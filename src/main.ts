@@ -11,7 +11,7 @@ import './common/style/index.scss';
 import '@/utils/global'
 import '@/utils/globalUtil'
 import '@/utils/globalFilter'
-import 'lib-flexible/flexible.js'
+// import 'lib-flexible/flexible.js'
 
 Vue.use(ElementUI);
 Vue.use(install);
