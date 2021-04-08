@@ -78,4 +78,9 @@
             height: 100%;
         }
     }
+    @media (max-width: 800px) {
+        .common-head{
+            padding: 0 20px;
+        }
+    }
 </style>

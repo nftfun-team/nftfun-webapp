@@ -26,6 +26,7 @@
 
         mounted(){
             WebChina.connect().then(data => {
+                if(!data.isConnect) return
                 this.$ChainApi.getPools()
                     .then( res => {
                         console.log(res)

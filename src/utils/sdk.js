@@ -2,19 +2,16 @@ import ChainApi from '../assets/sdk/ChainApi.js'
 import {Storage} from "utils/storage"
 import store from 'store'
 import { M_CHAIN_WALLETADDRESS } from 'store/modules/chain/types'
-import ChinaApi from "@/assets/sdk/ChainApi";
 
 class WebChain {
     walletAddress = ''
 
     constructor() {
         this.walletAddress = Storage.getItem('walletAddress')
-        // this.connect()
-        // this.onChainStatus()
     }
 
     connect = (data) => {
-        if(!Storage.getItem('chainId')) return Promise.reject()
+        if(!Storage.getItem('chainId')) return Promise.reject({account: '', isConnect: false})
         return ChainApi.connect(data).then(acc => {
             let is = acc && acc.length > 0;
             this.walletAddress = is ? acc[0] : '';

@@ -27,7 +27,7 @@
         },
         methods: {
             routerClick(data){
-                window.open(data.path)
+                data.path && window.open(data.path)
             }
         }
     }

@@ -66,7 +66,7 @@
                     },
                     {
                         title: 'BLOG',
-                        path: '/staking',
+                        path: '',
                         isRouter: false
                     }
                 ]
@@ -85,7 +85,7 @@
             jump(data){
                 if(data.isRouter){
                     this.$router.push(data.path)
-                }else window.open(data.path)
+                }else data.path && window.open(data.path)
             },
 
             showNav() {
