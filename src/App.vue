@@ -29,9 +29,9 @@ export default class App extends Vue {
 
     mounted() {
         this.$nextTick(() => {
-            setTimeout(() => {
+            // setTimeout(() => {
                 (<any>document).getElementById('screen-loading').style.display = 'none';
-            }, 1000);
+            // }, 1000);
         });
     }
 

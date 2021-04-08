@@ -60,13 +60,13 @@
                         isRouter: false
                     },
                     {
-                        title: 'CODE',
-                        path: 'https://medium.com/@NFTFunProtocol',
+                        title: 'DOCS',
+                        path: 'https://docs.nftfun.org/',
                         isRouter: false
                     },
                     {
                         title: 'BLOG',
-                        path: 'https://docs.nftfun.org/',
+                        path: 'https://medium.com/@NFTFunProtocol',
                         isRouter: false
                     }
                 ]
