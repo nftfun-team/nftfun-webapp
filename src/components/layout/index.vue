@@ -3,7 +3,7 @@
         <div class="common-head f-pf f-fw8">
             {{title}}
             <span class="f-cursor" v-if="walletAddress" @click="visible = true">{{walletAddress | hash(6)}}</span>
-            <com-button v-else style="{width: 184px;height: 55px}" @click="isShow = true" name="CONNECT WALLET" />
+            <com-button class="com-button" v-else style="{width: 184px;height: 55px}" @click="isShow = true" name="CONNECT WALLET" />
         </div>
         <div class="common-section"> <router-view /> </div>
         <connect-wallet v-if="isShow" @closeModal="isShow = false" @connect="connect" />
@@ -81,6 +81,13 @@
     @media (max-width: 800px) {
         .common-head{
             padding: 0 20px;
+            font-size: 18px;
+            height: 60px;
+        }
+        .com-button{
+            height: 28px;
+            font-size: 12px;
+            line-height: 28px;
         }
     }
 </style>

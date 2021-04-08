@@ -78,8 +78,7 @@ const load = new Loadings;
         console.log('Oops, unable to copy')
     }
     document.body.removeChild(textArea);
-    // load.tipSuccessShow('复制成功');
-    load.tipSuccessShow('复制成功');
+    load.tipSuccessShow('Copy Success');
 }
 
 

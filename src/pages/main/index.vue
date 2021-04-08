@@ -90,14 +90,14 @@
 
             showNav() {
                 this.showMenu = !this.showMenu
-                var preD=function(e){e.preventDefault();};
-                if (this.showMenu) {
-                    document.body.style.overflow = 'hidden'
-                    document.addEventListener('touchmove', preD, {passive: false}) // 禁止页面滑动
-                } else {
-                    document.body.style.overflow = '' // 出现滚动条
-                    document.removeEventListener('touchmove', preD, {passive: false})
-                }
+                // var preD=function(e){e.preventDefault();};
+                // if (this.showMenu) {
+                //     document.body.style.overflow = 'hidden'
+                //     document.addEventListener('touchmove', preD, {passive: false}) // 禁止页面滑动
+                // } else {
+                //     document.body.style.overflow = '' // 出现滚动条
+                //     document.removeEventListener('touchmove', preD, {passive: false})
+                // }
             }
         }
     }
@@ -122,12 +122,11 @@
             }
 
             .menu-nav {
-                width: 100%;
+                width: 100vw;
                 top: 60px;
-                left: 0;
+                left: 0px;
                 background: #F3CDC7;
                 overflow-y: hidden;
-
                 p {
                     line-height: 50px;
                     color: #000000;

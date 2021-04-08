@@ -27,4 +27,18 @@ export default class ComingSoon extends Vue {
             font-size: 54px;
         }
     }
+    @media (max-width: 800px) {
+        .coming{
+            margin-top: 100px;
+            width: 100%;
+            text-align: center;
+            img{
+                width: 150px;
+            }
+            p{
+                margin-top: 25px;
+                font-size: 28px;
+            }
+        }
+    }
 </style>
