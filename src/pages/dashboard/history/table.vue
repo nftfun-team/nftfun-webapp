@@ -78,9 +78,9 @@ export default {
         h3 {
             padding: 0 66px;
             font-size: 32px;
-            font-weight: bold;
-            color: #000000;
-            margin-bottom: 20px;
+            font-weight: 400;
+            color: #252525;
+            margin-bottom: 30px;
         }
 
         ._list {
@@ -91,7 +91,8 @@ export default {
                 border-bottom: 1px solid #D8D8D8;
                 height: 90px;
                 font-size: 16px;
-                color: #000000;
+                color: #252525;
+                font-family: KhContent;
 
                 div {
                     /*width: 20%;*/
@@ -100,7 +101,7 @@ export default {
                     }
 
                     &:nth-of-type(2) {
-                        width: 20%;
+                        width: 22%;
                     }
 
                     &:nth-of-type(3) {
@@ -112,13 +113,13 @@ export default {
                     }
 
                     &:nth-of-type(5) {
-                        width: 10%;
+                        width: 8%;
                     }
                 }
             }
 
             ._list-header {
-                font-weight: bold;
+                font-family: Poppins;
             }
         }
 
@@ -158,18 +159,23 @@ export default {
         ._more {
             text-align: center;
             margin-top: 44px;
-            &>div {
-                display: inline;
+
+            & > div {
+                width: 45px;
                 font-size: 18px;
                 line-height: 21px;
                 color: #EF8969;
                 font-weight: 300;
                 cursor: pointer;
-                span, img {
-                    display: block;
-                }
+                margin: 0 auto;
+
                 img {
-                    margin: 0 auto 8px;
+                    margin-bottom: 8px;
+                    transition: all .2s;
+                }
+
+                &:hover img{
+                    margin-top: 5px;
                 }
             }
         }

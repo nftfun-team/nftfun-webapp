@@ -8,7 +8,7 @@
                     <img :src="el.imgUrl" alt="">
                 </div>
                 <h5>{{el.title}}</h5>
-                <p>{{el.txt}}</p>
+                <p class="f-khc-family">{{el.txt}}</p>
             </div>
         </div>
     </div>
@@ -45,15 +45,15 @@ export default {
 <style scoped lang="scss">
     ._includes {
         background-color: #ffffff;
-        padding: 58px 0 48px;
+        padding: 58px 48px 38px;
 
         h3 {
             font-size: 40px;
-            line-height: 40px;
+            line-height: 50px;
             color: #28292B;
-            font-weight: bold;
             margin-bottom: 58px;
-            padding-right: 570px;
+            padding-right: 450px;
+            font-family: PoppinsBold;
         }
 
         ._flex {
@@ -62,15 +62,16 @@ export default {
 
         ._card {
             width: 360px;
-            height: 420px;
+            height: 356px;
             background: #F6F6F6;
             border: 1px solid rgba(239, 239, 239, 0.5);
             box-sizing: border-box;
             box-shadow: -2px 5px 6px #EFEEF1;
             border-radius: 8px;
-            padding: 26px;
+            padding: 28px;
             cursor: pointer;
             transition: all .2s;
+            margin-bottom: 20px;
 
             &:hover {
                 margin-top: -10px;
@@ -80,7 +81,7 @@ export default {
                 width: 100%;
                 height: 107px;
                 line-height: 107px;
-                margin-bottom: 28px;
+                margin-bottom: 18px;
 
                 img {
                     max-height: 100%;
@@ -88,18 +89,34 @@ export default {
             }
 
             h5 {
-                font-size: 24px;
-                line-height: 28px;
+                font-size: 25px;
+                line-height: 37px;
                 color: #000000;
-                font-weight: bold;
-                margin-bottom: 20px;
+                font-family: PoppinsBold;
+                margin-bottom: 10px;
             }
 
             p {
-                font-size: 16px;
-                line-height: 19px;
+                font-size: 15px;
+                line-height: 28px;
                 color: #686666;
                 font-weight: bold;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        ._includes {
+            padding: 20px;
+            h3 {
+                padding-right: 0;
+            }
+            ._card {
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            ._flex {
+                display: block;
             }
         }
     }
