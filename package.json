@@ -19,8 +19,6 @@
     "echarts": "^4.9.0",
     "fs": "^0.0.1-security",
     "ipfs-api": "^26.1.2",
-    "lib-flexible": "^0.3.2",
-    "postcss-plugin-px2rem": "^0.8.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",

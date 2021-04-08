@@ -85,9 +85,8 @@
             height: 60px;
         }
         .com-button{
-            height: 28px;
-            font-size: 12px;
-            line-height: 32px;
+            height: 28px !important;
+            font-size: 12px !important;
         }
     }
 </style>
