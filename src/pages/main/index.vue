@@ -106,9 +106,9 @@
 <style scoped lang="scss">
     ._main-header {
         width: 100%;
-        height: 160px;
+        height: 100px;
         background-color: #F3CDC7;
-        margin-bottom: -160px;
+        margin-bottom: -100px;
 
         ._container {
             height: 100%;
@@ -151,7 +151,7 @@
 
         & > ._content {
             min-height: 100%;
-            padding-top: 160px;
+            padding-top: 100px;
             padding-bottom: 115px;
         }
     }
@@ -172,6 +172,16 @@
             .menu {
                 display: block !important;
             }
+        }
+
+        ._main {
+            &>._content {
+                padding-bottom: 55px;
+            }
+        }
+
+        ._footer {
+            margin-top: -55px;
         }
     }
 </style>

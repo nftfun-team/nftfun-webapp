@@ -33,4 +33,16 @@ export default {
             margin: 0 15px;
         }
     }
+    @media (max-width: 800px) {
+        ._footer {
+            height: 55px;
+            a {
+                display: inline-flex;
+                align-items: center;
+            }
+            img {
+                width: 28px;
+            }
+        }
+    }
 </style>

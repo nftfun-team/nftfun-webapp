@@ -58,10 +58,10 @@ export default {
                 legend: {
                     orient: 'vertical',
                     x: 'right',
-                    top: 35,
+                    top: 30,
                     itemWidth: 18,
                     itemHeight: 18,
-                    itemGap: 25,
+                    itemGap: 20,
                     formatter: '{name}',
                     textStyle: {
                         color: '#000000',
