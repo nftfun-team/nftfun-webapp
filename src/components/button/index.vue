@@ -32,6 +32,7 @@ export default class ComButton extends Vue {
         position: relative;
         z-index: 0;
         font-family: KhContent;
+        border: 0;
 
         &::before {
             position: absolute;
