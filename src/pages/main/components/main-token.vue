@@ -58,7 +58,7 @@ export default {
                 legend: {
                     orient: 'vertical',
                     x: 'right',
-                    top: 30,
+                    top: 35,
                     itemWidth: 18,
                     itemHeight: 18,
                     itemGap: 20,
