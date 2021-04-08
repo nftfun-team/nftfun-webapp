@@ -1,7 +1,7 @@
 <template>
     <div class="no-data">
         <img src="~@/assets/images/nodata.png" alt="">
-        <p>暂无数据</p>
+        <p>No Data</p>
     </div>
 </template>
 
