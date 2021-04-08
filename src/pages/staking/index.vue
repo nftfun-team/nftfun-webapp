@@ -53,8 +53,11 @@
             section{
                 justify-content: center;
                 & > div{
-                    margin-left: 10px;
-                    margin-right: 10px;
+                    margin-left: 15px;
+                    margin-right: 15px !important;
+
+                    width: 90%;
+                    padding: 28px 15px;
                 }
             }
         }
