@@ -235,4 +235,24 @@ export default {
             width: 100%;
         }
     }
+
+    @media (max-width: 768px) {
+        ._token {
+            padding: 20px;
+            h3 {
+                padding: 0;
+            }
+
+            ._flex>div {
+                width: 100% !important;
+                height: auto;
+                min-height: 138px;
+                margin-bottom: 20px;
+            }
+
+            ._token-info {
+                display: block;
+            }
+        }
+    }
 </style>
