@@ -3,7 +3,7 @@
     <template v-if="loading">
     <div class="loading">
         <div class="loading-box">
-            <img src="~img/load.svg" alt="">
+            <img src="~img/loading.gif" alt="">
         </div>
         <span>Loading...</span>
     </div>
@@ -41,8 +41,10 @@ export default {
 
             img {
                 display: block;
-                margin: auto;
-                animation: spin 2s linear infinite;
+                margin: 0 auto;
+                width: 42px;
+                height: 42px;
+                /*animation: spin 2s linear infinite;*/
             }
         }
 

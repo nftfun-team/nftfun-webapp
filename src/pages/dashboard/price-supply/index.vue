@@ -1,7 +1,7 @@
 <template>
 <div class="_price-supply _flex _justify-content-center">
     <Card :label="'REBASE COOLDOWN'"
-        :value="`${time.d}d:${time.h}h:${time.m}m:${time.s}s`"
+        :value="!show ? `${time.d}d:${time.h}h:${time.m}m:${time.s}s` : '--'"
         :isRebase="time.down"
         :load="load"
         @rebase="rebaseClick"/>
@@ -65,6 +65,7 @@ export default {
                 m: '00',
                 s: '00'
             },
+            show: true
         }
     },
     mounted() {
@@ -161,10 +162,12 @@ export default {
                         this.time.down = false;
                         clearInterval(this.timer)
                     });
-                    this.time = {...date}
+                    this.time = {...date};
+                    this.show = false;
                 }, 1000)
             } else {
-                this.time.down = false
+                this.time.down = false;
+                this.show = false;
             }
         },
         verifyNumber(val) {
@@ -175,6 +178,7 @@ export default {
             ChainApi.rebase().then(res => {
                 console.log('res', res)
                 this.load = false;
+                this.show = true;
                 this.getInfo();
             }).catch(c => {
                 this.load = false;
