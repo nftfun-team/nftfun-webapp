@@ -59,7 +59,7 @@ export default {
         ._btn {
             width: 146px;
             height: 32px;
-            padding: 5px 0 0;
+            padding: 4px 0 0;
             font-size: 18px;
             border-radius: 6px;
 
