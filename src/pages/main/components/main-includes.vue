@@ -1,7 +1,7 @@
 <template>
 <div class="_includes">
     <div class="_container">
-        <h3>FUN Protocol includes FUN Money、FUN NFT and FUN DAO.</h3>
+        <h3>FUN Protocol has three phases.</h3>
         <div class="_flex">
             <div class="_card" v-for="el of list">
                 <div>
@@ -52,7 +52,6 @@ export default {
             line-height: 50px;
             color: #28292B;
             margin-bottom: 58px;
-            padding-right: 450px;
             font-family: PoppinsBold;
         }
 
@@ -62,7 +61,7 @@ export default {
 
         ._card {
             width: 360px;
-            height: 356px;
+            min-height: 356px;
             background: #F6F6F6;
             border: 1px solid rgba(239, 239, 239, 0.5);
             box-sizing: border-box;
@@ -107,13 +106,20 @@ export default {
 
     @media (max-width: 768px) {
         ._includes {
-            padding: 20px;
+            padding: 24px 18px;
             h3 {
                 padding-right: 0;
+                font-size: 24px;
+                line-height: 30px;
+                margin-bottom: 24px;
             }
             ._card {
-                margin-bottom: 20px;
+                margin-bottom: 24px;
                 width: 100%;
+                text-align: center;
+                &:nth-last-of-type(1) {
+                    margin-bottom: 0;
+                }
             }
             ._flex {
                 display: block;
