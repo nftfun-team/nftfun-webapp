@@ -93,4 +93,13 @@ export default {
             }
         }
     }
+
+    @media (max-width: 768px) {
+        ._main-faq {
+            padding: 20px;
+            h2 {
+                padding-right: 0;
+            }
+        }
+    }
 </style>

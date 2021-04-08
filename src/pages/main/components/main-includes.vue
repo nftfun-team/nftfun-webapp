@@ -103,4 +103,20 @@ export default {
             }
         }
     }
+
+    @media (max-width: 768px) {
+        ._includes {
+            padding: 20px;
+            h3 {
+                padding-right: 0;
+            }
+            ._card {
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            ._flex {
+                display: block;
+            }
+        }
+    }
 </style>

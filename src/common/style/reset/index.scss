@@ -86,6 +86,12 @@ a {
     margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+    ._container {
+        width: 100%;
+    }
+}
+
 ._flex {
     display: flex;
     flex-wrap: wrap;
