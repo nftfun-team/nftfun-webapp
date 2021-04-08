@@ -42,24 +42,25 @@
             }
         }
         ._rt {
-            width: 400px;
+            width: 450px;
         }
         h3 {
             font-size: 64px;
             line-height: 75px;
             color: #28292B;
-            font-weight: bold;
+            font-family: PoppinsBold;
             margin-bottom: 30px;
         }
         h5 {
             font-size: 24px;
-            line-height: 28px;
-            color: #28292B;
-            font-weight: bold;
+            line-height: 45px;
+            color: #252525;
             margin-bottom: 30px;
+            font-family: KhContent;
+            font-weight: 400;
         }
         h6 {
-            text-align: center;
+            /*text-align: center;*/
         }
     }
 </style>
