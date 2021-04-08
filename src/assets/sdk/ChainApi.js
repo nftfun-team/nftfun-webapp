@@ -815,6 +815,12 @@ $.getPools = async() => {
     totalAllocPoint: await getContractMethodsByName('MasterChef').totalAllocPoint().call(),
     totalSupply: await getContractMethodsByName('MasterChef').totalSupply().call(),
     funPerBlock: await getContractMethodsByName('MasterChef').funPerBlock().call(),
+    endBlock: await getContractMethodsByName('MasterChef').endBlock().call(),
+  }
+  let curBlock = await $.getBlockNumber()
+  let status = 1 // open
+  if(Number(curBlock) > Number($.masterChefData.endBlock)) {
+    status = 0 // close
   }
   pools.forEach(async (d)=>{
     d.apr = '--'
@@ -826,6 +832,7 @@ $.getPools = async() => {
     d.totalStake = '--'
     d.totalStakeValue = '--'
     d.weight = '--'
+    d.status = status
     $.pools[d.pid] = d
     $.updatePool(d.pid)
   })

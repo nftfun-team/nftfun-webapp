@@ -16,4 +16,9 @@ export default {
         height: 100%;
         align-items: center;
     }
+    @media (max-width: 900px){
+        ._logo img{
+            height: 40px;
+        }
+    }
 </style>

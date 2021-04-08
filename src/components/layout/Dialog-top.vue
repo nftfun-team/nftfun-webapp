@@ -17,7 +17,6 @@
                     <div
                             class="copy copy-btn"
                             @click="copyClick(account)"
-                            :data-clipboard-text="account"
                     >
                         Copy Address
                     </div>
@@ -37,7 +36,7 @@
                 </div>
                 <div v-for="item in actionCache" class="history f-pm-dinpro" :key="item.timestamp">
                     <div>
-                        {{item.time | getDate('yyyy-MM-dd hh:mm:ss')}}
+                        <span class="time">{{item.time | getDate('yyyy-MM-dd hh:mm:ss')}}</span>
                         <span class="handle">{{item.funcName}}</span>
                         <span class="hash" @click="winAddress(item.hash)">{{item.hash | hash(6)}}</span>
                     </div>
@@ -187,7 +186,6 @@
 
         .dialog-body {
             padding: 0px 0 30px 0;
-
             .block {
                 font-size: 24px;
                 color: #1e2226;
@@ -337,6 +335,7 @@
             .bsc-scan {
                 display: flex;
                 font-size: 17px;
+                flex-wrap: wrap;
             }
 
             .copy,
@@ -443,6 +442,10 @@
     }
 </style>
 <style scoped lang="scss">
+    ::v-deep .el-dialog__headerbtn{
+        font-size: 30px;
+        top: 15px;
+    }
 
     .dialog-footer {
         background: rgba(30, 34, 38, 0.05);
@@ -497,6 +500,29 @@
             color: #f0b80b;
             background: rgba(30, 34, 38, 0.05);
             padding: 10px 18px 7px;
+        }
+    }
+    @media (max-width: 450px){
+        .history-box {
+            .handle{
+                width: 130px;
+                text-indent: 0px;
+            }
+            .time{
+                display: none;
+            }
+        }
+        .bsc-scan{
+            font-size: 8px !important;
+            &>div:last-child{
+                margin-top: 15px;
+                margin-left: 0;
+                margin-right: 50px;
+            }
+        }
+        ::v-deep .el-dialog__headerbtn{
+            font-size: 36px;
+            top: 10px;
         }
     }
 </style>

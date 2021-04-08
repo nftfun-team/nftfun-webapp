@@ -3,9 +3,11 @@
 <!--        <div class="staking-info">-->
 <!--            <staking-info/>-->
 <!--        </div>-->
-        <section class="staking-cont">
-            <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
-        </section>
+
+        <coming-soon />
+<!--        <section class="staking-cont">-->
+<!--            <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />-->
+<!--        </section>-->
     </div>
 </template>
 
@@ -41,20 +43,23 @@
         width: 100%;
         padding-bottom: 50px;
         section{
-            margin-top: 88px;
+            margin-top: 70px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             & > div:nth-child(odd){
-                margin-right: 35px;
+                margin-right: 25px;
             }
         }
-        @media (max-width: 1192px){
+        @media (max-width: 1000px){
             section{
                 justify-content: center;
                 & > div{
-                    margin-left: 10px;
-                    margin-right: 10px;
+                    margin-left: 15px;
+                    margin-right: 15px !important;
+
+                    width: 90%;
+                    padding: 28px 15px;
                 }
             }
         }

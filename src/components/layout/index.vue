@@ -54,7 +54,7 @@
 
 <style lang="scss" scoped>
     .common{
-        padding-top: 160px;
+        padding-top: 100px;
         width: 100%;
         height: 100%;
         display: flex;
@@ -62,14 +62,14 @@
         &-head{
             padding: 0 84px;
             width: 100%;
-            height: 160px;
+            height: 100px;
             top: 0;
             left: 0;
             box-shadow: 0px 4px 4px rgba(243, 243, 243, 0.8);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 40px;
+            font-size: 36px;
             background: #fff;
             z-index: 99;
         }
