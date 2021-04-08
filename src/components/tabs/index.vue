@@ -44,9 +44,8 @@ export default {
 
         span {
             font-size: 32px;
-            font-weight: bold;
             color: #000000;
-            padding-bottom: 24px;
+            padding-bottom: 18px;
             margin-right: 70px;
             transition: all .2s;
             cursor: pointer;

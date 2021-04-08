@@ -40,26 +40,26 @@ export default {
 
         p {
             width: 100%;
-            font-weight: bold;
 
             &:nth-of-type(1) {
                 font-size: 16px;
-                line-height: 19px;
+                line-height: 16px;
                 color: #686666;
                 margin-bottom: 28px;
+                font-family: KhContent;
             }
 
             &:nth-of-type(2) {
                 font-size: 24px;
-                line-height: 28px;
-                color: #000000;
+                line-height: 24px;
+                color: #252525;
             }
         }
 
         ._btn {
             width: 146px;
             height: 32px;
-            padding: 0;
+            padding: 5px 0 0;
             font-size: 18px;
             border-radius: 6px;
 
