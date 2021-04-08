@@ -1,98 +1,106 @@
 <template>
-    <div id="app" class="body-main">
-        <router-view/>
-    </div>
+<div id="app" class="body-main">
+    <router-view/>
+</div>
 </template>
 
 <script lang="ts">
-    import {Component, Vue, } from 'vue-property-decorator';
-    import ChainApi from "@/assets/sdk/ChainApi.js";
-    import { Storage } from 'utils/storage'
-    import { Getter, Mutation} from "vuex-class";
-    import { M_CHAIN_CHAINID, M_CHAIN_WALLETADDRESS, G_CHAIN_CHAINID, G_CHAIN_WALLETADDRESS } from "store/modules/chain/types";
+import {Component, Vue,} from 'vue-property-decorator';
+import ChainApi from '@/assets/sdk/ChainApi.js';
+import {Storage} from 'utils/storage';
+import {Getter, Mutation} from 'vuex-class';
+import {
+    M_CHAIN_CHAINID,
+    M_CHAIN_WALLETADDRESS,
+    G_CHAIN_CHAINID,
+    G_CHAIN_WALLETADDRESS
+} from 'store/modules/chain/types';
 
-    @Component
-    export default class App extends Vue {
-        @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
-        @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAddress!: Function;
-        @Getter(G_CHAIN_CHAINID) private ChainId!: string;
-        @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
+@Component
+export default class App extends Vue {
+    @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
+    @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAddress!: Function;
+    @Getter(G_CHAIN_CHAINID) private ChainId!: string;
+    @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
 
-        created() {
-            this.init()
+    created() {
+        this.init();
+    }
+
+    mounted() {
+        this.$nextTick(() => {
+            setTimeout(() => {
+                (<any>document).getElementById('screen-loading').style.display = 'none';
+            }, 1000);
+        });
+    }
+
+
+    private reload(): void {
+        window.location.reload();
+    }
+
+    public init(): void {
+        this.onChainStatus();
+        this.onChainChanged();
+        this.onAccountsChanged();
+    }
+
+    onChainStatus() {
+        ChainApi.onChainStatus(this.handleChainStatus);
+    }
+
+    onChainChanged() {
+        ChainApi.onChainChanged(this.handleChainChanged);
+    }
+
+    onAccountsChanged() {
+        ChainApi.onAccountsChanged(this.handleNewAccounts);
+    }
+
+    handleNewAccounts(acc) {
+        // console.error('acc----->',acc)
+        if (!acc.length) {
+            Storage.removeItem('account');
+            return;
         }
 
-        mounted() {
-            this.$nextTick(()=>{
-
-                (<any> document).getElementById('screen-loading').style.display = 'none';
-            })
-        }
-
-
-        private reload(): void{
-            window.location.reload();
-        }
-
-        public init(): void {
-            this.onChainStatus();
-            this.onChainChanged();
-            this.onAccountsChanged();
-        }
-
-        onChainStatus() {
-            ChainApi.onChainStatus(this.handleChainStatus);
-        }
-        onChainChanged() {
-            ChainApi.onChainChanged(this.handleChainChanged);
-        }
-        onAccountsChanged() {
-            ChainApi.onAccountsChanged(this.handleNewAccounts);
-        }
-
-        handleNewAccounts(acc) {
-            // console.error('acc----->',acc)
-            if (!acc.length) {
-                Storage.removeItem('account');
-                return;
-            }
-
-            let user = this.walletAddress;
-            if (acc.length) {
-                if (user !== null) {
-                    if (user !== acc[0]) {
-                        this.setWalletAddress(acc[0]);
-                        this.reload();
-                    }
+        let user = this.walletAddress;
+        if (acc.length) {
+            if (user !== null) {
+                if (user !== acc[0]) {
+                    this.setWalletAddress(acc[0]);
+                    this.reload();
                 }
             }
         }
+    }
 
-        handleChainChanged(chainId) {
-            // console.error('chainId----->',chainId)
-            if (!chainId) return;
+    handleChainChanged(chainId) {
+        // console.error('chainId----->',chainId)
+        if (!chainId) return;
 
-            if (chainId != this.ChainId && this.ChainId) {
-                this.setChainId(chainId)
-                this.reload();
-            }else{
-                this.setChainId(chainId)
-            }
-        }
-
-        handleChainStatus(status) {
-            // console.error('test handleChainStatus:', status);
-            if (status === 2) {
-                //console.log('连接成功');
-                // this.$store.commit('isInstall', true);
-                // this.isOpen = !this.account;
-            } else {
-                //console.log('未安装')
-                // this.$store.commit('isInstall', false);
-                // this.isOpen = true;
-            }
+        if (chainId != this.ChainId && this.ChainId) {
+            this.setChainId(chainId);
+            this.reload();
+        } else {
+            this.setChainId(chainId);
         }
     }
+
+    handleChainStatus(status) {
+        // console.error('test handleChainStatus:', status);
+        if (status === 2) {
+            //console.log('连接成功');
+            // this.$store.commit('isInstall', true);
+            // this.isOpen = !this.account;
+        } else {
+            //console.log('未安装')
+            // this.$store.commit('isInstall', false);
+            // this.isOpen = true;
+        }
+    }
+}
 
 </script>
 
