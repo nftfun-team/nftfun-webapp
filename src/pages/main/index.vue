@@ -4,7 +4,7 @@
             <div class="_container">
                 <Logo/>
                 <NavLink class="dis-nav" :navList="navList" />
-                <Button class="dis-nav" :name="'BUY NFTFUN'" :loading="loading" @click="buyClick"/>
+                <Button class="dis-nav" :name="'BUY FUN'" :loading="loading" @click="buyClick"/>
                 <img class="menu f-fr f-cursor" src="~img/menu.svg" alt="" @click="showNav()">
                 <transition name="normal-expand">
                     <nav class="menu-nav f-pa" v-show="showMenu">
