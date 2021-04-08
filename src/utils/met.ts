@@ -100,3 +100,17 @@ const install = Vue => {
 };
 
 export default install;
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        $number: () => {},
+        $toFixed: () => {},
+        $numberAndDecimal: () => {},
+        $shiftedBy: () => {},
+        $getRate: () => {},
+        $api: () => {},
+        $sort: () => {},
+        $comparedTo: (x:String | Number, y:String | Number) => {},
+        $filterNumber: () => {},
+    }
+}
