@@ -104,6 +104,18 @@ export default {
         }
     }
 
+    @media (min-width: 769px) and (max-width: 1025px){
+        ._includes {
+            ._flex {
+                justify-content: center;
+            }
+
+            ._card {
+                margin: 20px;
+            }
+        }
+    }
+
     @media (max-width: 768px) {
         ._includes {
             padding: 24px 18px;

@@ -154,7 +154,7 @@ export default {
             color: #28292B;
             font-family: PoppinsBold;
             margin-bottom: 58px;
-            padding-right: 400px;
+            padding-right: 10%;
         }
 
         ._flex {
@@ -240,6 +240,32 @@ export default {
 
         .img {
             display: none;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1025px) {
+        ._token {
+            h3 {
+                padding-right: 0;
+            }
+            ._flex {
+                margin-bottom: 0;
+
+                & > div {
+                    width: 100% !important;
+                    height: auto;
+                    min-height: 138px;
+                    margin-bottom: 24px;
+                }
+            }
+
+            ._token-info {
+                display: block;
+                margin-top: 24px;
+                &>div {
+                    width: 100%;
+                }
+            }
         }
     }
 

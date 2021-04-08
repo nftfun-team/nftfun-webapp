@@ -6,13 +6,12 @@
             <el-collapse-item :title="el.title" :name="index" v-for="(el, index) of list">
                 <div class="txt" v-html="el.txt"></div>
             </el-collapse-item>
+            <img src="~img/loading.gif" alt="" v-if="load" class="load-img">
         </el-collapse>
         <div class="_faq-more" v-if="hideFlag">
             <span @click="moreClick">Show More</span>
             <img src="~img/show-more.svg" alt="">
         </div>
-
-
     </div>
 </div>
 </template>
@@ -22,6 +21,7 @@ export default {
     name: 'main-describe',
     data() {
         return {
+            load: false,
             hideFlag: true,
             // activeNames: [0, 1, 2],
             list: [
@@ -74,8 +74,13 @@ export default {
             console.log(val);
         },
         moreClick() {
-            this.list = this.list.concat(this.list2);
-            this.hideFlag = false;
+            this.load = true;
+            setTimeout(() => {
+                this.list = this.list.concat(this.list2);
+                this.hideFlag = false;
+                this.load = false
+            }, 1000)
+
         }
     }
 }
@@ -84,7 +89,14 @@ export default {
 <style scoped lang="scss">
     ._main-faq {
         background-color: #ffffff;
-        padding: 48px 0;
+        padding: 58px 48px;
+
+        .load-img {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto;
+        }
 
         h2 {
             font-size: 40px;
