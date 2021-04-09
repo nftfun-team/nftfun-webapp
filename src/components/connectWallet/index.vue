@@ -161,7 +161,7 @@
 
     @media (max-width: 960px) {
         .dialog {
-            width: 358px;
+            width: 90%;
             background: #ffffff;
             box-shadow: 0 0 10px 4px rgba(39, 88, 53, 0.06);
             position: fixed;
