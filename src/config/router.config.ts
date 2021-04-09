@@ -25,10 +25,6 @@ export const BaseRouter = [
         component: () => import('../pages/test.vue')
     },
     {
-        path: '/login',
-        component: () => import( 'pages/login/index.vue'),
-    },
-    {
         path: '*',
         redirect: '/main'
     },
