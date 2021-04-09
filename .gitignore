@@ -1,9 +1,6 @@
 .DS_Store
 node_modules
-/mdcar
 /dist
-/mdcx
-/src/apriluis
 
 yarn.lock
 # local env files

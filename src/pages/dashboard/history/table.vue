@@ -53,7 +53,6 @@ export default {
     methods: {
         getHistoryList() {
             WebSdk.connect().then((data) => {
-                if(!data.isConnect) return
                 ChainApi.history(this.params.page, this.params.size).then(res => {
                     this.load = false;
                     if (res.code === 0 && res.data) {

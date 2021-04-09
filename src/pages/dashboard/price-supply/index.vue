@@ -75,7 +75,7 @@ export default {
         upDate() {
             console.log('CountDown', count);
             WebSdk.connect().then((data) => {
-                if(!data.isConnect) return
+                // if(!data.isConnect) return
                 this.getInfo();
                 this.$ChainApi.report().then(res => {
                     console.log('res.....', res)
