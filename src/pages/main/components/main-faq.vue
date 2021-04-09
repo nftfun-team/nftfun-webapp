@@ -35,7 +35,7 @@ export default {
                 },
                 {
                     title: 'How can I purchase FUN?',
-                    txt: 'FUN tokens will be available for public sale through an initial offering on our partner\'s platform. For more information please check our official <a href="" target="_blank">telegram</a> or <a href="" target="_blank">Twitter</a>.'
+                    txt: 'FUN tokens will be available for public sale through an initial offering on our partner\'s platform. For more information please check our official <a href="https://t.me/NftFunProtocol" target="_blank">telegram</a> or <a href="https://twitter.com/NFTFunProtocol" target="_blank">Twitter</a>.'
                 }
             ],
             list2: [
