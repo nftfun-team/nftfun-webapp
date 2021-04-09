@@ -65,7 +65,7 @@ export default {
                 m: '00',
                 s: '00'
             },
-            show: true
+            show: true,
         }
     },
     mounted() {
@@ -89,6 +89,9 @@ export default {
         tabClick($event) {
             this.active = $event.name;
             this.type = $event.type;
+            if (!this.data) {
+                return
+            }
             this.getPriceData();
             this.getSupplyData();
             this.getMktCapData();
