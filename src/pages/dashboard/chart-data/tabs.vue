@@ -32,7 +32,7 @@ export default {
     h3 {
         font-size: 32px;
         line-height: 32px;
-        color: #000000;
+        color: #252525;
         font-weight: 400;
         margin-bottom: 30px;
         margin-top: 94px;
@@ -76,6 +76,23 @@ export default {
 
             .active {
                 background-color: #F3CDC7;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        h3 {
+            font-size: 14px;
+            line-height: 14px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        ._chart-tabs {
+            flex-wrap: wrap;
+            justify-content: center;
+            div {
+                margin-bottom: 8px;
             }
         }
     }
