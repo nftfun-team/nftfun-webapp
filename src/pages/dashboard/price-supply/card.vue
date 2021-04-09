@@ -74,4 +74,31 @@ export default {
             }
         }
     }
+
+    @media (max-width: 768px) {
+        ._card {
+            width: 100%;
+            height: 92px;
+            padding: 16px 20px;
+            margin: 0 0 12px;
+            p{
+                &:nth-of-type(1) {
+                    font-size: 12px;
+                }
+                &:nth-of-type(2) {
+                    text-align: right;
+                    font-size: 16px;
+                }
+            }
+
+            ._btn {
+                height: 26px;
+                width: 124px;
+                font-size: 14px;
+                display: block;
+                float: right;
+                margin-top: -10px;
+            }
+        }
+    }
 </style>

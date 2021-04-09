@@ -60,4 +60,10 @@ export default {
     ._dashboard {
         padding: 84px 0;
     }
+
+    @media(max-width: 768px) {
+        ._dashboard {
+            padding: 24px 18px;
+        }
+    }
 </style>
