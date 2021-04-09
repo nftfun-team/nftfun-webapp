@@ -761,12 +761,26 @@ $.getLpValue = async (token, baseToken, amount) => {
   return await methods.getLpValue(token, baseToken, amount).call()
 }
 
-$.getLpUsdValue = async (token, baseToken, amount) => {
+$.getDemaxLpValue = async (lpToken, baseToken, amount) => {
+  let methods = getContractMethodsByName('Query')
+  return await methods.getDemaxLpValue(lpToken, baseToken, amount).call()
+}
+
+$.getLpUsdValue = async (pool, amount) => {
+  let token = $.getTokenAddress(pool.tokenSymbol)
+  let baseToken = $.getTokenAddress(pool.baseSymbol)
   if(baseToken.toLocaleLowerCase() == $.getTokenAddress($.getWSymbol()).toLocaleLowerCase()) {
     let res = await $.getLpValue(token, baseToken, amount)
     let wValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
     let wPrice = await $.getWTokenPrice()
     return wValue.multipliedBy(wPrice).toFixed()
+  } else if(baseToken.toLocaleLowerCase() == $.getTokenAddress('BURGER').toLocaleLowerCase()) {
+      let res = await $.getDemaxLpValue(pool.address, baseToken, amount)
+      console.log('getDemaxLpValue:', res)
+      let burgerValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
+      let burgerPrice = await $.getTokenPriceByTokens($.getTokenAddress('BURGER'), $.getTokenAddress('USDT'))
+      console.log('burgerPrice:', burgerPrice)
+      return burgerValue.multipliedBy(burgerPrice).toFixed()
   } else if(baseToken.toLocaleLowerCase() == $.getTokenAddress('USDT').toLocaleLowerCase()) {
     let res = await $.getLpValue(token, baseToken, amount)
     return new BigNumber(res[0]).shiftedBy(-1*res[1]).toFixed()
@@ -800,7 +814,7 @@ $.updatePool = async(pid) => {
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   let totalStake = await $.balanceOf($.pools[pid].address, $.getContractAddr('MasterChef'))
   $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
-  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.getTokenAddress($.pools[pid].tokenSymbol), $.getTokenAddress($.pools[pid].baseSymbol), totalStake)
+  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], totalStake)
   $.pools[pid].weight = poolInfo.allocPoint
   $.pools[pid].apr = await $.poolRewardApr($.pools[pid], $.masterChefData, $.funPrice)
   $.pools[pid].userAllowance = await $.allowance($.pools[pid].address, $.getContractAddr('MasterChef'))

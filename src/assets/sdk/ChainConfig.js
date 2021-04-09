@@ -38,7 +38,7 @@ const ContractsAddr = {
         Master: '0x80EbE98696df632e40963E60c252c41aeA2d6404',
         Oracle: '0xbe3d3708A6c50457834Fce564677e6cce72fdc8b',
         MasterChef: '0x7966F5653e20cAa3eF57cEE0100277321c4AE770',
-        Query: '0xe589d34794856D85E50b087A2a9c174C6DeDB903',
+        Query: '0xBf41799DAaF2a9d7e607042687De2d2018F3EE02',
     },
 }
 
@@ -50,6 +50,7 @@ const Tokens = {
         FUN: '0xB9f8985b884d16DedfA8de7f37651AE938949A54',
         USDT: '0xF2ED382e6A3439Be124813842200cf6702fD6ecA',
         WBNB: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
+        BURGER: '0x06bF890dfF5b422c35c9683f47d2d7663f6E1c24',
     },
 }
 
@@ -69,6 +70,13 @@ const Pools = {
             pid: 1,
             tokenSymbol: "FUN",
             baseSymbol: "WBNB"
+        },
+        {
+            name: "FUN-BURGER",
+            address: "0xa0cFA7ca408924c00A57a1603E01fdCA18e16C5F",
+            pid: 2,
+            tokenSymbol: "FUN",
+            baseSymbol: "BURGER"
         }
     ],
 }

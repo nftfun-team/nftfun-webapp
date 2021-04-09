@@ -18,7 +18,7 @@
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
             <div class="deposit-item-handle-cont">
-                <p class="deposit-item-handle-cont-use">Wallet Available: {{data.userBalance}} {{data.name}} LP</p>
+                <p class="deposit-item-handle-cont-use">Wallet Available: <span>{{data.userBalance}} {{data.name}} LP</span></p>
                 <template v-if="direction=='deposit'">
                     <div class="deposit-item-handle-cont-number f-pr" >
                         <el-input v-model="depositNumber" placeholder="0.0000" @input.native="$filterNumber" @blur="changeVal('deposit')"/>
@@ -210,13 +210,13 @@
                 margin-bottom: 28px;
                 font-size: 24px;
                 line-height: 24px;
-                font-weight: 800;
                 &:last-child{
                     margin-bottom: 0;
                 }
                 span{
                     font-size: 16px;
                     color: #686666;
+
                 }
             }
         }
@@ -251,7 +251,6 @@
             &-cont{
                 padding: 24px 0 0;
                 &-use{
-                    font-weight: 800;
                     font-size: 16px;
                     line-height: 24px;
                     height: 24px;
@@ -271,7 +270,6 @@
                     }
                     span{
                         font-size: 16px;
-                        font-weight: 800;
                         position: absolute;
                         right: 20px;
                         top: 55%;
@@ -322,6 +320,127 @@
                 font-weight: 500;
                 font-size: 18px;
                 background: #FAFAF1;
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .deposit-item{
+            margin-bottom: 28px;
+            &-symbol{
+                height: 30px;
+                line-height: 31px;
+                font-size: 14px;
+                justify-content: left;
+                img{
+                    height: 30px;
+                }
+                span{
+                    height: 14px;
+                    line-height: 14px;
+                    font-size: 10px;
+                    padding: 0 12px;
+                }
+
+            }
+            &-over{
+                padding: 18px 0 8px;
+                h4{
+                    font-size: 16px;
+                    line-height: 24px;
+                    margin-bottom: 8px;
+                }
+                p{
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    span{
+                        display: block;
+                        float: none;
+                        margin-top: 8px;
+                        font-size: 14px;
+                        line-height: 16px;
+                    }
+                }
+            }
+            &-handle {
+                padding: 10px 0 8px;
+                &-nav {
+                    height: 34px;
+                    border-radius: 8px;
+                    &-item{
+                        line-height: 34px;
+                        font-size: 14px;
+                    }
+                }
+                &-cont{
+                    padding: 10px 0 0;
+                    &-use{
+                        font-size: 16px;
+                        line-height: 24px;
+                        height: auto;
+                        span{
+                            margin-top: 8px;
+                            display: block;
+                            font-size: 14px;
+                            line-height: 16px;
+                            color: #686666;
+                        }
+                    }
+                    &-number{
+                        height: 34px;
+                        border-radius: 8px;
+                        ::v-deep .el-input__inner{
+                            height: 34px;
+                            border-radius: 8px;
+                            font-size: 12px;
+                        }
+                        span{
+                            font-size: 12px;
+                            position: absolute;
+                            right: 10px;
+                            top: 51%;
+                            cursor: pointer;
+                        }
+                    }
+                    &-btn{
+                        height: 34px;
+                        font-size: 12px;
+                        border-radius: 17px;
+                        margin: 20px 0 18px;
+                    }
+                    &-link{
+                        font-size: 14px;
+                        line-height: 14px;
+                        height: 14px;
+                    }
+                }
+            }
+            &-status{
+                margin-top: 14px;
+                p{
+                    margin-bottom: 12px;
+                    font-size: 16px;
+                    line-height: 24px;
+                    height: auto;
+                    span{
+                        float: none;
+                        display: block;
+                        font-size: 14px;
+                        line-height: 16px;
+                        margin-top: 8px;
+                    }
+                }
+                &-end{
+                    margin-bottom: 24px;
+                }
+                &-btn{
+                    height: 34px;
+                    border-radius: 17px;
+                    font-size: 12px;
+                }
             }
         }
     }

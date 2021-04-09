@@ -8,9 +8,11 @@ import {Loadings} from "utils/loadings/loadings";
 import BigNumber from "bignumber.js";
 
 import ComingSoon from 'components/comingSoon/index.vue'
+import Loading from 'components/loading/index.vue'
 
 const components: { [propsName: string]: any } = {
-    ComingSoon
+    ComingSoon,
+    Loading
 };
 
 

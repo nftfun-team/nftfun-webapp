@@ -78,11 +78,14 @@
             height: 100%;
         }
     }
-    @media (max-width: 800px) {
-        .common-head{
-            padding: 0 20px;
-            font-size: 18px;
-            height: 60px;
+    @media (max-width: 768px) {
+        .common{
+            padding-top: 85px;
+            &-head{
+                padding: 0 20px;
+                font-size: 18px;
+                height: 60px;
+            }
         }
         .com-button{
             height: 28px !important;
