@@ -2,6 +2,7 @@
 <div class="_table">
     <h3>PRBASES</h3>
     <ul class="_list">
+        <template v-if="isPc">
         <li class="_list-header">
             <div>Date</div>
             <div>Supply Adjustment %</div>
@@ -9,21 +10,49 @@
             <div>Supply After Rebase</div>
             <div>Block</div>
         </li>
-        <Loading :loading="load">
-            <li v-for="item of tableData">
-                <div>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</div>
-                <div>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</div>
-                <div>{{item.lastTotalSupply}}</div>
-                <div>{{item.totalSupply}}</div>
-                <div>{{item.updateBlock}}</div>
-            </li>
-            <div class="_more">
-                <div @click="moreClick" v-if="!empty">
-                    <img src="~img/more.svg" alt="">
-                    <span>More</span>
-                </div>
+        <template v-if="!load">
+        <li v-for="item of tableData">
+            <div>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</div>
+            <div>{{item.lastTotalSupply}}</div>
+            <div>{{item.totalSupply}}</div>
+            <div>{{item.updateBlock}}</div>
+        </li>
+        </template>
+        </template>
+
+        <template v-if="!isPc">
+        <li class="_mobile-li" v-for="item of tableData">
+            <div>
+                <p>Date</p>
+                <p>{{item.updateTime * 1000 | getDate('yyyy-MM-dd hh:mm:ss')}}</p>
             </div>
-        </Loading>
+            <div>
+                <p>Supply Adjustment %</p>
+                <p>{{`${(item.supplyDelta / item.lastTotalSupply * 100).toFixed(2)}%`}}</p>
+            </div>
+            <div>
+                <p>Supply Before Rebase</p>
+                <p>{{item.lastTotalSupply}}</p>
+            </div>
+            <div>
+                <p>Supply After Rebase</p>
+                <p>{{item.totalSupply}}</p>
+            </div>
+            <div>
+                <p>Block</p>
+                <p>{{item.updateBlock}}</p>
+            </div>
+        </li>
+        </template>
+
+        <Loading :loading="load || moreLoad"/>
+        <div class="_more" v-if="!load && !moreLoad && !empty">
+            <div @click="moreClick">
+                <img src="~img/more.svg" alt="">
+                <span>More</span>
+            </div>
+        </div>
     </ul>
 </div>
 </template>
@@ -44,27 +73,40 @@ export default {
             },
             tableData: [],
             empty: false,
-            load: true
+            load: true,
+            moreLoad: false,
+            isPc: true
         }
     },
     mounted() {
-        this.getHistoryList()
+        this.getHistoryList();
+        if (window.innerWidth <= 768) {
+            this.isPc = false
+        }
     },
     methods: {
         getHistoryList() {
             WebSdk.connect().then((data) => {
                 ChainApi.history(this.params.page, this.params.size).then(res => {
                     this.load = false;
+                    this.moreLoad = false;
                     if (res.code === 0 && res.data) {
                         console.log('history------>', res)
                         this.tableData = this.tableData.concat(res.data);
                         this.empty = this.tableData.length >= res.count;
                     }
+                }).catch(e => {
+                    this.load = false;
+                    this.empty = true;
                 })
+            }).catch(e => {
+                this.load = false;
+                this.empty = true;
             })
         },
         moreClick() {
             this.params.page++;
+            this.moreLoad = true;
             this.getHistoryList();
         }
     }
@@ -174,10 +216,65 @@ export default {
                     transition: all .2s;
                 }
 
-                &:hover img{
+                &:hover img {
                     margin-top: 5px;
                 }
             }
+        }
+    }
+
+    @media (max-width: 768px) {
+        ._table {
+            background-color: #ffffff;
+            padding: 0 18px 50px;
+
+            h3 {
+                font-size: 14px;
+                line-height: 14px;
+                margin-bottom: 18px;
+                padding: 18px 0 0;
+            }
+
+            ._list {
+                ._mobile-li {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    padding: 0;
+                    height: auto;
+                    margin-bottom: 18px;
+
+                    div {
+                        width: 50% !important;
+                        margin-bottom: 18px;
+
+                        &:nth-of-type(odd) {
+                            text-align: left;
+                        }
+
+                        &:nth-of-type(even) {
+                            text-align: right;
+                        }
+
+                        p {
+                            line-height: 16px;
+
+                            &:nth-of-type(1) {
+                                font-size: 12px;
+                                color: #686666;
+                                margin-bottom: 8px;
+                            }
+
+                            &:nth-of-type(2) {
+                                font-size: 16px;
+                                color: #252525;
+                            }
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 </style>

@@ -205,4 +205,10 @@ export default {
             }
         }
     }
+
+    @media (max-width: 768px) {
+        ._price-supply {
+            padding: 0 18px;
+        }
+    }
 </style>
