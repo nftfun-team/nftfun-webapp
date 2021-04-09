@@ -61,7 +61,7 @@ export default class ComButton extends Vue {
     }
     @media (max-width: 768px) {
         ._button {
-            /*padding: 0 10px;*/
+            padding: 4px 20px 0;
         }
     }
 </style>

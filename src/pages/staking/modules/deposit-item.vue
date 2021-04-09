@@ -61,7 +61,13 @@
         private data!: Record<string, any>;
 
         get imgSrc():string {
-            return require(`../../../assets/images/stake/${this.data.name.replace('/\//g', '-')}.svg`)
+            let src = ''
+            try{
+                src = require(`../../../assets/images/stake/${this.data.name.replace('/\//g', '-')}.svg`)
+            }catch (e) {
+                src = require(`../../../assets/images/stake/defalut.svg`)
+            }
+            return src
         }
 
         private depositNumber: string = '';

@@ -19,6 +19,7 @@
 <script lang="ts">
     import { Component, Vue, Watch } from "vue-property-decorator";
     import {Action, Getter} from "vuex-class";
+    import WebChain from "utils/sdk"
     import ComButton from "components/button/index.vue";
     import ConnectWallet from "components/connectWallet/index.vue";
     import DialogTop from "./Dialog-top.vue";
@@ -38,6 +39,10 @@
                 case '/staking': this.title = 'Staking'; break;
                 case '/dashboard': this.title = 'Dashboard'; break;
             }
+        }
+
+        created(){
+            // WebChain.connect().catch(_ => this.isShow = true)
         }
 
         private title: string = 'Staking';

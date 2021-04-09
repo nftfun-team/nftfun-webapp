@@ -4,12 +4,12 @@
 <!--            <staking-info/>-->
 <!--        </div>-->
 
-        <coming-soon />
-<!--        <loading :loading="load">-->
-<!--            <section class="staking-cont">-->
-<!--                <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />-->
-<!--            </section>-->
-<!--        </loading>-->
+<!--        <coming-soon />-->
+        <loading :loading="load" v-if="1!=2">
+            <section class="staking-cont">
+                <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
+            </section>
+        </loading>
     </div>
 </template>
 
@@ -17,7 +17,7 @@
     import { Component, Vue } from "vue-property-decorator";
     import StakingInfo from './modules/staking-info.vue'
     import DepositItem from './modules/deposit-item.vue'
-    import WebChina from "utils/sdk"
+    import WebChain from "utils/sdk"
 
     @Component({
         name: 'Staking',
@@ -28,7 +28,7 @@
         private load: Boolean = true;
 
         mounted(){
-            WebChina.connect().then(data => {
+            WebChain.connect().then(data => {
                 this.load = true
                 this.$ChainApi.getPools()
                     .then( res => {
