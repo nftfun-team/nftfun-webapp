@@ -44,7 +44,7 @@ export default {
 
         span {
             font-size: 32px;
-            color: #000000;
+            color: #252525;
             padding-bottom: 18px;
             margin-right: 70px;
             transition: all .2s;
@@ -76,6 +76,22 @@ export default {
 
             &::after {
                 background-color: #EF8969;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        ._tabs {
+            margin-bottom: 24px;
+
+            span {
+                font-size: 16px;
+                margin-right: 30px;
+                padding-bottom: 8px;
+
+                &::after {
+                    height: 1px;
+                }
             }
         }
     }
