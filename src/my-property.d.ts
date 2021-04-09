@@ -1,5 +1,4 @@
 import VueRouter, {Route} from 'vue-router';
-import BigNumber from "bignumber.js";
 
 type Api<T> = { [key: string]: T }
 
@@ -32,13 +31,12 @@ declare module 'vue/types/vue' {
         $serviceApi: Api<Function>,
         $popTip: () => {},
         $sleep: (time?:number) => {},
-        // $event: any,
         $load: Load,
         $modelOperating: (data: Operating) => {},
         $router: VueRouter
         $route: Route,
         $ChainApi: any,
-        $BigNumber: any
+        $BigNumber: any,
     }
 }
 

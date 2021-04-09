@@ -11,7 +11,7 @@
             </h5>
             <h6><img src="~img/img-1.svg" alt=""></h6>
         </div>
-        <Button :name="'BUY NFTFUN'" :loading="loading" @click="buyClick" class="btn"/>
+        <Button :name="'BUY FUN'" :loading="loading" @click="buyClick" class="btn"/>
     </div>
 </div>
 </template>
@@ -103,6 +103,9 @@ export default {
                 justify-content: center;
                 flex-wrap: wrap;
                 padding: 17px 0;
+            }
+            .btn {
+                display: block;
             }
 
             ._lf, ._rt {

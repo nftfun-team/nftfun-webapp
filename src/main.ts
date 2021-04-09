@@ -11,7 +11,7 @@ import './common/style/index.scss';
 import '@/utils/global'
 import '@/utils/globalUtil'
 import '@/utils/globalFilter'
-
+// import 'lib-flexible/flexible.js'
 
 Vue.use(ElementUI);
 Vue.use(install);
@@ -19,7 +19,6 @@ Vue.use(install);
 Vue.config.productionTip = false;
 Vue.config.silent = true;
 window.BigNumber = (number: number | string) =>  new BigNumber(number)
-
 
 new Vue({
   router,

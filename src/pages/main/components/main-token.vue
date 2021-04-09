@@ -61,7 +61,7 @@ export default {
                     top: 35,
                     itemWidth: 18,
                     itemHeight: 18,
-                    itemGap: 25,
+                    itemGap: 20,
                     formatter: '{name}',
                     textStyle: {
                         color: '#000000',

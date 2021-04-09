@@ -3,9 +3,13 @@
 <!--        <div class="staking-info">-->
 <!--            <staking-info/>-->
 <!--        </div>-->
-        <section class="staking-cont">
-            <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
-        </section>
+
+        <coming-soon />
+<!--        <loading :loading="load">-->
+<!--            <section class="staking-cont">-->
+<!--                <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />-->
+<!--            </section>-->
+<!--        </loading>-->
     </div>
 </template>
 
@@ -21,17 +25,19 @@
     })
     export default class Staking extends Vue{
         private poolList: Array<any> = []
+        private load: Boolean = true;
 
         mounted(){
             WebChina.connect().then(data => {
+                this.load = true
                 this.$ChainApi.getPools()
                     .then( res => {
-                        console.log(res)
+                        console.error('res------>', res)
                         this.poolList = res
                     })
                     .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error(e)})
-                    .finally(_ => this.$load.hideLoading())
-            }).catch(_ => this.$load.hideLoading())
+                    .finally(_ => this.load = false)
+            }).catch(_ => this.load = false)
         }
     }
 </script>
@@ -41,20 +47,35 @@
         width: 100%;
         padding-bottom: 50px;
         section{
-            margin-top: 88px;
+            margin-top: 70px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             & > div:nth-child(odd){
-                margin-right: 35px;
+                margin-right: 25px;
             }
         }
-        @media (max-width: 1192px){
+
+    }
+    @media (max-width: 1000px){
+        .staking section{
+            justify-content: center;
+            & > div{
+                margin-left: 15px;
+                margin-right: 15px !important;
+
+                width: 90%;
+                padding: 28px 15px;
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .staking{
             section{
-                justify-content: center;
+                margin-top: 0px;
                 & > div{
-                    margin-left: 10px;
-                    margin-right: 10px;
+                    padding: 18px;
                 }
             }
         }

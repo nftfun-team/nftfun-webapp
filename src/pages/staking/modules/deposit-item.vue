@@ -2,7 +2,7 @@
     <div class="deposit-item">
         <div class="deposit-item-symbol">
             <img :src="imgSrc" alt="">
-            {{data.name}} LP
+            <b class="f-pop-bold-family">{{data.name}} LP</b>
             <span class="f-center-y">{{data.weight}}X</span>
         </div>
 
@@ -18,14 +18,14 @@
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
             <div class="deposit-item-handle-cont">
-                <p class="deposit-item-handle-cont-use">Wallet Available: {{data.userBalance}} {{data.name}} LP</p>
+                <p class="deposit-item-handle-cont-use">Wallet Available: <span>{{data.userBalance}} {{data.name}} LP</span></p>
                 <template v-if="direction=='deposit'">
                     <div class="deposit-item-handle-cont-number f-pr" >
                         <el-input v-model="depositNumber" placeholder="0.0000" @input.native="$filterNumber" @blur="changeVal('deposit')"/>
                         <span class="f-center-y" @click="handleMax('deposit')">MAX</span>
                     </div>
-                    <el-button class="deposit-item-handle-cont-btn f-pm-family"  v-if="Number(data.userAllowance) > 0 || approveFlag" :loading="depositLoad" :disabled="!depositNumber || Number(depositNumber) == 0" @click="deposit()">Deposit</el-button>
-                    <el-button class="deposit-item-handle-cont-btn f-pm-family" v-else :loading="approveLoad" @click="approve(data.address)">Approve</el-button>
+                    <el-button class="deposit-item-handle-cont-btn f-khc-family"  v-if="Number(data.userAllowance) > 0 || approveFlag" :loading="depositLoad" :disabled="!depositNumber || Number(depositNumber) == 0" @click="deposit()">Deposit</el-button>
+                    <el-button class="deposit-item-handle-cont-btn f-khc-family" v-else :loading="approveLoad" @click="approve(data.address)">Approve</el-button>
 
                 </template>
 
@@ -34,7 +34,7 @@
                         <el-input v-model="withdrawNumber" placeholder="0.0000" @input.native="$filterNumber" @blur="changeVal('withdraw')"/>
                         <span class="f-center-y" @click="handleMax('withdraw')">MAX</span>
                     </div>
-                    <el-button class="deposit-item-handle-cont-btn f-pm-family" :loading="withdrawLoad" :disabled="!withdrawNumber || Number(withdrawNumber) == 0" @click="withdraw()">Withdraw</el-button>
+                    <el-button class="deposit-item-handle-cont-btn f-khc-family" :loading="withdrawLoad" :disabled="!withdrawNumber || Number(withdrawNumber) == 0" @click="withdraw()">Withdraw</el-button>
                 </template>
                 <p class="deposit-item-handle-cont-link f-cursor" @click="jump()">Get Liquidity Pool Tokens</p>
             </div>
@@ -42,8 +42,8 @@
 
         <div class="deposit-item-status">
             <p>Staked <span class="f-fr"> {{data.userAmount}} {{data.name}} LP</span></p>
-            <p>Rewards <span class="f-fr">{{data.userReward}}</span></p>
-            <el-button class="deposit-item-status-btn f-pm-family" :loading="claimLoad" :disabled="Number(data.userReward) == 0" @click="harvest">Claim</el-button>
+            <p class="deposit-item-status-end">Rewards <span class="f-fr">{{data.userReward}}</span></p>
+            <el-button class="deposit-item-status-btn f-khc-family" :loading="claimLoad" :disabled="Number(data.userReward) == 0" @click="harvest">Claim</el-button>
         </div>
     </div>
 </template>
@@ -97,7 +97,7 @@
         }
 
         private changeVal(type:string): void{
-            if(type === 'deposit') this.depositNumber = (<any> this).$comparedTo(this.depositNumber,this.data.userBalance) === 1 ? this.data.userBalance : this.depositNumber;
+            if(type === 'deposit') this.depositNumber = this.$comparedTo(this.depositNumber,this.data.userBalance) === 1 ? this.data.userBalance : this.depositNumber;
             else this.withdrawNumber = (<any> this).$comparedTo(this.depositNumber,this.data.userAmount) === 1 ? this.data.userAmount : this.depositNumber;
         }
 
@@ -162,12 +162,12 @@
 <style lang="scss" scoped>
     .deposit-item{
         width: 572px;
-        padding: 28px 58px 28px;
+        padding: 28px 48px 28px;
         background: #fff;
         box-shadow: -2px 5px 6px #EFEEF1;
         border-radius: 8px;
         border: 1px solid rgba(239, 239, 239, 0.5);
-        margin-bottom: 58px;
+        margin-bottom: 48px;
         color: #000;
         ::v-deep .el-button:hover{
             background: #FCFCED;
@@ -186,7 +186,6 @@
                 margin-right: 24px;
             }
             span{
-                font-weight: 600;
                 margin-left: 18px;
                 height: 20px;
                 line-height: 20px;
@@ -195,35 +194,34 @@
                 background: #FAFAF1;
                 border: 1px solid #000;
                 font-size: 14px;
-                top: 45%;
+                top: 47%;
             }
         }
         &-over{
             padding: 47px 0 34px;
             border-bottom: 1px solid rgba(104, 102, 102, 0.5);
             h4{
-                line-height: 35px;
-                font-size: 28px;
-                color: #000;
+                line-height: 24px;
+                font-size: 24px;
+                color: #252525;
                 margin-bottom: 28px;
             }
             p{
-                margin-bottom: 20px;
+                margin-bottom: 28px;
                 font-size: 24px;
-                line-height: 35px;
-                height: 35px;
-                font-weight: 800;
+                line-height: 24px;
                 &:last-child{
                     margin-bottom: 0;
                 }
                 span{
                     font-size: 16px;
                     color: #686666;
+
                 }
             }
         }
         &-handle{
-            padding: 25px 0 14px;
+            padding: 18px 0 13px;
             border-bottom: 1px solid rgba(104, 102, 102, 0.5);
             &-nav{
                 height: 50px;
@@ -235,12 +233,11 @@
                     text-align: center;
                     line-height: 50px;
                     font-size: 24px;
-                    font-weight: 800;
+                    color: #252525;
                     flex: 1;
                     cursor: pointer;
                     &:hover{
                         color: #6ABFEE;
-                        /*background: #E1F4FF;*/
                     }
                     &:first-child{
                         border-right: 1px solid #2C3035;
@@ -254,25 +251,25 @@
             &-cont{
                 padding: 24px 0 0;
                 &-use{
-                    font-weight: 800;
                     font-size: 16px;
-                    line-height: 23px;
-                    height: 23px;
-                    margin-bottom: 24px;
+                    line-height: 24px;
+                    height: 24px;
+                    margin-bottom: 18px;
                 }
                 &-number{
                     width: 100%;
                     height: 50px;
                     border-radius: 16px;
                     overflow: hidden;
+                    color: #686666;
                     ::v-deep .el-input__inner{
                         height: 50px;
                         border-radius: 16px;
                         font-size: 16px;
+                        color: #686666;
                     }
                     span{
                         font-size: 16px;
-                        font-weight: 800;
                         position: absolute;
                         right: 20px;
                         top: 55%;
@@ -290,11 +287,9 @@
                 }
                 &-link{
                     font-size: 16px;
-                    line-height: 19px;
-                    height: 23px;
+                    line-height: 24px;
+                    height: 24px;
                     color: #F5B6A1;
-                    font-weight: 800;
-                    text-indent: 10px;
                     &:hover{
                         color: #F3A58B;
                     }
@@ -303,16 +298,19 @@
         }
         &-status{
             margin-top: 28px;
+            color: #252525;
             p{
-                margin-bottom: 20px;
+                margin-bottom: 31px;
                 font-size: 24px;
-                line-height: 35px;
-                height: 35px;
-                font-weight: 800;
+                line-height: 24px;
+                height: 24px;
                 span{
                     font-size: 16px;
                     color: #686666;
                 }
+            }
+            &-end{
+                margin-bottom: 28px;
             }
             &-btn{
                 margin-top: 4px;
@@ -322,6 +320,127 @@
                 font-weight: 500;
                 font-size: 18px;
                 background: #FAFAF1;
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .deposit-item{
+            margin-bottom: 28px;
+            &-symbol{
+                height: 30px;
+                line-height: 31px;
+                font-size: 14px;
+                justify-content: left;
+                img{
+                    height: 30px;
+                }
+                span{
+                    height: 14px;
+                    line-height: 14px;
+                    font-size: 10px;
+                    padding: 0 12px;
+                }
+
+            }
+            &-over{
+                padding: 18px 0 8px;
+                h4{
+                    font-size: 16px;
+                    line-height: 24px;
+                    margin-bottom: 8px;
+                }
+                p{
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    span{
+                        display: block;
+                        float: none;
+                        margin-top: 8px;
+                        font-size: 14px;
+                        line-height: 16px;
+                    }
+                }
+            }
+            &-handle {
+                padding: 10px 0 8px;
+                &-nav {
+                    height: 34px;
+                    border-radius: 8px;
+                    &-item{
+                        line-height: 34px;
+                        font-size: 14px;
+                    }
+                }
+                &-cont{
+                    padding: 10px 0 0;
+                    &-use{
+                        font-size: 16px;
+                        line-height: 24px;
+                        height: auto;
+                        span{
+                            margin-top: 8px;
+                            display: block;
+                            font-size: 14px;
+                            line-height: 16px;
+                            color: #686666;
+                        }
+                    }
+                    &-number{
+                        height: 34px;
+                        border-radius: 8px;
+                        ::v-deep .el-input__inner{
+                            height: 34px;
+                            border-radius: 8px;
+                            font-size: 12px;
+                        }
+                        span{
+                            font-size: 12px;
+                            position: absolute;
+                            right: 10px;
+                            top: 51%;
+                            cursor: pointer;
+                        }
+                    }
+                    &-btn{
+                        height: 34px;
+                        font-size: 12px;
+                        border-radius: 17px;
+                        margin: 20px 0 18px;
+                    }
+                    &-link{
+                        font-size: 14px;
+                        line-height: 14px;
+                        height: 14px;
+                    }
+                }
+            }
+            &-status{
+                margin-top: 14px;
+                p{
+                    margin-bottom: 12px;
+                    font-size: 16px;
+                    line-height: 24px;
+                    height: auto;
+                    span{
+                        float: none;
+                        display: block;
+                        font-size: 14px;
+                        line-height: 16px;
+                        margin-top: 8px;
+                    }
+                }
+                &-end{
+                    margin-bottom: 24px;
+                }
+                &-btn{
+                    height: 34px;
+                    border-radius: 17px;
+                    font-size: 12px;
+                }
             }
         }
     }

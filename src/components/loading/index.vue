@@ -1,22 +1,24 @@
 <template>
-<div>
-    <template v-if="loading">
-    <div class="loading">
-        <div class="loading-box">
-            <img src="~img/load.svg" alt="">
-        </div>
-        <span>Loading...</span>
+    <div>
+        <template v-if="loading">
+            <div class="loading">
+                <div class="loading-box">
+                    <img src="~img/loading.gif" alt="">
+                </div>
+                <span>Loading...</span>
+            </div>
+        </template>
+        <slot v-else></slot>
     </div>
-    </template>
-    <slot v-else></slot>
-</div>
 </template>
 
-<script>
-export default {
-    name: 'index',
-    props: ['loading'],
-}
+<script lang="ts">
+    import {Component, Vue, Prop} from 'vue-property-decorator';
+
+    @Component({name: 'Loading'})
+    export default class ComingSoon extends Vue {
+        @Prop({type: Boolean, default: false}) private loading!: Boolean
+    }
 </script>
 
 <style scoped lang="scss">
@@ -41,8 +43,10 @@ export default {
 
             img {
                 display: block;
-                margin: auto;
-                animation: spin 2s linear infinite;
+                margin: 0 auto;
+                width: 42px;
+                height: 42px;
+                /*animation: spin 2s linear infinite;*/
             }
         }
 

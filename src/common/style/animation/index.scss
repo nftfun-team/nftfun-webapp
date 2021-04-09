@@ -24,3 +24,13 @@
 }
 
 
+.normal-expand-enter-active,
+.normal-expand-leave-active{
+  transition:all .4s linear;
+  height: 210px !important;
+}
+.normal-expand-enter,
+.normal-expand-leave-to {
+  height: 0px !important;
+}
+

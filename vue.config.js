@@ -29,6 +29,16 @@ module.exports = {
             'AMap': 'AMap'
         }
 
+        // config.module
+        //     .rule('scss')
+        //     .test(/\.scss$/)
+        //     .oneOf('vue')
+        //     .use('px2rem-loader')
+        //     .loader('px2rem-loader')
+        //     .before('postcss-loader') // this makes it work.
+        //     .options({ remUnit: 75, remPrecision: 8 })
+        //     .end()
+
         if (process.env.NODE_ENV !== "development"){
             config.optimization.splitChunks({
             chunks: 'initial',
@@ -70,5 +80,42 @@ module.exports = {
         host: '0.0.0.0',
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器
-    }
+    },
+
+    // css: {
+    //     loaderOptions: {
+    //         postcss: {
+    //             plugins: [
+    //                 require('postcss-plugin-px2rem')({
+    //                     rootValue : 37.5, // 换算的基数
+    //                     propList  : ['*'],
+    //                 }),
+    //             ]
+    //         },
+    //         // less: {
+    //         //     javascriptEnabled: true,
+    //         // }
+    //     }
+    // }
+
+    // css: {
+    //     loaderOptions: {
+    //         postcss: {
+    //             plugins: [
+    //                 require("postcss-plugin-px2rem")({
+    //                     rootValue: 64,
+    //                     // unitPrecision: 5,
+    //                     //propWhiteList: [],
+    //                     // propBlackList: [],
+    //                     // exclude: /(node_module)/,
+    //                     // selectorBlackList: [],
+    //                     // ignoreIdentifier: false,
+    //                     // replace: true,
+    //                     mediaQuery: false,
+    //                     minPixelValue: 3
+    //                 })
+    //             ]
+    //         }
+    //     }
+    // }
 }

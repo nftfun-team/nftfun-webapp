@@ -7,21 +7,15 @@ import service from "utils/serviceApi";
 import {Loadings} from "utils/loadings/loadings";
 import BigNumber from "bignumber.js";
 
-const components: { [propsName: string]: any } = {
+import ComingSoon from 'components/comingSoon/index.vue'
+import Loading from 'components/loading/index.vue'
 
+const components: { [propsName: string]: any } = {
+    ComingSoon,
+    Loading
 };
 
-const metFn = {
-    $number: () => {},
-    $toFixed: () => {},
-    $numberAndDecimal: () => {},
-    $shiftedBy: () => {},
-    $getRate: () => {},
-    $api: () => {},
-    $sort: () => {},
-    $comparedTo: () => {},
-    $filterNumber: () => {},
-}
+
 
 const install = function(Vue:any, opts = {}) {
     Object.keys(components).forEach((key) => {
