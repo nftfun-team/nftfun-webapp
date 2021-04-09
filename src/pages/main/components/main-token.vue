@@ -1,7 +1,7 @@
 <template>
 <div class="_token">
     <div class="_container">
-        <h3>$FUN：An exponential algorithms stable coin pegged to NFT segments.</h3>
+        <h3>$FUN：An exponential algorithms token pegged to NFT segments.</h3>
         <div class="_flex">
             <div>
                 <p class="f-khc-family">Initial Supply</p>
