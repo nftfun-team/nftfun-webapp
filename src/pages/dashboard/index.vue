@@ -1,11 +1,11 @@
 <template>
 <div class="_dashboard">
-    <Tabs :tabsList="tabsList" @tab="tabClick"/>
-    <div class="_flex _justify-content-center">
-        <PriceSupply v-if="active === 1"/>
-        <History v-if="active === 2"/>
-    </div>
-    <!--<coming-soon/>-->
+<!--    <Tabs :tabsList="tabsList" @tab="tabClick"/>-->
+<!--    <div class="_flex _justify-content-center">-->
+<!--        <PriceSupply v-if="active === 1"/>-->
+<!--        <History v-if="active === 2"/>-->
+<!--    </div>-->
+    <coming-soon/>
 </div>
 </template>
 
