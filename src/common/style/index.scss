@@ -18,6 +18,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,body{
+  //cursor: url('~img/cursor.svg'),auto;
+  //cursor: url('~img/cursor.svg'),pointer;
+  //cursor: pointer;
+}
+
 .dis-tip-s{
   text-indent: 0;
   color: #fff;

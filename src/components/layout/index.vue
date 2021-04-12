@@ -1,6 +1,7 @@
 <template>
     <section class="common">
         <div class="common-head f-pf f-fw8">
+<!--            <img src="~img/back.svg" alt="">-->
             {{title}}
             <span class="f-cursor" v-if="walletAddress" @click="visible = true">{{walletAddress | hash(6)}}</span>
             <com-button class="com-button" v-else style="{width: 184px;height: 55px}" @click="isShow = true" name="CONNECT WALLET" />
@@ -77,6 +78,9 @@
             font-size: 36px;
             background: #fff;
             z-index: 99;
+            span{
+                font-size: 18px;
+            }
         }
         &-section{
             width: 1192px;

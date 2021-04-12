@@ -4,8 +4,8 @@
 <!--            <staking-info/>-->
 <!--        </div>-->
 
-        <coming-soon />
-        <loading :loading="load" v-if="1==2">
+<!--        <coming-soon />-->
+        <loading :loading="load" v-if="1!==2">
             <section class="staking-cont">
                 <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
             </section>
@@ -55,7 +55,7 @@
             }
         }
     }
-    @media (max-width: 1000px){
+    @media (max-width: 1175px){
         .staking section{
             justify-content: center;
             & > div{

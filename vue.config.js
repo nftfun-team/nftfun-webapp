@@ -7,7 +7,7 @@ function resolve(dir){
 module.exports = {
 
     outputDir: 'dist',
-
+    publicPath: process.env.NODE_ENV == "development" ? '././' : '',
     //   lintOnSave：{ type:Boolean default:true } 问你是否使用eslint
     lintOnSave: true,
     productionSourceMap: false,
