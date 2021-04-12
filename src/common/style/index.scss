@@ -1,15 +1,5 @@
 @charset "utf-8";
 
-//@font-face {
-//  font-family: 'iconfont';  /* project id 1678237 */
-//  src: url('//at.alicdn.com/t/font_1678237_7rugnik45k.eot');
-//  src: url('//at.alicdn.com/t/font_1678237_7rugnik45k.eot?#iefix') format('embedded-opentype'),
-//  url('//at.alicdn.com/t/font_1678237_7rugnik45k.woff2') format('woff2'),
-//  url('//at.alicdn.com/t/font_1678237_7rugnik45k.woff') format('woff'),
-//  url('//at.alicdn.com/t/font_1678237_7rugnik45k.ttf') format('truetype'),
-//  url('//at.alicdn.com/t/font_1678237_7rugnik45k.svg#iconfont') format('svg');
-//}
-
 .iconfont{
   font-family:"iconfont" !important;
   font-size:16px;font-style:normal;
@@ -19,10 +9,10 @@
 }
 
 html,body{
-  //cursor: url('~img/cursor.svg'),auto;
-  //cursor: url('~img/cursor.svg'),pointer;
-  //cursor: pointer;
+  cursor: url('~img/cursor.svg'),auto;
+  //animation: roate-cursor .4s linear;
 }
+
 
 .dis-tip-s{
   text-indent: 0;

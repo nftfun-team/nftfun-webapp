@@ -38,6 +38,7 @@
 
     export default {
         name: 'index',
+        inject: ['setWalletShow'],
         components: {NavLink, Logo, Button, MainSlogan, MainFaq, Footer, MainIncludes, MainToken},
         data() {
             return {
@@ -47,6 +48,7 @@
                     {
                         title: 'DASHBOARD',
                         path: '/dashboard',
+                        animation: true,
                         isRouter: true
                     },
                     {
@@ -80,6 +82,9 @@
                     const url = this.$ChainApi.getSwapTradeUrl(this.$ChainApi.getTokenAddress('USDT'), this.$ChainApi.getTokenAddress('FUN'));
                     this.loading = false;
                     window.open(url)
+                }).catch(e => {
+                    this.loading = false;
+                    this.setWalletShow(true)
                 })
             },
 
@@ -91,14 +96,6 @@
 
             showNav() {
                 this.showMenu = !this.showMenu
-                // var preD=function(e){e.preventDefault();};
-                // if (this.showMenu) {
-                //     document.body.style.overflow = 'hidden'
-                //     document.addEventListener('touchmove', preD, {passive: false}) // 禁止页面滑动
-                // } else {
-                //     document.body.style.overflow = '' // 出现滚动条
-                //     document.removeEventListener('touchmove', preD, {passive: false})
-                // }
             }
         }
     }

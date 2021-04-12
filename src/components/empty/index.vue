@@ -1,14 +1,14 @@
 <template>
-<div class="no-data">
+<div class="no-data f-center-y">
     <img src="~@/assets/images/empty.png" alt="">
     <p>Temporarily no data</p>
 </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue, Watch} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
-@Component
+@Component({name: 'NoData'})
 export default class NoData extends Vue {
 
 }

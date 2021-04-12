@@ -23,6 +23,7 @@ import WebSdk from '../../../utils/sdk';
 export default {
     name: 'main-slogan',
     components: {Button},
+    inject: ['setWalletShow'],
     data() {
         return {
             loading: false
@@ -30,11 +31,15 @@ export default {
     },
     methods: {
         buyClick() {
+            return
             this.loading = true;
             WebSdk.connect().then(() => {
                 const url = this.$ChainApi.getSwapTradeUrl(this.$ChainApi.getTokenAddress('USDT'), this.$ChainApi.getTokenAddress('FUN'));
                 this.loading = false;
                 window.open(url)
+            }).catch(e => {
+                this.loading = false;
+                this.setWalletShow(true)
             })
         }
     }
