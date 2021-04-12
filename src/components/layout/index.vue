@@ -6,9 +6,9 @@
                 {{title}}
             </div>
 
-            <div class="common-head-address" v-if="walletAddress">
+            <div class="common-head-address" v-if="walletAddress" @click="visible = true">
                 <img src="~img/BNB.svg" alt="">
-                <span class="f-cursor" @click="visible = true">{{walletAddress | hash(6)}}</span>
+                <span class="f-cursor">{{walletAddress | hash(6)}}</span>
             </div>
             <com-button class="com-button" v-else style="{width: 184px;height: 55px}" @click="setWalletShow(true)" name="CONNECT WALLET" />
         </div>
