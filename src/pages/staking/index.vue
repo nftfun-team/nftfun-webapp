@@ -32,7 +32,6 @@
                 this.load = true
                 this.$ChainApi.getPools()
                     .then( res => {
-                        console.error('res------>', res)
                         this.poolList = res
                     })
                     .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error(e)})
@@ -55,7 +54,6 @@
                 margin-right: 25px;
             }
         }
-
     }
     @media (max-width: 1000px){
         .staking section{
@@ -63,7 +61,6 @@
             & > div{
                 margin-left: 15px;
                 margin-right: 15px !important;
-
                 width: 90%;
                 padding: 28px 15px;
             }
