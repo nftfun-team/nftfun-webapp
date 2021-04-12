@@ -58,7 +58,7 @@
                     },
                     {
                         title: 'AUDIT',
-                        path: '',
+                        path: 'https://nftfun.org/audit.pdf',
                         isRouter: false
                     },
                     {
