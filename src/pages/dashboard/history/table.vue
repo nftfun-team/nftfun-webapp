@@ -21,7 +21,7 @@
         </template>
         </template>
 
-        <template v-if="!isPc">
+        <template v-if="!isPc && !load">
         <li class="_mobile-li" v-for="item of tableData">
             <div>
                 <p>Date</p>
@@ -47,12 +47,14 @@
         </template>
 
         <Loading :loading="load || moreLoad"/>
+        <Empty v-if="!load && empty" />
         <div class="_more" v-if="!load && !moreLoad && !empty">
             <div @click="moreClick">
                 <img src="~img/more.svg" alt="">
                 <span>More</span>
             </div>
         </div>
+
     </ul>
 </div>
 </template>
@@ -61,10 +63,11 @@
 import Loading from '@/components/loading/index.vue'
 import ChainApi from '../../../assets/sdk/ChainApi';
 import WebSdk from '../../../utils/sdk';
+import Empty from '@/components/empty/index.vue';
 
 export default {
     name: 'nTable',
-    components: {Loading},
+    components: {Loading, Empty},
     data() {
         return {
             params: {
@@ -94,6 +97,8 @@ export default {
                         console.log('history------>', res)
                         this.tableData = this.tableData.concat(res.data);
                         this.empty = this.tableData.length >= res.count;
+                    } else {
+                        this.empty = true
                     }
                 }).catch(e => {
                     this.load = false;

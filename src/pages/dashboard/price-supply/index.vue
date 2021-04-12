@@ -20,11 +20,11 @@
 
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
-    <PriceChart :data="priceData" :type="type"/>
+    <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty"/>
     <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
-    <SupplyChart :data="supplyData" :type="type"/>
+    <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty"/>
     <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
-    <MktCapChart :data="mktCapChartData" :type="type"/>
+    <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty"/>
 </div>
 </template>
 
@@ -66,6 +66,7 @@ export default {
                 s: '00'
             },
             show: true,
+            isEmpty: false
         }
     },
     mounted() {
@@ -82,6 +83,8 @@ export default {
                     if (res.code === 0 && res.data) {
                         this.data = res.data;
                         this.tabClick({name: this.active, type: this.type});
+                    } else {
+                        this.isEmpty = true;
                     }
                 })
             });

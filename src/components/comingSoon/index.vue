@@ -16,7 +16,7 @@ export default class ComingSoon extends Vue {
 
 <style scoped lang="scss">
     .coming{
-        margin-top: 200px;
+        /*margin-top: 200px;*/
         width: 100%;
         text-align: center;
         img{
