@@ -1,21 +1,23 @@
 <template>
-<div>
+<div style="width: 100%; position: relative">
     <Charts class="chart" :options="options"/>
+    <Empty v-if="isEmpty" class="_empty"/>
 </div>
 </template>
 
 <script>
 import Charts from '@/components/echarts/echarts.vue';
+import Empty from '@/components/empty/index.vue';
 
 export default {
     name: 'index',
-    components: {Charts},
+    components: {Charts, Empty},
     data() {
         return {
             options: null,
         }
     },
-    props: ['data', 'type'],
+    props: ['data', 'type', 'isEmpty'],
     watch: {
         data: {
             handler(val) {
@@ -145,5 +147,12 @@ export default {
         border: 1px solid rgba(239, 239, 239, 0.5);
         box-shadow: -2px 5px 6px #EFEEF1;
         border-radius: 8px;
+    }
+
+    ._empty {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div style="width: 100%">
-    <chart-data :data="data" :type="type"></chart-data>
+    <chart-data :data="data" :type="type" :isEmpty="isEmpty"></chart-data>
 </div>
 </template>
 
@@ -10,7 +10,7 @@ import ChartData from './index'
 export default {
     name: 'price-chart',
     components: {ChartData},
-    props: ['data', 'type'],
+    props: ['data', 'type', 'isEmpty'],
     data() {
         return {}
     },
