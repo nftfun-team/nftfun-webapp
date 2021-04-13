@@ -44,8 +44,8 @@ export default {
             priceData: null,
             supplyData: null,
             mktCapChartData: null,
-            active: '7d',
-            type: 'ABS',
+            active: '',
+            type: '',
             coolDown: 0,
             price: 0,
             totalSupply: 0,
@@ -97,7 +97,7 @@ export default {
                     this.loading = false;
                     if (res.code === 0 && res.data) {
                         this.data = res.data;
-                        this.tabClick({name: this.active, type: this.type});
+                        this.tabClick({name: '7d', type: 'ABS'});
                     } else {
                         this.isEmpty = true;
                     }
@@ -111,6 +111,9 @@ export default {
             });
         },
         tabClick($event) {
+            if (this.active === $event.name && this.type === $event.type) {
+                return;
+            }
             this.active = $event.name;
             this.type = $event.type;
             if (!this.data) {
