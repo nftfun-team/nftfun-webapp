@@ -1,7 +1,7 @@
 <template>
 <div style="width: 100%; position: relative">
     <Charts class="chart" :options="options"/>
-    <Loading :loading="loading" class="_load"/>
+    <Loading :loading="loading" class="_load" v-if="loading"/>
     <Empty v-if="isEmpty" class="_empty"/>
 </div>
 </template>
