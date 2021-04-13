@@ -208,6 +208,11 @@ export default {
                 this.load = false;
                 this.show = true;
                 this.getInfo();
+                this.$notify({
+                    title: 'Rebase',
+                    message: 'Rebase Success',
+                    type: 'success'
+                });
             }).catch(c => {
                 this.load = false;
                 this.getInfo();
