@@ -59,9 +59,10 @@ export default {
                     formatter: function (params) {
                         var result = params[0].name;
                         params.forEach(function (item) {
+                            const val = chartType === 'SUPPLY' ? new BigNumber(item.value).toFixed(2) : '$' + new BigNumber(item.value).toFixed(2);
                             result += '<br/>';
                             result += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background:' + item.color + '"></span>';
-                            result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : '$' + new BigNumber(item.value).toFixed(2));
+                            result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : val);
                         });
                         return result;
                     }
