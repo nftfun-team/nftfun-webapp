@@ -164,7 +164,7 @@ export default {
                 this.coolDown = res.cooldown * 1000;
                 this.price = `$${this.verifyNumber(res.price)}`;
                 this.totalSupply = this.verifyNumber(res.totalSupply);
-                this.targetPrice = `$${this.verifyNumber(res.targetPrice.toFixed(2, 1))}`;
+                this.targetPrice = `$${this.verifyNumber(new BigNumber(res.nftCurrentValue).div(30000000000).toFixed(2, 1))}`;
                 this.funMarketCap = `$${this.verifyNumber(res.marketCap)}`;
                 this.nftMarketCap = `$${this.verifyNumber(new BigNumber(res.nftCurrentValue).toFixed(2, 1))}`;
                 this.setCountDown();
