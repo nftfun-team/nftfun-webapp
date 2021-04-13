@@ -18,10 +18,12 @@
 
     <Card :label="'FUN MARKET CAP(TWAP)'" :value="funMarketCap || '--'" :isRebase="true"/>
 
-    <template v-for="item in chartList">
-    <Tabs :title="item.name" :active="active" :type="type" @tab="tabClick"/>
-    <PriceChart :data="item.data" :type="type" :isEmpty="isEmpty" :loading="loading"/>
-    </template>
+    <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
+    <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
+    <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
+    <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
+    <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
+    <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
 </div>
 </template>
 
@@ -65,21 +67,6 @@ export default {
             show: true,
             isEmpty: false,
             loading: true,
-
-            chartList: [
-                {
-                    name: 'PRICE',
-                    data: null
-                },
-                {
-                    name: 'SUPPLY',
-                    data: null
-                },
-                {
-                    name: 'MARKET CAP',
-                    data: null
-                }
-            ]
         }
     },
     mounted() {
@@ -124,7 +111,7 @@ export default {
             this.getMktCapData();
         },
         getPriceData() {
-            this.chartList[0].data = this.getChartData({
+            this.priceData = this.getChartData({
                 chartData: this.data,
                 activeDuration: this.active,
                 activeType: this.type,
@@ -132,7 +119,7 @@ export default {
             });
         },
         getSupplyData() {
-            this.chartList[1].data = this.getChartData({
+            this.supplyData = this.getChartData({
                 chartData: this.data,
                 activeDuration: this.active,
                 activeType: this.type,
@@ -140,7 +127,7 @@ export default {
             });
         },
         getMktCapData() {
-            this.chartList[2].data = this.getChartData({
+            this.mktCapChartData = this.getChartData({
                 chartData: this.data,
                 activeDuration: this.active,
                 activeType: this.type,
