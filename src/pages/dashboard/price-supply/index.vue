@@ -14,17 +14,17 @@
 
     <Card :label="'FUN SUPPLY'" :value="totalSupply || '--'" :isRebase="true"/>
 
-    <Card :label="'ORACLE PRICE'" :value="price || '--'" :isRebase="true"/>
+    <Card :label="'ORACLE PRICE(TWAP)'" :value="price || '--'" :isRebase="true"/>
 
-    <Card :label="'FUN MARKET CAP'" :value="funMarketCap || '--'" :isRebase="true"/>
+    <Card :label="'FUN MARKET CAP(TWAP)'" :value="funMarketCap || '--'" :isRebase="true"/>
 
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
-    <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty"/>
+    <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
     <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
-    <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty"/>
+    <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
     <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
-    <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty"/>
+    <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
 </div>
 </template>
 
@@ -66,7 +66,8 @@ export default {
                 s: '00'
             },
             show: true,
-            isEmpty: false
+            isEmpty: false,
+            loading: true
         }
     },
     mounted() {
@@ -78,15 +79,23 @@ export default {
             WebSdk.connect().then((data) => {
                 // if(!data.isConnect) return
                 this.getInfo();
+                this.loading = true;
                 this.$ChainApi.report().then(res => {
                     console.log('res.....', res)
+                    this.loading = false;
                     if (res.code === 0 && res.data) {
                         this.data = res.data;
                         this.tabClick({name: this.active, type: this.type});
                     } else {
                         this.isEmpty = true;
                     }
+                }).catch(e=>{
+                    this.loading = false;
+                    this.isEmpty = true;
                 })
+            }).catch(e=>{
+                this.loading = false;
+                this.isEmpty = true;
             });
         },
         tabClick($event) {
@@ -121,7 +130,7 @@ export default {
                 activeDuration: this.active,
                 activeType: this.type,
                 map: ({x, s, p}) => {
-                    const y = s.map((a, i) => parseFloat(a) + parseFloat(p[i]))
+                    const y = s.map((a, i) => parseFloat(a) * parseFloat(p[i]))
                     return {x, p: y}
                 },
             });

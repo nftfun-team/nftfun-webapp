@@ -58,7 +58,7 @@ export default {
     }
 
     ._dashboard {
-        height: 100%;
+        /*height: 100%;*/
         padding: 84px 0;
     }
 
