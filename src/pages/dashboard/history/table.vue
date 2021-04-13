@@ -47,7 +47,7 @@
         </template>
 
         <Loading :loading="load || moreLoad"/>
-        <Empty v-if="!load && empty" class="_empty"/>
+        <Empty v-if="!load && tableData.length<=0" class="_empty"/>
         <div class="_more" v-if="!load && !moreLoad && !empty">
             <div @click="moreClick">
                 <img src="~img/more.svg" alt="">
