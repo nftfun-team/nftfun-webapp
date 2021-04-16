@@ -1,6 +1,7 @@
 <template>
 <div style="width: 100%; position: relative">
     <Charts class="chart" :options="options"/>
+    <Loading :loading="loading" class="_load" v-if="loading"/>
     <Empty v-if="isEmpty" class="_empty"/>
 </div>
 </template>
@@ -8,16 +9,17 @@
 <script>
 import Charts from '@/components/echarts/echarts.vue';
 import Empty from '@/components/empty/index.vue';
+import Loading from '@/components/loading/index.vue'
 
 export default {
     name: 'index',
-    components: {Charts, Empty},
+    components: {Charts, Empty, Loading},
     data() {
         return {
             options: null,
         }
     },
-    props: ['data', 'type', 'isEmpty'],
+    props: ['data', 'type', 'isEmpty', 'loading', 'chartType'],
     watch: {
         data: {
             handler(val) {
@@ -32,6 +34,7 @@ export default {
     methods: {
         setOptions() {
             const type = this.type;
+            const chartType = this.chartType;
             // console.log('data', this.data, type)
             let XList = this.data.x;
             let YList = this.data.y;
@@ -56,9 +59,10 @@ export default {
                     formatter: function (params) {
                         var result = params[0].name;
                         params.forEach(function (item) {
+                            const val = chartType === 'SUPPLY' ? new BigNumber(item.value).toFixed(2) : '$' + new BigNumber(item.value).toFixed(2);
                             result += '<br/>';
                             result += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background:' + item.color + '"></span>';
-                            result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : '$' + new BigNumber(item.value).toFixed(2));
+                            result += isNaN(item.value) ? 0 : (type === '%' ? new BigNumber(item.value).toFixed(2) + '%' : val);
                         });
                         return result;
                     }
@@ -105,7 +109,8 @@ export default {
                         color: '#9a9b96',
                         fontsize: '14px',
                         formatter: function (value) {
-                            return type === '%' ? new BigNumber(value).toFixed(2) + '%' : '$' + new BigNumber(value).toFixed(2);
+                            const val = chartType === 'SUPPLY' ? new BigNumber(value).toFixed(2) : '$' + new BigNumber(value).toFixed(2);
+                            return type === '%' ? new BigNumber(value).toFixed(2) + '%' : val;
                         }
                     },
                 },
@@ -154,5 +159,19 @@ export default {
         top: 50%;
         left: 0;
         transform: translateY(-50%);
+    }
+
+    ._load {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        ::v-deep .loading {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
     }
 </style>

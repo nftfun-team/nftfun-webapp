@@ -1,10 +1,11 @@
 <template>
 <div class="_dashboard">
-        <Tabs :tabsList="tabsList" @tab="tabClick"/>
-        <div class="_flex _justify-content-center">
-            <PriceSupply v-if="active === 1"/>
-            <History v-if="active === 2"/>
-        </div>
+
+    <Tabs :tabsList="tabsList" @tab="tabClick"/>
+    <div class="_flex _justify-content-center">
+        <PriceSupply v-if="active === 1"/>
+        <History v-if="active === 2"/>
+    </div>
 <!--    <coming-soon/>-->
 </div>
 </template>
@@ -58,7 +59,7 @@ export default {
     }
 
     ._dashboard {
-        height: 100%;
+        /*height: 100%;*/
         padding: 84px 0;
     }
 
