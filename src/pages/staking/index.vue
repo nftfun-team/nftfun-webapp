@@ -4,13 +4,13 @@
 <!--            <staking-info/>-->
 <!--        </div>-->
 
-        <coming-soon />
-<!--        <loading :loading="load">-->
-<!--            <no-data v-if="poolList.length === 0" />-->
-<!--            <section class="staking-cont" v-else>-->
-<!--                <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />-->
-<!--            </section>-->
-<!--        </loading>-->
+<!--        <coming-soon />-->
+        <loading :loading="load">
+            <no-data v-if="poolList.length === 0" />
+            <section class="staking-cont" v-else>
+                <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
+            </section>
+        </loading>
     </div>
 </template>
 
