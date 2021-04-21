@@ -51,6 +51,13 @@ const $filterNumber = (e) => {
     e.target.value = clearNoNum(e.target.value);
 }
 
+const $numFormat = (val, flag) => {
+    if( !val || !flag) return val;
+    let reg = /(\d)(?=(?:\d{3})+$)/g;
+    const strAry = val.toString().split('.')
+    return `${strAry[0].replace(reg, '$1,')}${strAry.length > 1 ? "."+strAry[1] : ''}`
+}
+
 const install = Vue => {
     if ((<any> install).installed) return;// 如果已经注册过了，就跳过
     (<any> install).installed = true;
@@ -90,6 +97,11 @@ const install = Vue => {
                 return $comparedTo;
             }
         },
+        $numFormat: {
+            get() {
+                return $numFormat;
+            }
+        },
         $filterNumber: {
             get() {
                 return $filterNumber;
@@ -110,6 +122,7 @@ declare module 'vue/types/vue' {
         $getRate: () => {},
         $api: () => {},
         $sort: () => {},
+        $numFormat: () => {},
         $comparedTo: (x:String | Number, y:String | Number) => {},
         $filterNumber: () => {},
     }

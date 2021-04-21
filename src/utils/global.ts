@@ -10,11 +10,13 @@ import BigNumber from "bignumber.js";
 import ComingSoon from 'components/comingSoon/index.vue'
 import Loading from 'components/loading/index.vue'
 import NoData from 'components/empty/index.vue'
+import CountJump from 'components/countJump/index.vue'
 
 const components: { [propsName: string]: any } = {
     ComingSoon,
     Loading,
-    NoData
+    NoData,
+    CountJump
 };
 
 

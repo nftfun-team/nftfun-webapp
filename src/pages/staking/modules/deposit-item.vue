@@ -2,14 +2,14 @@
     <div class="deposit-item">
         <div class="deposit-item-symbol">
             <img :src="imgSrc" alt="">
-            <b class="f-pop-bold-family">{{data.name}} LP</b>
+            <b class="f-pop-bold-family">{{data.name}} {{data.type ==='double' ? 'LP' : ''}}</b>
             <span class="f-center-y">{{data.weight}}X</span>
         </div>
 
         <div class="deposit-item-over">
             <h4>Overview </h4>
-            <p class="deposit-item-over-line">APR <span class="f-fr">{{data.apr}}%</span></p>
-            <p class="deposit-item-over-line">Total Deposits <span class="f-fr">{{data.totalStakeValue | toFixed(2)}} USD</span></p>
+            <p class="deposit-item-over-line">APR <span class="f-fr"> <count-jump :val="data.apr" isFormat=true />%</span></p>
+            <p class="deposit-item-over-line">Total Deposits <span class="f-fr"><count-jump :val="$toFixed(data.totalStakeValue,2)" /> USD</span></p>
         </div>
 
         <div class="deposit-item-handle">
@@ -18,7 +18,7 @@
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
             <div class="deposit-item-handle-cont">
-                <p class="deposit-item-handle-cont-use">Wallet Available: <span>{{data.userBalance}} {{data.name}} LP</span></p>
+                <p class="deposit-item-handle-cont-use">Wallet Available: <span><count-jump :val="data.userBalance" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'LP' : ''}}</span></p>
                 <template v-if="direction=='deposit'">
                     <div class="deposit-item-handle-cont-number f-pr" >
                         <el-input v-model="depositNumber" placeholder="0.0000" @input.native="$filterNumber" @blur="changeVal('deposit')"/>
@@ -36,13 +36,13 @@
                     </div>
                     <el-button class="deposit-item-handle-cont-btn f-khc-family" :loading="withdrawLoad" :disabled="!withdrawNumber || Number(withdrawNumber) == 0" @click="withdraw()">Withdraw</el-button>
                 </template>
-                <p class="deposit-item-handle-cont-link f-cursor" @click="jump()">Get Liquidity Pool Tokens</p>
+                <p class="deposit-item-handle-cont-link " :class="{'f-cursor': data.type ==='double'}" @click="data.type ==='double' && jump()">{{data.type ==='double' ? 'Get Liquidity Pool Tokens' : ''}}</p>
             </div>
         </div>
 
         <div class="deposit-item-status">
-            <p>Staked <span class="f-fr"> {{data.userAmount}} {{data.name}} LP</span></p>
-            <p class="deposit-item-status-end">Rewards <span class="f-fr">{{data.userReward}}</span></p>
+            <p>Staked <span class="f-fr"> <count-jump :val="data.userAmount" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'LP' : ''}}</span></p>
+            <p class="deposit-item-status-end">Rewards <span class="f-fr"><count-jump :val="data.userReward" isFormat=true /></span></p>
             <el-button class="deposit-item-status-btn f-khc-family" :loading="claimLoad" :disabled="Number(data.userReward) == 0" @click="harvest">Claim</el-button>
         </div>
     </div>
@@ -104,7 +104,7 @@
 
         private changeVal(type:string): void{
             if(type === 'deposit') this.depositNumber = this.$comparedTo(this.depositNumber,this.data.userBalance) === 1 ? this.data.userBalance : this.depositNumber;
-            else this.withdrawNumber = (<any> this).$comparedTo(this.depositNumber,this.data.userAmount) === 1 ? this.data.userAmount : this.depositNumber;
+            else this.withdrawNumber = (<any> this).$comparedTo(this.withdrawNumber,this.data.userAmount) === 1 ? this.data.userAmount : this.withdrawNumber;
         }
 
         private handleMax(type: string): void{
