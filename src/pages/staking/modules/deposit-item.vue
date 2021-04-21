@@ -282,7 +282,7 @@
                         font-size: 16px;
                         position: absolute;
                         right: 20px;
-                        top: 55%;
+                        top: 50%;
                         cursor: pointer;
                     }
                 }
