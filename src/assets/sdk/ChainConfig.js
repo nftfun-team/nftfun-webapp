@@ -77,6 +77,13 @@ const Pools = {
             pid: 2,
             tokenSymbol: "FUN",
             baseSymbol: "BURGER"
+        },
+        {
+            name: "USDT",
+            address: "0xF2ED382e6A3439Be124813842200cf6702fD6ecA",
+            pid: 3,
+            tokenSymbol: "USDT",
+            baseSymbol: ""
         }
     ],
 }
