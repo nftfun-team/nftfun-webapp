@@ -826,9 +826,10 @@ $.updatePool = async(pid) => {
   $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
   $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
-  let totalStake = await $.balanceOf($.pools[pid].address, $.getContractAddr('MasterChef'))
-  $.pools[pid].totalStake = new BigNumber(totalStake).shiftedBy(-18).toFixed()
-  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], totalStake)
+  let token = await $.queryToken($.pools[pid].address)
+  $.pools[pid].tokenDecimals = token.decimals
+  $.pools[pid].totalStake = new BigNumber(poolInfo.depositTotal).shiftedBy(-1* token.decimals).toFixed()
+  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
   $.pools[pid].weight = poolInfo.allocPoint
   $.pools[pid].apr = await $.poolRewardApr($.pools[pid], $.masterChefData, $.funPrice)
   $.pools[pid].userAllowance = await $.allowance($.pools[pid].address, $.getContractAddr('MasterChef'))
@@ -852,6 +853,7 @@ $.getPools = async() => {
   }
   pools.forEach(async (d)=>{
     d.apr = '--'
+    d.tokenDecimals = 18
     d.userAllowance = '0'
     d.userBalance = '--'
     d.userAmount = '--'
@@ -872,12 +874,12 @@ $.rebase = async() => {
 }
 
 $.deposit = async(pid, amount) => {
-  amount = new BigNumber(amount).shiftedBy(18).toFixed()
+  amount = new BigNumber(amount).shiftedBy(Number($.pools[pid].tokenDecimals)).toFixed()
   return await executeContractByName('MasterChef', 'deposit', 0, [pid, amount])
 }
 
 $.withdraw = async(pid, amount) => {
-  amount = new BigNumber(amount).shiftedBy(18).toFixed()
+  amount = new BigNumber(amount).shiftedBy(Number($.pools[pid].tokenDecimals)).toFixed()
   return await executeContractByName('MasterChef', 'withdraw', 0, [pid, amount])
 }
 

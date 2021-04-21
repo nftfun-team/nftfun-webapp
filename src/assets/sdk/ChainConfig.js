@@ -37,7 +37,7 @@ const ContractsAddr = {
     97: {
         Master: '0x80EbE98696df632e40963E60c252c41aeA2d6404',
         Oracle: '0xbe3d3708A6c50457834Fce564677e6cce72fdc8b',
-        MasterChef: '0x7966F5653e20cAa3eF57cEE0100277321c4AE770',
+        MasterChef: '0x17B1Adbf780CD72dF88171e5b0274567f51C1Ec3',
         Query: '0xBf41799DAaF2a9d7e607042687De2d2018F3EE02',
     },
 }
@@ -88,7 +88,7 @@ const Pools = {
         {
             name: "FUN",
             address: "0xB9f8985b884d16DedfA8de7f37651AE938949A54",
-            pid: 4,
+            pid: 3,
             type: 'single',
             tokenSymbol: "FUN",
             baseSymbol: "",
