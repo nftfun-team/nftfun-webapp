@@ -23,6 +23,15 @@
   }
 }
 
+@keyframes roate-cursor {
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
 
 .normal-expand-enter-active,
 .normal-expand-leave-active{

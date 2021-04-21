@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="loading-main">
         <template v-if="loading">
             <div class="loading">
                 <div class="loading-box">
@@ -31,6 +31,9 @@
         }
     }
 
+    .loading-main{
+        height: 100%;
+    }
     .loading {
         width: 100%;
         padding: 30px 0 0;

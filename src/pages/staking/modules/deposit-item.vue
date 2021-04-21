@@ -175,12 +175,16 @@
         border: 1px solid rgba(239, 239, 239, 0.5);
         margin-bottom: 48px;
         color: #000;
+        transition: all .2s;
         ::v-deep .el-button:hover{
             background: #FCFCED;
         }
         ::v-deep .is-disabled{
             background: #EEEEE9;
             &:hover{background: #EEEEE9}
+        }
+        &:hover {
+            margin-top: -10px;
         }
         &-symbol{
             height: 50px;
@@ -278,7 +282,7 @@
                         font-size: 16px;
                         position: absolute;
                         right: 20px;
-                        top: 55%;
+                        top: 50%;
                         cursor: pointer;
                     }
                 }

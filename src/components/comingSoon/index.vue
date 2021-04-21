@@ -1,5 +1,5 @@
 <template>
-    <div class="coming">
+    <div class="coming f-center-y">
         <img src="~img/coming.svg" alt="">
         <p>Coming soon…</p>
     </div>
@@ -16,7 +16,6 @@ export default class ComingSoon extends Vue {
 
 <style scoped lang="scss">
     .coming{
-        margin-top: 200px;
         width: 100%;
         text-align: center;
         img{
@@ -29,7 +28,6 @@ export default class ComingSoon extends Vue {
     }
     @media (max-width: 800px) {
         .coming{
-            margin-top: 100px;
             width: 100%;
             text-align: center;
             img{

@@ -9,10 +9,12 @@ import BigNumber from "bignumber.js";
 
 import ComingSoon from 'components/comingSoon/index.vue'
 import Loading from 'components/loading/index.vue'
+import NoData from 'components/empty/index.vue'
 
 const components: { [propsName: string]: any } = {
     ComingSoon,
-    Loading
+    Loading,
+    NoData
 };
 
 

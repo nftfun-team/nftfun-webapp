@@ -5,8 +5,9 @@
 <!--        </div>-->
 
 <!--        <coming-soon />-->
-        <loading :loading="load" v-if="1!=2">
-            <section class="staking-cont">
+        <loading :loading="load">
+            <no-data v-if="poolList.length === 0" />
+            <section class="staking-cont" v-else>
                 <deposit-item v-for="(item,index) in poolList" :key="index" :data="item" />
             </section>
         </loading>
@@ -32,7 +33,6 @@
                 this.load = true
                 this.$ChainApi.getPools()
                     .then( res => {
-                        console.error('res------>', res)
                         this.poolList = res
                     })
                     .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error(e)})
@@ -45,6 +45,7 @@
 <style lang="scss" scoped>
     .staking{
         width: 100%;
+        height: 100%;
         padding-bottom: 50px;
         section{
             margin-top: 70px;
@@ -55,15 +56,13 @@
                 margin-right: 25px;
             }
         }
-
     }
-    @media (max-width: 1000px){
+    @media (max-width: 1175px){
         .staking section{
             justify-content: center;
             & > div{
                 margin-left: 15px;
                 margin-right: 15px !important;
-
                 width: 90%;
                 padding: 28px 15px;
             }

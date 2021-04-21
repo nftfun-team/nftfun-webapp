@@ -10,8 +10,7 @@ VueRouter.prototype.push = function push(location) {
 };
 
 const router = new VueRouter({
-  mode: 'history',
-  // mode: 'hash',
+  mode: process.env.NODE_ENV === 'ipfsview' ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes: BaseRouter,
 });

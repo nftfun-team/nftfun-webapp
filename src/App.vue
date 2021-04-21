@@ -1,27 +1,41 @@
 <template>
 <div id="app" class="body-main">
     <router-view/>
+    <connect-wallet v-if="isShow" @closeModal="isShow = false" @connect="connect" />
 </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue,} from 'vue-property-decorator';
+import {Component, Vue, Provide} from 'vue-property-decorator';
+import ConnectWallet from "components/connectWallet/index.vue";
 import ChainApi from '@/assets/sdk/ChainApi.js';
 import {Storage} from 'utils/storage';
-import {Getter, Mutation} from 'vuex-class';
+import {Action, Getter, Mutation} from 'vuex-class';
+
 import {
     M_CHAIN_CHAINID,
     M_CHAIN_WALLETADDRESS,
     G_CHAIN_CHAINID,
-    G_CHAIN_WALLETADDRESS
+    G_CHAIN_WALLETADDRESS, A_CHAIN_COONNECT
 } from 'store/modules/chain/types';
 
-@Component
+@Component({
+    components: {ConnectWallet}
+})
 export default class App extends Vue {
+    @Action(A_CHAIN_COONNECT) private connectWallet!: Function;
     @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
     @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAddress!: Function;
     @Getter(G_CHAIN_CHAINID) private ChainId!: string;
     @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
+    private isShow: boolean = false;
+
+    @Provide('setWalletShow')
+    setWalletShow(data:boolean = true){
+        console.error('data---->', data)
+        this.isShow = true
+    }
+
 
     created() {
         this.init();
@@ -34,6 +48,11 @@ export default class App extends Vue {
     }
 
 
+    // public setWalletShow(data:boolean = true): void {
+    //     console.error('data---->', data)
+    //     this.isShow = true
+    // }
+
     private reload(): void {
         window.location.reload();
     }
@@ -42,6 +61,12 @@ export default class App extends Vue {
         this.onChainStatus();
         this.onChainChanged();
         this.onAccountsChanged();
+    }
+
+    private connect(type: string): void{
+        this.connectWallet(type).then(res => {
+            this.isShow = false;
+        })
     }
 
     onChainStatus() {

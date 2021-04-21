@@ -20,6 +20,12 @@
 export default {
     name: 'tabs',
     props: ['active', 'type', 'title'],
+    data() {
+        return {
+            init7d: '7d',
+            init30d: '30d',
+        }
+    },
     methods: {
         tabClick(name, type) {
             this.$emit('tab', {name, type})

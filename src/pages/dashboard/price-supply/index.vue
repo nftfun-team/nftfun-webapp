@@ -14,17 +14,16 @@
 
     <Card :label="'FUN SUPPLY'" :value="totalSupply || '--'" :isRebase="true"/>
 
-    <Card :label="'ORACLE PRICE'" :value="price || '--'" :isRebase="true"/>
+    <Card :label="'ORACLE PRICE(TWAP)'" :value="price || '--'" :isRebase="true"/>
 
-    <Card :label="'FUN MARKET CAP'" :value="funMarketCap || '--'" :isRebase="true"/>
-
+    <Card :label="'FUN MARKET CAP(TWAP)'" :value="funMarketCap || '--'" :isRebase="true"/>
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
-    <PriceChart :data="priceData" :type="type"/>
+    <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
     <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
-    <SupplyChart :data="supplyData" :type="type"/>
+    <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
     <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
-    <MktCapChart :data="mktCapChartData" :type="type"/>
+    <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
 </div>
 </template>
 
@@ -47,8 +46,8 @@ export default {
             priceData: null,
             supplyData: null,
             mktCapChartData: null,
-            active: '7d',
-            type: 'ABS',
+            active: '',
+            type: '',
             coolDown: 0,
             price: 0,
             totalSupply: 0,
@@ -65,7 +64,9 @@ export default {
                 m: '00',
                 s: '00'
             },
-            show: true
+            show: true,
+            isEmpty: false,
+            loading: true,
         }
     },
     mounted() {
@@ -77,18 +78,34 @@ export default {
             WebSdk.connect().then((data) => {
                 // if(!data.isConnect) return
                 this.getInfo();
+                this.loading = true;
                 this.$ChainApi.report().then(res => {
                     console.log('res.....', res)
+                    this.loading = false;
                     if (res.code === 0 && res.data) {
                         this.data = res.data;
-                        this.tabClick({name: this.active, type: this.type});
+                        this.tabClick({name: '7d', type: 'ABS'});
+                    } else {
+                        this.isEmpty = true;
                     }
+                }).catch(e => {
+                    this.loading = false;
+                    this.isEmpty = true;
                 })
+            }).catch(e => {
+                this.loading = false;
+                this.isEmpty = true;
             });
         },
         tabClick($event) {
+            if (this.active === $event.name && this.type === $event.type) {
+                return;
+            }
             this.active = $event.name;
             this.type = $event.type;
+            if (!this.data) {
+                return
+            }
             this.getPriceData();
             this.getSupplyData();
             this.getMktCapData();
@@ -115,7 +132,7 @@ export default {
                 activeDuration: this.active,
                 activeType: this.type,
                 map: ({x, s, p}) => {
-                    const y = s.map((a, i) => parseFloat(a) + parseFloat(p[i]))
+                    const y = s.map((a, i) => parseFloat(a) * parseFloat(p[i]))
                     return {x, p: y}
                 },
             });
@@ -149,7 +166,7 @@ export default {
                 this.coolDown = res.cooldown * 1000;
                 this.price = `$${this.verifyNumber(res.price)}`;
                 this.totalSupply = this.verifyNumber(res.totalSupply);
-                this.targetPrice = `$${this.verifyNumber(res.targetPrice.toFixed(2, 1))}`;
+                this.targetPrice = `$${this.verifyNumber(new BigNumber(res.nftCurrentValue).div(30000000000).toFixed(2, 1))}`;
                 this.funMarketCap = `$${this.verifyNumber(res.marketCap)}`;
                 this.nftMarketCap = `$${this.verifyNumber(new BigNumber(res.nftCurrentValue).toFixed(2, 1))}`;
                 this.setCountDown();
@@ -181,6 +198,11 @@ export default {
                 this.load = false;
                 this.show = true;
                 this.getInfo();
+                this.$notify({
+                    title: 'Rebase',
+                    message: 'Rebase Success',
+                    type: 'success'
+                });
             }).catch(c => {
                 this.load = false;
                 this.getInfo();
@@ -203,6 +225,12 @@ export default {
             &::before {
                 background-color: #FAFAF1;
             }
+        }
+    }
+
+    @media (max-width: 768px) {
+        ._price-supply {
+            padding: 0 18px;
         }
     }
 </style>
