@@ -1,8 +1,8 @@
 <template>
     <div class="staking">
-        <div class="staking-info">
-            <staking-info/>
-        </div>
+<!--        <div class="staking-info">-->
+<!--            <staking-info/>-->
+<!--        </div>-->
 
 <!--        <coming-soon />-->
         <loading :loading="load">
