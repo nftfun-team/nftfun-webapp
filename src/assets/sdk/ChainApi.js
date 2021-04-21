@@ -781,7 +781,7 @@ $.getLpUsdValue = async (pool, amount) => {
   let token = $.getTokenAddress(pool.tokenSymbol)
   let baseToken = $.getTokenAddress(pool.baseSymbol)
   if(pool.tokenType ==1) {
-    return await getTokenUsdValue(token, amount)
+    return await $.getTokenUsdValue(pool.address, amount)
   }
   if(baseToken.toLocaleLowerCase() == $.getTokenAddress($.getWSymbol()).toLocaleLowerCase()) {
     let res = await $.getLpValue(token, baseToken, amount)
