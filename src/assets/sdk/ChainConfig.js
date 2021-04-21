@@ -51,6 +51,7 @@ const Tokens = {
         USDT: '0xF2ED382e6A3439Be124813842200cf6702fD6ecA',
         WBNB: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
         BURGER: '0x06bF890dfF5b422c35c9683f47d2d7663f6E1c24',
+        FUN_USDT_LP: '0x33763d9EdF9D8F91bBAFfA4f8df622f90EC9DDA9',
     },
 }
 
@@ -62,28 +63,32 @@ const Pools = {
             address: "0x33763d9EdF9D8F91bBAFfA4f8df622f90EC9DDA9",
             pid: 0,
             tokenSymbol: "FUN",
-            baseSymbol: "USDT"
+            baseSymbol: "USDT",
+            tokenType: 2,
         },
         {
             name: "FUN-WBNB",
             address: "0x98655083a337b1658e0b7b818da039e5f1ce707c",
             pid: 1,
             tokenSymbol: "FUN",
-            baseSymbol: "WBNB"
+            baseSymbol: "WBNB",
+            tokenType: 2,
         },
         {
             name: "FUN-BURGER",
             address: "0xa0cFA7ca408924c00A57a1603E01fdCA18e16C5F",
             pid: 2,
             tokenSymbol: "FUN",
-            baseSymbol: "BURGER"
+            baseSymbol: "BURGER",
+            tokenType: 2,
         },
         {
             name: "USDT",
             address: "0xF2ED382e6A3439Be124813842200cf6702fD6ecA",
             pid: 3,
             tokenSymbol: "USDT",
-            baseSymbol: ""
+            baseSymbol: "",
+            tokenType: 1,
         }
     ],
 }

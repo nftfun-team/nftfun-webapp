@@ -766,9 +766,23 @@ $.getDemaxLpValue = async (lpToken, baseToken, amount) => {
   return await methods.getDemaxLpValue(lpToken, baseToken, amount).call()
 }
 
+$.getTokenUsdValue = async (tokenAddr, amount) => {
+  let token = await $.queryToken(tokenAddr)
+  if(tokenAddr.toLocaleLowerCase() == $.getTokenAddress('USDT').toLocaleLowerCase()) {
+    return new BigNumber(amount).shiftedBy(-1*token.decimals).toFixed()
+  } else {
+    let symbol = token.symbol + '_USDT_LP'
+    let price = await $.getTokenPrice($.getTokenAddress(symbol), tokenAddr)
+    return new BigNumber(amount).shiftedBy(-1*token.decimals).multipliedBy(price).toFixed()
+  }
+}
+
 $.getLpUsdValue = async (pool, amount) => {
   let token = $.getTokenAddress(pool.tokenSymbol)
   let baseToken = $.getTokenAddress(pool.baseSymbol)
+  if(pool.tokenType ==1) {
+    return await getTokenUsdValue(token, amount)
+  }
   if(baseToken.toLocaleLowerCase() == $.getTokenAddress($.getWSymbol()).toLocaleLowerCase()) {
     let res = await $.getLpValue(token, baseToken, amount)
     let wValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
