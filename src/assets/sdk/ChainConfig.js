@@ -86,11 +86,11 @@ const Pools = {
             tokenType: 2,
         },
         {
-            name: "USDT",
-            address: "0xF2ED382e6A3439Be124813842200cf6702fD6ecA",
-            pid: 3,
+            name: "FUN",
+            address: "0xB9f8985b884d16DedfA8de7f37651AE938949A54",
+            pid: 4,
             type: 'single',
-            tokenSymbol: "USDT",
+            tokenSymbol: "FUN",
             baseSymbol: "",
             tokenType: 1,
         }
