@@ -829,7 +829,7 @@ $.updatePool = async(pid) => {
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   $.pools[pid].tokenDecimals = token.decimals
   $.pools[pid].totalStake = new BigNumber(poolInfo.depositTotal).shiftedBy(-1* token.decimals).toFixed()
-  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
+  $.pools[pid].totalStakeValue = '0' // await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
   $.pools[pid].weight = poolInfo.allocPoint
   $.pools[pid].apr = await $.poolRewardApr($.pools[pid], $.masterChefData, $.funPrice)
   $.pools[pid].userAllowance = await $.allowance($.pools[pid].address, $.getContractAddr('MasterChef'))
