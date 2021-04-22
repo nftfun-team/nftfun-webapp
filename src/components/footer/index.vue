@@ -9,9 +9,9 @@
     <a href="https://medium.com/@NFTFunProtocol" target="_blank">
         <img src="~img/medium.svg" alt="">
     </a>
-<!--    <a href="">-->
-<!--        <img src="~img/github.svg" alt="">-->
-<!--    </a>-->
+    <a href="https://github.com/nftfun/nftfun-protocol" target="_blank">
+        <img src="~img/github.svg" alt="">
+    </a>
 </div>
 </template>
 
