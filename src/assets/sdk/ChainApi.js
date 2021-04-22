@@ -748,12 +748,20 @@ $.getTokenPriceByTokens = async (token, baseToken) => {
   return $.getTokenPriceByReserve(res, token)
 }
 
+$.getTokenPriceByDemaxTokens = async (token, baseToken) => {
+  let methods = getContractMethodsByName('Query')
+  let res = await methods.getDemaxPairReserveByTokens(token, baseToken).call()
+  return $.getTokenPriceByReserve(res, token)
+}
+
+
+
 $.getFunPrice = async () => {
-  return await $.getTokenPriceByTokens($.getTokenAddress('FUN'), $.getTokenAddress('USDT'))
+  return await $.getTokenPriceByDemaxTokens($.getTokenAddress('FUN'), $.getTokenAddress('USDT'))
 }
 
 $.getWTokenPrice = async () => {
-  return await $.getTokenPriceByTokens($.getTokenAddress($.getWSymbol()), $.getTokenAddress('USDT'))
+  return await $.getTokenPriceByDemaxTokens($.getTokenAddress($.getWSymbol()), $.getTokenAddress('USDT'))
 }
 
 $.getLpValue = async (token, baseToken, amount) => {
@@ -771,33 +779,30 @@ $.getTokenUsdValue = async (tokenAddr, amount) => {
   if(tokenAddr.toLocaleLowerCase() == $.getTokenAddress('USDT').toLocaleLowerCase()) {
     return new BigNumber(amount).shiftedBy(-1*token.decimals).toFixed()
   } else {
-    let symbol = token.symbol + '_USDT_LP'
-    let price = await $.getTokenPrice($.getTokenAddress(symbol), tokenAddr)
+    let price = await $.getTokenPriceByDemaxTokens(tokenAddr, $.getTokenAddress('USDT'))
+    console.log('getTokenUsdValue:', price)
     return new BigNumber(amount).shiftedBy(-1*token.decimals).multipliedBy(price).toFixed()
   }
 }
 
 $.getLpUsdValue = async (pool, amount) => {
+  console.log('getLpUsdValue pool:', pool)
   let token = $.getTokenAddress(pool.tokenSymbol)
   let baseToken = $.getTokenAddress(pool.baseSymbol)
   if(pool.tokenType ==1) {
     return await $.getTokenUsdValue(pool.address, amount)
-  }
-  if(baseToken.toLocaleLowerCase() == $.getTokenAddress($.getWSymbol()).toLocaleLowerCase()) {
-    let res = await $.getLpValue(token, baseToken, amount)
-    let wValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
-    let wPrice = await $.getWTokenPrice()
-    return wValue.multipliedBy(wPrice).toFixed()
-  } else if(baseToken.toLocaleLowerCase() == $.getTokenAddress('BURGER').toLocaleLowerCase()) {
-      let res = await $.getDemaxLpValue(pool.address, baseToken, amount)
-      console.log('getDemaxLpValue:', res)
-      let burgerValue = new BigNumber(res[0]).shiftedBy(-1*res[1])
-      let burgerPrice = await $.getTokenPriceByTokens($.getTokenAddress('BURGER'), $.getTokenAddress('USDT'))
-      console.log('burgerPrice:', burgerPrice)
-      return burgerValue.multipliedBy(burgerPrice).toFixed()
-  } else if(baseToken.toLocaleLowerCase() == $.getTokenAddress('USDT').toLocaleLowerCase()) {
-    let res = await $.getLpValue(token, baseToken, amount)
-    return new BigNumber(res[0]).shiftedBy(-1*res[1]).toFixed()
+  } else if(pool.tokenType ==2) {
+    let res = await $.getDemaxLpValue(pool.address, token, amount)
+    console.log('getDemaxLpValue:', res)
+    let value = new BigNumber(res[0]).shiftedBy(-1*res[1])
+    let price = await $.getFunPrice()
+    // console.log('price:', price)
+    return value.multipliedBy(price).toFixed()
+  } else {
+    let res = await $.getLpValue(token, token, amount)
+    let value = new BigNumber(res[0]).shiftedBy(-1*res[1])
+    let price = await $.getFunPrice()
+    return value.multipliedBy(price).toFixed()
   }
   return '0'
 }
@@ -822,6 +827,7 @@ $.poolRewardApr = async (poolData, masterChefData, funPrice) => {
 $.updatePool = async(pid) => {
   let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
   let poolInfo = await getContractMethodsByName('MasterChef').poolInfo(pid).call()
+  // console.log('poolInfo:', poolInfo)
   let pendingFun = await $.pendingFun(pid)
   let token = await $.queryToken($.pools[pid].address)
   $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
@@ -829,7 +835,7 @@ $.updatePool = async(pid) => {
   $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   $.pools[pid].tokenDecimals = token.decimals
   $.pools[pid].totalStake = new BigNumber(poolInfo.depositTotal).shiftedBy(-1* token.decimals).toFixed()
-  $.pools[pid].totalStakeValue = '0' // await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
+  $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
   $.pools[pid].weight = poolInfo.allocPoint
   $.pools[pid].apr = await $.poolRewardApr($.pools[pid], $.masterChefData, $.funPrice)
   $.pools[pid].userAllowance = await $.allowance($.pools[pid].address, $.getContractAddr('MasterChef'))

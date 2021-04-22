@@ -111,6 +111,60 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_token0",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_token1",
+        "type": "address"
+      }
+    ],
+    "name": "getDemaxPairReserveByTokens",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "token0",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token1",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "decimals0",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "decimals1",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserve0",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserve1",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalSupply",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_tokenA",
         "type": "address"
       },
