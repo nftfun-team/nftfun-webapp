@@ -50,7 +50,9 @@
         private visible: Boolean = false;
 
         private goBack(): void{
-            this.$router.go(-1)
+            this.$router.push({
+                path: '/'
+            })
         }
     }
 </script>
