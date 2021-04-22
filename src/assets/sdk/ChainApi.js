@@ -823,10 +823,10 @@ $.updatePool = async(pid) => {
   let userInfo = await getContractMethodsByName('MasterChef').userInfo(pid, getSelectedAddress()).call()
   let poolInfo = await getContractMethodsByName('MasterChef').poolInfo(pid).call()
   let pendingFun = await $.pendingFun(pid)
-  $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
-  $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-18).toFixed()
-  $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   let token = await $.queryToken($.pools[pid].address)
+  $.pools[pid].userBalance = await $.tokenBalanceOf($.pools[pid].address, getSelectedAddress())
+  $.pools[pid].userAmount = new BigNumber(userInfo.amount).shiftedBy(-1* token.decimals).toFixed()
+  $.pools[pid].userReward = new BigNumber(pendingFun).shiftedBy(-9).toFixed()
   $.pools[pid].tokenDecimals = token.decimals
   $.pools[pid].totalStake = new BigNumber(poolInfo.depositTotal).shiftedBy(-1* token.decimals).toFixed()
   $.pools[pid].totalStakeValue = await $.getLpUsdValue($.pools[pid], poolInfo.depositTotal)
