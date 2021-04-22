@@ -47,16 +47,17 @@
             img {
                 display: block;
                 margin: 0 auto;
-                width: 42px;
-                height: 42px;
+                /*width: 42px;*/
+                /*height: 42px;*/
                 /*animation: spin 2s linear infinite;*/
             }
         }
 
         span {
             text-align: center;
-            padding-top: 20px;
+            /*padding-top: 20px;*/
             font-size: 14px;
+            letter-spacing: 2px;
             color: #000000;
         }
     }
