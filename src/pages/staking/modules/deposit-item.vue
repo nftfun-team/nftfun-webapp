@@ -2,7 +2,7 @@
     <div class="deposit-item">
         <div class="deposit-item-symbol">
             <img :src="imgSrc" alt="">
-            <b class="f-pop-bold-family">{{data.name}} {{data.type ==='double' ? 'LP' : ''}}</b>
+            <b class="f-pop-bold-family">{{data.name}} {{data.type ==='double' ? 'BLP' : ''}}</b>
             <span class="f-center-y">{{data.weight}}X</span>
         </div>
 
@@ -18,7 +18,7 @@
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
             <div class="deposit-item-handle-cont">
-                <p class="deposit-item-handle-cont-use">Wallet Available: <span><count-jump :val="data.userBalance" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'LP' : ''}}</span></p>
+                <p class="deposit-item-handle-cont-use">Wallet Available: <span><count-jump :val="data.userBalance" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'BLP' : ''}}</span></p>
                 <template v-if="direction=='deposit'">
                     <div class="deposit-item-handle-cont-number f-pr" >
                         <el-input v-model="depositNumber" placeholder="0.0000" @input.native="$filterNumber" @blur="changeVal('deposit')"/>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="deposit-item-status">
-            <p>Staked <span class="f-fr"> <count-jump :val="data.userAmount" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'LP' : ''}}</span></p>
+            <p>Staked <span class="f-fr"> <count-jump :val="data.userAmount" isFormat=true /> {{data.name}} {{data.type ==='double' ? 'BLP' : ''}}</span></p>
             <p class="deposit-item-status-end">Rewards <span class="f-fr"><count-jump :val="data.userReward" isFormat=true /></span></p>
             <el-button class="deposit-item-status-btn f-khc-family" :loading="claimLoad" :disabled="Number(data.userReward) == 0" @click="harvest">Claim</el-button>
         </div>
