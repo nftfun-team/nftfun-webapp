@@ -33,7 +33,6 @@
                 this.load = true
                 this.$ChainApi.getPools()
                     .then( res => {
-                        console.error('---->', res)
                         this.poolList = res
                     })
                     .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error(e)})
