@@ -88,7 +88,6 @@ const Pools = {
             baseSymbol: "WBNB",
             tokenType: 2,
         },
-        
         {
             name: "FUN",
             address: "0xCC89AC2C6f4a82e5A4c53215b6a6d7ebA4C25E6a",
