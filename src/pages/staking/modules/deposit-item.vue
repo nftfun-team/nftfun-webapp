@@ -9,7 +9,7 @@
         <div class="deposit-item-over">
             <h4>Overview </h4>
             <p class="deposit-item-over-line">APR <span class="f-fr"> <count-jump :val="data.apr" isFormat=true />%</span></p>
-<!--            <p class="deposit-item-over-line">Total Deposits <span class="f-fr"><count-jump :val="$toFixed(data.totalStakeValue,2)" /> USD</span></p>-->
+            <p class="deposit-item-over-line">Total Deposits <span class="f-fr"><count-jump :val="$toFixed(data.totalStakeValue,2)" /> USD</span></p>
         </div>
 
         <div class="deposit-item-handle">
