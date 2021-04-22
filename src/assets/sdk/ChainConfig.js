@@ -29,10 +29,10 @@ const Swap_URL = {
 
 const ContractsAddr = {
     56: {
-        Master: '',
-        Oracle: '',
-        MasterChef: '',
-        Query: '',
+        Master: '0xab61073E66D7E35753757aDAB4442628874FbCeb',
+        Oracle: '0x4894140Ef1D9aCD420fd9482cb64c285530dF8b4',
+        MasterChef: '0x1fa65c1666d5771F5dd0C3abf54564BB55a12227',
+        Query: '0x1eCaeE6e4e01C45712ccd9262c3e9F623A6ac7ed',
     },
     97: {
         Master: '0x80EbE98696df632e40963E60c252c41aeA2d6404',
@@ -44,7 +44,11 @@ const ContractsAddr = {
 
 const Tokens = {
     56: {
-        FUN: '',
+        FUN: '0xCC89AC2C6f4a82e5A4c53215b6a6d7ebA4C25E6a',
+        USDT: '0x55d398326f99059fF775485246999027B3197955',
+        WBNB: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+        BURGER: '0xAe9269f27437f0fcBC232d39Ec814844a51d6b8f',
+        FUN_USDT_LP: '0xA7F3D08992E6B35a22CF8d3E18FB5883b8C8BDC9',
     },
     97: {
         FUN: '0xB9f8985b884d16DedfA8de7f37651AE938949A54',
@@ -56,7 +60,45 @@ const Tokens = {
 }
 
 const Pools = {
-    56: [],
+    56: [
+        {
+            name: "FUN-BURGER",
+            address: "0xa31b33A4042457021Db559ca4B1f65b33aC508af",
+            pid: 0,
+            type: 'double',
+            tokenSymbol: "FUN",
+            baseSymbol: "BURGER",
+            tokenType: 2,
+        },
+        {
+            name: "FUN-USDT",
+            address: "0xA7F3D08992E6B35a22CF8d3E18FB5883b8C8BDC9",
+            pid: 1,
+            type: 'double',
+            tokenSymbol: "FUN",
+            baseSymbol: "USDT",
+            tokenType: 2,
+        },
+        {
+            name: "FUN-WBNB",
+            address: "0xea57B995E86a194C19836594D6E2DAC56E25E7a2",
+            pid: 2,
+            type: 'double',
+            tokenSymbol: "FUN",
+            baseSymbol: "WBNB",
+            tokenType: 2,
+        },
+        
+        {
+            name: "FUN",
+            address: "0xCC89AC2C6f4a82e5A4c53215b6a6d7ebA4C25E6a",
+            pid: 3,
+            type: 'single',
+            tokenSymbol: "FUN",
+            baseSymbol: "",
+            tokenType: 1,
+        }
+    ],
     97: [
         {
             name: "FUN-USDT",
