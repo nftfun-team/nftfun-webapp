@@ -20,7 +20,7 @@ axiosIns.defaults.validateStatus =  (status:number) => {
   return true;
 };
 axiosIns.interceptors.request.use( (config:any) => {
-  config.headers['X-Access-Token'] = User.token();
+  // config.headers['X-Access-Token'] = User.token();
   return config;
 });
 
