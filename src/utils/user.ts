@@ -1,20 +1,15 @@
-
-import {Storage} from "utils/storage";
-import service from "utils/serviceApi/index";
+import store from '../store'
+import {M_CHAIN_CONNECTED, M_CHAIN_WALLETADDRESS, M_CHAIN_CHAINID} from 'store/modules/chain/types'
 
 const User = {
-    token: () => {
-        return Storage.getItem("token")
+    login: (walletAddress, isConnect, ) => {
+        store.commit(M_CHAIN_WALLETADDRESS, walletAddress)
+        store.commit(M_CHAIN_CONNECTED, isConnect)
     },
     logout: () =>{
-        service.logout().then((data:any) => {
-            const user = ['userInfo', 'token'];
-            for(let item of user){
-                window.localStorage.removeItem(item);
-            }
-            const path = window.location.pathname;
-            return window.location.href = window.location.origin + '/login#'+ path ;
-        })
+        store.commit(M_CHAIN_WALLETADDRESS, '')
+        store.commit(M_CHAIN_CHAINID, '')
+        store.commit(M_CHAIN_CONNECTED, false)
     }
 };
 

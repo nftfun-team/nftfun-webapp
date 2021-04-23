@@ -55,9 +55,8 @@
     import {Component, Vue, Prop, Emit, Watch} from "vue-property-decorator";
     import { Mutation } from "vuex-class";
     import WebChain from "utils/sdk.js";
-    import {M_CHAIN_WALLETADDRESS, M_CHAIN_CHAINID} from "store/modules/chain/types";
-    import vi from "element-ui/src/locale/lang/vi";
-
+    import User from 'utils/user'
+    import {M_CHAIN_WALLETADDRESS, M_CHAIN_CHAINID, M_CHAIN_CONNECTED} from "store/modules/chain/types";
 
     @Component({
         name: 'DialogTop',
@@ -65,6 +64,7 @@
     export default class DialogTop extends Vue {
         @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAdress!: Function;
         @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
+        @Mutation(M_CHAIN_CONNECTED) private setConnect!: Function;
 
         @Prop({type: Boolean, default: false}) private visible!: Boolean
         @Prop({type: String, default: ''}) private account!: Boolean
@@ -117,8 +117,7 @@
 
         private logoutClick(): void {
             this.close();
-            this.setChainId('');
-            this.setWalletAdress('');
+            User.logout();
             this.showLogin()
         }
     }

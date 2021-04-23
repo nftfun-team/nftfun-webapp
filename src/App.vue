@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Provide} from 'vue-property-decorator';
+import {Component, Vue, Provide, Watch} from 'vue-property-decorator';
 import ConnectWallet from "components/connectWallet/index.vue";
 import ChainApi from '@/assets/sdk/ChainApi.js';
 import {Storage} from 'utils/storage';
@@ -16,7 +16,7 @@ import {
     M_CHAIN_CHAINID,
     M_CHAIN_WALLETADDRESS,
     G_CHAIN_CHAINID,
-    G_CHAIN_WALLETADDRESS, A_CHAIN_COONNECT
+    G_CHAIN_WALLETADDRESS, A_CHAIN_COONNECT, G_CHAIN_CONNECTED
 } from 'store/modules/chain/types';
 
 @Component({
@@ -27,13 +27,19 @@ export default class App extends Vue {
     @Mutation(M_CHAIN_CHAINID) private setChainId!: Function;
     @Mutation(M_CHAIN_WALLETADDRESS) private setWalletAddress!: Function;
     @Getter(G_CHAIN_CHAINID) private ChainId!: string;
+    @Getter(G_CHAIN_CONNECTED) private connected!: boolean;
     @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
     private isShow: boolean = false;
 
     @Provide('setWalletShow')
     setWalletShow(data:boolean = true){
-        console.error('data---->', data)
         this.isShow = true
+    }
+
+    @Watch("connected",{deep: true})
+    changeConnect(flag: boolean){
+        console.error('changeConnect---->', flag)
+        this.isShow = !flag;
     }
 
 
@@ -61,6 +67,11 @@ export default class App extends Vue {
         this.onChainStatus();
         this.onChainChanged();
         this.onAccountsChanged();
+        // this.connect('m');
+        // if(!this.connected){
+        //     this.isShow = true;
+        // }
+        // console.error('walletAddress=====>',this.walletAddress,'>>>>>',this.ChainId, ChainApi.isConnected())
     }
 
     private connect(type: string): void{
@@ -82,7 +93,6 @@ export default class App extends Vue {
     }
 
     handleNewAccounts(acc) {
-        // console.error('acc----->',acc)
         if (!acc.length) {
             Storage.removeItem('account');
             return;
@@ -112,7 +122,6 @@ export default class App extends Vue {
     }
 
     handleChainStatus(status) {
-        // console.error('test handleChainStatus:', status);
         if (status === 2) {
             //console.log('连接成功');
             // this.$store.commit('isInstall', true);
