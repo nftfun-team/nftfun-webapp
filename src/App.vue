@@ -9,9 +9,9 @@
                 :before-close="handleClose">
             <div class="app-dialog-tip">
                 <img src="~img/wain.svg" alt="">
-                <p>1) Due the significant fluctuation of the Crypto market, the FUN Protocol team decided to not start Rebase function until the market being relatively stable. The First Rebase Time is now tentatively set at UTC 11:00 AM 26th April.</p>
-                <p>2) The single token staking (Staking FUN, Earn FUN) will be close at UTC 11:AM 23rd April. Please all users claim your FUN from this staking pool after the closing time and the deadline will be at UTC 11:00 AM 26th April. If you have not claimed your FUN before the deadline time, the FUN Protocol team will not be responsible for your losses.</p>
-                <p>3) Users can still stake FUN-Burger/ FUN- USDT/ FUN-BNB LP and there will be a higher APR! Keep Staking!</p>
+                <p>1) The single token staking (Staking FUN, Earn FUN) will be close at UTC 11:AM 23rd April. Please all users withdraw your FUN from this staking pool after the closing time and the deadline will be at UTC 11:00 AM 26th April. If you have not withdrawed your FUN before the deadline time, the FUN Protocol team will not be responsible for your losses.</p>
+                <p>2) Users can still stake FUN-Burger/ FUN- USDT/ FUN-BNB LP and there will be a higher APR! Keep Staking!</p>
+                <p>3) Due the significant fluctuation of the Crypto market, the FUN Protocol team decided to not start Rebase function until the market being relatively stable. The First Rebase Time is now tentatively set at UTC 11:00 AM 26th April.</p>
                 <p class="no-indent">Thanks for your supporting and patience!</p>
                 <p class="no-indent">Good Luck.</p>
             </div>
