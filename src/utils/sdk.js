@@ -1,6 +1,7 @@
 import ChainApi from '../assets/sdk/ChainApi.js'
 import {Storage} from "utils/storage"
 import store from 'store'
+import User from 'utils/user'
 import { M_CHAIN_WALLETADDRESS } from 'store/modules/chain/types'
 
 class WebChain {
@@ -10,15 +11,22 @@ class WebChain {
         this.walletAddress = Storage.getItem('walletAddress')
     }
 
-    connect = (data) => {
-        if(!Storage.getItem('chainId')) return Promise.reject({account: '', isConnect: false})
+    connect = async (data) => {
+        if(!Storage.getItem('chainId')){
+            User.logout();
+            return Promise.reject({account: '', isConnect: false})
+        }
+
         return ChainApi.connect(data).then(acc => {
             let is = acc && acc.length > 0;
             this.walletAddress = is ? acc[0] : '';
             if (is) {
-                store.commit(M_CHAIN_WALLETADDRESS, this.walletAddress)
+                User.login(this.walletAddress, is);
+                return {account: acc, isConnect: is};
+            }else{
+                User.logout();
+                throw ('链接失败')
             }
-            return {account: acc, isConnect: is};
         });
     }
 

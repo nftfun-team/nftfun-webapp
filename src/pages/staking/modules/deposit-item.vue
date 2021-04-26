@@ -9,12 +9,13 @@
         <div class="deposit-item-over">
             <h4>Overview </h4>
             <p class="deposit-item-over-line">APR <span class="f-fr"> <count-jump :val="data.apr" isFormat=true />%</span></p>
-<!--            <p class="deposit-item-over-line">Total Deposits <span class="f-fr"><count-jump :val="$toFixed(data.totalStakeValue,2)" /> USD</span></p>-->
+            <p class="deposit-item-over-line">Total Deposits <span class="f-fr"><count-jump :val="$toFixed(data.totalStakeValue,2)" isFormat=true /> USD</span></p>
         </div>
 
         <div class="deposit-item-handle">
             <div class="deposit-item-handle-nav">
-                <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='deposit'}" @click="direction='deposit'">Deposit</div>
+                <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='deposit'}" @click="!disDeposit && (direction='deposit')">
+                    {{disDeposit ? 'Close' : 'Deposit'}}</div>
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
             <div class="deposit-item-handle-cont">
@@ -70,9 +71,13 @@
             return src
         }
 
+        get disDeposit(): Boolean {
+            return this.data.tokenType == 1 ? true : false
+        }
+
         private depositNumber: string = '';
         private withdrawNumber: string = '';
-        private direction: string = 'deposit';
+        private direction: string = this.data.tokenType == 1 ? 'withdraw' : 'deposit';
         private approveLoad: boolean = false;
         private approveFlag: boolean = false;
         private depositLoad: boolean = false;

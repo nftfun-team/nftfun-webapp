@@ -1,61 +1,62 @@
 <template>
-<div class="dialog-main">
-    <div class="dialog-bg" @click="closeModal" style="display: block"></div>
-    <div class="dialog" style="display: block">
-        <div class="dialog-wrap">
-            <div class="dialog-top">
-                <span>Connect to a wallet</span>
-                <i class="icon-close" @click="closeModal"></i>
-            </div>
-            <div class="dialog-content">
-                <div class="wallet-box" @click="connect('m')">
-                    <span class="wallet-name">Metamask</span>
-                    <img src="~img/wallet/Metamask.svg" alt=""/>
+    <div class="dialog-main">
+        <div class="dialog-bg" @click="closeModal" style="display: block"></div>
+        <div class="dialog" style="display: block">
+            <div class="dialog-wrap">
+                <div class="dialog-top">
+                    <span>Connect to a wallet</span>
+                    <i class="icon-close" @click="closeModal"></i>
                 </div>
+                <div class="dialog-content">
+                    <div class="wallet-box" @click="connect('m')">
+                        <span class="wallet-name">Metamask</span>
+                        <img src="~img/wallet/Metamask.svg" alt=""/>
+                    </div>
 
-                <div class="wallet-box" @click="connect('m')">
-                    <span class="wallet-name">TrustWallet</span>
-                    <img src="~img/wallet/TrustWallet.svg" alt=""/>
-                </div>
+                    <div class="wallet-box" @click="connect('m')">
+                        <span class="wallet-name">TrustWallet</span>
+                        <img src="~img/wallet/TrustWallet.svg" alt=""/>
+                    </div>
 
-                <div class="wallet-box" @click="connect('m')">
-                    <span class="wallet-name">MathWallet</span>
-                    <img src="~img/wallet/MathWallet.svg" alt=""/>
-                </div>
+                    <div class="wallet-box" @click="connect('m')">
+                        <span class="wallet-name">MathWallet</span>
+                        <img src="~img/wallet/MathWallet.svg" alt=""/>
+                    </div>
 
-                <div class="wallet-box" @click="connect('m')">
-                    <span class="wallet-name">TokenPocket</span>
-                    <img src="~img/wallet/TokenPocket.svg" alt=""/>
-                </div>
+                    <div class="wallet-box" @click="connect('m')">
+                        <span class="wallet-name">TokenPocket</span>
+                        <img src="~img/wallet/TokenPocket.svg" alt=""/>
+                    </div>
 
-                <div class="wallet-box" @click="connect('w')">
-                    <span class="wallet-name">WalletConnect</span>
-                    <img src="~img/wallet/WalletConnect.svg" alt=""/>
-                </div>
+                    <div class="wallet-box" @click="connect('w')">
+                        <span class="wallet-name">WalletConnect</span>
+                        <img src="~img/wallet/WalletConnect.svg" alt=""/>
+                    </div>
 
-                <div class="wallet-box" @click="connect('b')">
-                    <span class="wallet-name">Binance Chain Wallet</span>
-                    <img src="~img/wallet/BinanceChainWallet.svg" alt=""/>
+                    <div class="wallet-box" @click="connect('b')">
+                        <span class="wallet-name">Binance Chain Wallet</span>
+                        <img src="~img/wallet/BinanceChainWallet.svg" alt=""/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue, Emit } from "vue-property-decorator";
+    import {Component, Vue, Emit} from "vue-property-decorator";
 
     @Component({
         name: 'ConnectWallet',
     })
-    export default class ConnectWallet extends Vue{
+    export default class ConnectWallet extends Vue {
 
         @Emit('closeModal')
-        private closeModal(): void{}
+        private closeModal(): void {
+        }
 
         @Emit('connect')
-        private connect(type:string){
+        private connect(type: string) {
             return type
         }
     }
@@ -65,7 +66,7 @@
     .dialog-bg {
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
         position: fixed;
         top: 0;
         left: 0;

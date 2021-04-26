@@ -60,6 +60,15 @@ const Tokens = {
 const Pools = {
     56: [
         {
+            name: "FUN",
+            address: "0xCC89AC2C6f4a82e5A4c53215b6a6d7ebA4C25E6a",
+            pid: 3,
+            type: 'single',
+            tokenSymbol: "FUN",
+            baseSymbol: "",
+            tokenType: 1,
+        },
+        {
             name: "FUN-BURGER",
             address: "0xa31b33A4042457021Db559ca4B1f65b33aC508af",
             pid: 0,
@@ -86,17 +95,17 @@ const Pools = {
             baseSymbol: "WBNB",
             tokenType: 2,
         },
+    ],
+    97: [
         {
             name: "FUN",
-            address: "0xCC89AC2C6f4a82e5A4c53215b6a6d7ebA4C25E6a",
+            address: "0xB9f8985b884d16DedfA8de7f37651AE938949A54",
             pid: 3,
             type: 'single',
             tokenSymbol: "FUN",
             baseSymbol: "",
             tokenType: 1,
-        }
-    ],
-    97: [
+        },
         {
             name: "FUN-USDT",
             address: "0x33763d9EdF9D8F91bBAFfA4f8df622f90EC9DDA9",
@@ -124,15 +133,6 @@ const Pools = {
             baseSymbol: "BURGER",
             tokenType: 2,
         },
-        {
-            name: "FUN",
-            address: "0xB9f8985b884d16DedfA8de7f37651AE938949A54",
-            pid: 3,
-            type: 'single',
-            tokenSymbol: "FUN",
-            baseSymbol: "",
-            tokenType: 1,
-        }
     ],
 }
 
