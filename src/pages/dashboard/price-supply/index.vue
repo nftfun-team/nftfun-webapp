@@ -20,8 +20,10 @@
 
     <Tabs :title="'PRICE'" :active="active" :type="type" @tab="tabClick"/>
     <PriceChart :data="priceData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
+
     <Tabs :title="'SUPPLY'" :active="active" :type="type" @tab="tabClick"/>
     <SupplyChart :data="supplyData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
+
     <Tabs :title="'MARKET CAP'" :active="active" :type="type" @tab="tabClick"/>
     <MktCapChart :data="mktCapChartData" :type="type" :isEmpty="isEmpty" :loading="loading"/>
 </div>

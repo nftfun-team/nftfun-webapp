@@ -18,7 +18,7 @@ const CHAIN_BROWSER = {
 
 const IPFS_URL = 'https://ipfs.io/ipfs'
 const Report_URL = {
-    56: '',
+    56: 'https://api.nftfun.org',
     97: 'https://api-test.nftfun.org'
 }
 
