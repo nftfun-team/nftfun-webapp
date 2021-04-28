@@ -35,7 +35,7 @@
                     .then( res => {
                         this.poolList = res
                     })
-                    .catch(e => { this.$load.tipErrorShow('获取列表失败'); console.error('1212', e)})
+                    .catch(e => { this.$load.tipErrorShow('获取列表失败')})
                     .finally(_ => this.load = false)
             }).catch(_ => this.load = false)
         }
