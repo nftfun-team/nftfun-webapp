@@ -77,42 +77,18 @@ module.exports = {
         host: '0.0.0.0',
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器
+        proxy: {
+            '/ws': {
+                target: 'https://stream.binance.com:9443/ws',
+            },
+            // '/api/v3': {
+            //     target: 'https://api.binance.com/api/v3',
+            // },
+            '/api': {
+                target: 'https://api.binance.com',
+                pathRewrite: {'^/api': '/api'}
+            },
+        },
     },
 
-    // css: {
-    //     loaderOptions: {
-    //         postcss: {
-    //             plugins: [
-    //                 require('postcss-plugin-px2rem')({
-    //                     rootValue : 37.5, // 换算的基数
-    //                     propList  : ['*'],
-    //                 }),
-    //             ]
-    //         },
-    //         // less: {
-    //         //     javascriptEnabled: true,
-    //         // }
-    //     }
-    // }
-
-    // css: {
-    //     loaderOptions: {
-    //         postcss: {
-    //             plugins: [
-    //                 require("postcss-plugin-px2rem")({
-    //                     rootValue: 64,
-    //                     // unitPrecision: 5,
-    //                     //propWhiteList: [],
-    //                     // propBlackList: [],
-    //                     // exclude: /(node_module)/,
-    //                     // selectorBlackList: [],
-    //                     // ignoreIdentifier: false,
-    //                     // replace: true,
-    //                     mediaQuery: false,
-    //                     minPixelValue: 3
-    //                 })
-    //             ]
-    //         }
-    //     }
-    // }
 }

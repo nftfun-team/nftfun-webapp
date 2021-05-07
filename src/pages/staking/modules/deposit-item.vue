@@ -14,7 +14,8 @@
 
         <div class="deposit-item-handle">
             <div class="deposit-item-handle-nav">
-                <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='deposit'}" @click="!disDeposit && (direction='deposit')">
+<!--                <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='deposit'}" @click="!disDeposit && (direction='deposit')">-->
+                <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='deposit'}" @click="disDeposit ? openTips() : (direction='deposit')">
                     {{disDeposit ? 'Close' : 'Deposit'}}</div>
                 <div class="deposit-item-handle-nav-item" :class="{'nav-active': direction=='withdraw'}" @click="direction='withdraw'">Withdraw</div>
             </div>
@@ -50,7 +51,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue, Prop } from "vue-property-decorator";
+    import { Component, Vue, Prop, Emit } from "vue-property-decorator";
     import ComButton from "components/button/index.vue";
 
     @Component({
@@ -162,6 +163,11 @@
             }).finally(() => {
                 this.claimLoad = false;
             });
+        }
+
+        @Emit('openTips')
+        private openTips(): void{
+
         }
 
         private jump(): void{

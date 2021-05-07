@@ -2,20 +2,6 @@
     <div id="app" class="body-main">
         <router-view/>
         <connect-wallet v-if="isShow" @closeModal="isShow = false" @connect="connect"/>
-
-        <el-dialog
-                :visible.sync="dialogTip"
-                width="45%"
-                :before-close="handleClose">
-            <div class="app-dialog-tip">
-                <img src="~img/wain.svg" alt="">
-                <p>1) The single token staking (Staking FUN, Earn FUN) will be close at UTC 11:AM 23rd April. Please all users withdraw your FUN from this staking pool after the closing time and the deadline will be at UTC 11:00 AM 26th April. If you have not withdrawed your FUN before the deadline time, the FUN Protocol team will not be responsible for your losses.</p>
-                <p>2) Users can still stake FUN-Burger/ FUN- USDT/ FUN-BNB LP and there will be a higher APR! Keep Staking!</p>
-                <p>3) Due the significant fluctuation of the Crypto market, the FUN Protocol team decided to not start Rebase function until the market being relatively stable. The First Rebase Time is now tentatively set at UTC 11:00 AM 26th April.</p>
-                <p class="no-indent">Thanks for your supporting and patience!</p>
-                <p class="no-indent">Good Luck.</p>
-            </div>
-         </el-dialog>
     </div>
 </template>
 
@@ -44,17 +30,10 @@
         @Getter(G_CHAIN_CONNECTED) private connected!: boolean;
         @Getter(G_CHAIN_WALLETADDRESS) private walletAddress!: string;
         private isShow: boolean = false;
-        private dialogTip: boolean = true;
-        private tipRouteList: String[] = ['/staking', '/dashboard'];
 
         @Provide('setWalletShow')
         setWalletShow(data: boolean = true) {
             this.isShow = true
-        }
-
-        @Watch("$route",{immediate: true, deep: true})
-        getRoute(to:any){
-            this.dialogTip = this.tipRouteList.includes(to.path)
         }
 
         @Watch("connected", {deep: true})
@@ -74,12 +53,6 @@
             });
         }
 
-
-        // public setWalletShow(data:boolean = true): void {
-        //     console.error('data---->', data)
-        //     this.isShow = true
-        // }
-
         private reload(): void {
             window.location.reload();
         }
@@ -88,11 +61,6 @@
             this.onChainStatus();
             this.onChainChanged();
             this.onAccountsChanged();
-            // this.connect('m');
-            // if(!this.connected){
-            //     this.isShow = true;
-            // }
-            // console.error('walletAddress=====>',this.walletAddress,'>>>>>',this.ChainId, ChainApi.isConnected())
         }
 
         private connect(type: string): void {
